@@ -40,7 +40,7 @@
 
 #include "legendre.h"
 
-static void voronoi_weights_S2(R *w, R *xi, INT M)
+static void voronoi_weights_S2(R *w, R *xi, NFFT_INT M)
 {
   R *x;
   R *y;

@@ -20,9 +20,9 @@
 #include "infft.h"
 
 /** Print real vector to standard output. */
-void Y(vpr_double)(R *x, const INT n, const char *text)
+void Y(vpr_double)(R *x, const NFFT_INT n, const char *text)
 {
-  INT k;
+  NFFT_INT k;
 
   if (x == NULL)
   {
@@ -57,9 +57,9 @@ void Y(vpr_double)(R *x, const INT n, const char *text)
 }
 
 /** Print complex vector to standard output. */
-void Y(vpr_complex)(C *x, const INT n, const char *text)
+void Y(vpr_complex)(C *x, const NFFT_INT n, const char *text)
 {
-  INT k;
+  NFFT_INT k;
 
   if(text != NULL)
   {

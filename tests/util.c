@@ -25,15 +25,15 @@
 #include "nfft3.h"
 #include "infft.h"
 
-static INT _log2i(const INT m)
+static NFFT_INT _log2i(const NFFT_INT m)
 {
-  INT l = 0;
-  INT mm = m;
+  NFFT_INT l = 0;
+  NFFT_INT mm = m;
 
   if (m <= 0)
     return -1;
 
-  while (mm > (INT)(0))
+  while (mm > (NFFT_INT)(0))
   {
     mm = (mm >> 1);
     l++;
@@ -44,35 +44,35 @@ static INT _log2i(const INT m)
 
 void X(check_log2i)(void)
 {
-    INT i;
-    INT j;
+    NFFT_INT i;
+    NFFT_INT j;
 
     {
-        INT r = Y(log2i)(0);
+        NFFT_INT r = Y(log2i)(0);
         int ok = r == -1;
-        printf("log2i("__D__") = "__D__" -> %s\n", (INT)(0), r, ok ? "OK" : "FAIL");
+        printf("log2i("__D__") = "__D__" -> %s\n", (NFFT_INT)(0), r, ok ? "OK" : "FAIL");
         CU_ASSERT(ok)
     }
 
     {
-        INT r = Y(log2i)(-1);
+        NFFT_INT r = Y(log2i)(-1);
         int ok = r == -1;
-        printf("log2i("__D__") = "__D__" -> %s\n", (INT)(-1), r, ok ? "OK" : "FAIL");
+        printf("log2i("__D__") = "__D__" -> %s\n", (NFFT_INT)(-1), r, ok ? "OK" : "FAIL");
         CU_ASSERT(ok)
     }
 
     for (i = 0, j = 1; i < 8 * SIZEOF_PTRDIFF_T - 1; i++, j <<= 1)
     {
         {
-            INT r = Y(log2i)(j);
-            INT r2 = _log2i(j);
+            NFFT_INT r = Y(log2i)(j);
+            NFFT_INT r2 = _log2i(j);
             int ok = r == r2;
             printf("log2i("__D__") = "__D__" -> %s\n", j, r, ok ? "OK" : "FAIL");
             CU_ASSERT(ok)
         }
         {
-            INT r = Y(log2i)(j - 1);
-            INT r2 = _log2i(j - 1);
+            NFFT_INT r = Y(log2i)(j - 1);
+            NFFT_INT r2 = _log2i(j - 1);
             int ok = r == r2;
             printf("log2i("__D__") = "__D__" -> %s\n", j - 1, r, ok ? "OK" : "FAIL");
             CU_ASSERT(ok)
@@ -82,10 +82,10 @@ void X(check_log2i)(void)
 
 /** Computes /f$n\ge N/f$ such that /f$n=2^j,\, j\in\mathhb{N}_0/f$.
  */
-static INT _next_power_of_2(const INT N)
+static NFFT_INT _next_power_of_2(const NFFT_INT N)
 {
-  INT n,i,logn;
-  INT N_is_not_power_of_2=0;
+  NFFT_INT n,i,logn;
+  NFFT_INT N_is_not_power_of_2=0;
 
   if (N == 0)
     return 1;
@@ -115,35 +115,35 @@ static INT _next_power_of_2(const INT N)
 
 void X(check_next_power_of_2)(void)
 {
-    INT i;
-    INT j;
+    NFFT_INT i;
+    NFFT_INT j;
 
     {
-        INT r = Y(next_power_of_2)(0);
+        NFFT_INT r = Y(next_power_of_2)(0);
         int ok = r == 1;
-        printf("next_power_of_2("__D__") = "__D__" -> %s\n", (INT)(0), r, ok ? "OK" : "FAIL");
+        printf("next_power_of_2("__D__") = "__D__" -> %s\n", (NFFT_INT)(0), r, ok ? "OK" : "FAIL");
         CU_ASSERT(ok)
     }
 
     {
-        INT r = Y(next_power_of_2)(-1);
+        NFFT_INT r = Y(next_power_of_2)(-1);
         int ok = r == -1;
-        printf("log2i("__D__") = "__D__" -> %s\n", (INT)(-1), r, ok ? "OK" : "FAIL");
+        printf("log2i("__D__") = "__D__" -> %s\n", (NFFT_INT)(-1), r, ok ? "OK" : "FAIL");
         CU_ASSERT(ok)
     }
 
     for (i = 0, j = 1; i < 8 * SIZEOF_PTRDIFF_T - 1; i++, j <<= 1)
     {
         {
-            INT r = Y(next_power_of_2)(j);
-            INT r2 = _next_power_of_2(j);
+            NFFT_INT r = Y(next_power_of_2)(j);
+            NFFT_INT r2 = _next_power_of_2(j);
             int ok = r == r2;
             printf("next_power_of_2("__D__") = "__D__" -> %s\n", j, r, ok ? "OK" : "FAIL");
             CU_ASSERT(ok)
         }
         {
-            INT r = Y(next_power_of_2)(j - 1);
-            INT r2 = _next_power_of_2(j - 1);
+            NFFT_INT r = Y(next_power_of_2)(j - 1);
+            NFFT_INT r2 = _next_power_of_2(j - 1);
             int ok = r == r2;
             printf("next_power_of_2("__D__") = "__D__" -> %s\n", j - 1, r, ok ? "OK" : "FAIL");
             CU_ASSERT(ok)

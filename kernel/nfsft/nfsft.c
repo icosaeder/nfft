@@ -1257,7 +1257,7 @@ void nfsft_trafo(nfsft_plan *plan)
        * plan_nfft is not initialized if NFSFT_EQUISPACED is set. */
 
 #ifdef _OPENMP
-      INT nthreads = Y(get_num_threads)();
+      NFFT_INT nthreads = Y(get_num_threads)();
 #endif
 
       int N[2];

@@ -30,9 +30,9 @@ FormatVectorRaw[x_]:=Module[{M=Length[x], s = ""},
 For[j=1,j<=M,j++,s=s<>FormatNumberRaw[x[[j]]]<>"\n"];Return[s]];
 
 FormatIntegerInternal[x_]:=ToString[NumberForm[IntegerPart[x],NumberSigns->{"-",""}]];
-FormatIntegerVector[x_,name_]:=Module[{M=Length[x], s = "static const INT "<> name <> "[] = \n{\n"},
+FormatIntegerVector[x_,name_]:=Module[{M=Length[x], s = "static const NFFT_INT "<> name <> "[] = \n{\n"},
 For[j=1,j<=M,j++,s=s<>"  " <>FormatIntegerInternal[x[[j]]]<>",\n"];s=s<>"};";Return[s]];
-FormatInteger[x_,name_]:=Module[{M=Length[x], s = "static const INT "<> name <> " = "<>FormatIntegerInternal[x]<>";\n"},Return[s]];
+FormatInteger[x_,name_]:=Module[{M=Length[x], s = "static const NFFT_INT "<> name <> " = "<>FormatIntegerInternal[x]<>";\n"},Return[s]];
 FormatIntegerVectorRaw[x_]:=Module[{M=Length[x], s = ""},
 For[j=1,j<=M,j++,s=s<>FormatIntegerInternal[x[[j]]]<>"\n"];Return[s]];
 FormatIntegerRaw[x_]:=Module[{M=Length[x], s = FormatIntegerInternal[x]<>"\n"},Return[s]];

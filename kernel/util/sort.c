@@ -30,9 +30,9 @@
  *
  * \author Michael Hofmann
  */
-static inline void sort_node_indices_sort_bubble(INT n, INT *keys)
+static inline void sort_node_indices_sort_bubble(NFFT_INT n, NFFT_INT *keys)
 {
-  INT i, j, ti;
+  NFFT_INT i, j, ti;
 
   for (i = 0; i < n; ++i)
   {
@@ -51,9 +51,9 @@ static inline void sort_node_indices_sort_bubble(INT n, INT *keys)
  *
  * \author Michael Hofmann
  */
-static inline void sort_node_indices_radix_count(INT n, INT *keys, INT shift, INT mask, INT *counts)
+static inline void sort_node_indices_radix_count(NFFT_INT n, NFFT_INT *keys, NFFT_INT shift, NFFT_INT mask, NFFT_INT *counts)
 {
-  INT i, k;
+  NFFT_INT i, k;
 
   for (i = 0; i < n; ++i)
   {
@@ -67,9 +67,9 @@ static inline void sort_node_indices_radix_count(INT n, INT *keys, INT shift, IN
  *
  * \author Michael Hofmann
  */
-static inline void sort_node_indices_radix_rearrange(INT n, INT *keys_in, INT *keys_out, INT shift, INT mask, INT *displs)
+static inline void sort_node_indices_radix_rearrange(NFFT_INT n, NFFT_INT *keys_in, NFFT_INT *keys_out, NFFT_INT shift, NFFT_INT mask, NFFT_INT *displs)
 {
-  INT i, k;
+  NFFT_INT i, k;
 
   for (i = 0; i < n; ++i)
   {
@@ -88,26 +88,26 @@ static inline void sort_node_indices_radix_rearrange(INT n, INT *keys_in, INT *k
  *
  * \author Michael Hofmann
  */
-void Y(sort_node_indices_radix_lsdf)(INT n, INT *keys0, INT *keys1, INT rhigh)
+void Y(sort_node_indices_radix_lsdf)(NFFT_INT n, NFFT_INT *keys0, NFFT_INT *keys1, NFFT_INT rhigh)
 {
-  const INT radix_mask = radix_n - 1;
-  const INT rhigh_in = rhigh;
+  const NFFT_INT radix_mask = radix_n - 1;
+  const NFFT_INT rhigh_in = rhigh;
 
-  const INT tmax =
+  const NFFT_INT tmax =
 #ifdef _OPENMP
     omp_get_max_threads();
 #else
     1;
 #endif
 
-  INT *from, *to, *tmp;
+  NFFT_INT *from, *to, *tmp;
 
-  INT i, k, l, h;
-  INT *lcounts;
+  NFFT_INT i, k, l, h;
+  NFFT_INT *lcounts;
 
-  INT tid = 0, tnum = 1;
+  NFFT_INT tid = 0, tnum = 1;
 
-  STACK_MALLOC(INT*, lcounts, (size_t)(tmax * radix_n) * sizeof(INT));
+  STACK_MALLOC(NFFT_INT*, lcounts, (size_t)(tmax * radix_n) * sizeof(NFFT_INT));
 
   from = keys0;
   to = keys1;
@@ -161,7 +161,7 @@ void Y(sort_node_indices_radix_lsdf)(INT n, INT *keys0, INT *keys1, INT rhigh)
     rhigh -= rwidth;
   }
 
-  if (to == keys0) memcpy(to, from, (size_t)(n) * 2 * sizeof(INT));
+  if (to == keys0) memcpy(to, from, (size_t)(n) * 2 * sizeof(NFFT_INT));
 
   STACK_FREE(lcounts);
 }
@@ -171,25 +171,25 @@ void Y(sort_node_indices_radix_lsdf)(INT n, INT *keys0, INT *keys1, INT rhigh)
  *
  * \author Michael Hofmann
  */
-void Y(sort_node_indices_radix_msdf)(INT n, INT *keys0, INT *keys1, INT rhigh)
+void Y(sort_node_indices_radix_msdf)(NFFT_INT n, NFFT_INT *keys0, NFFT_INT *keys1, NFFT_INT rhigh)
 {
-  const INT radix_mask = radix_n - 1;
+  const NFFT_INT radix_mask = radix_n - 1;
 
-  const INT tmax =
+  const NFFT_INT tmax =
 #ifdef _OPENMP
     omp_get_max_threads();
 #else
     1;
 #endif
 
-  INT i, k, l, h;
-  INT *lcounts;
+  NFFT_INT i, k, l, h;
+  NFFT_INT *lcounts;
 
-  INT counts[radix_n], displs[radix_n];
+  NFFT_INT counts[radix_n], displs[radix_n];
 
-  INT tid = 0, tnum = 1;
+  NFFT_INT tid = 0, tnum = 1;
 
-  STACK_MALLOC(INT*, lcounts, (size_t)(tmax * radix_n) * sizeof(INT));
+  STACK_MALLOC(NFFT_INT*, lcounts, (size_t)(tmax * radix_n) * sizeof(NFFT_INT));
 
   rhigh -= rwidth;
 
@@ -235,7 +235,7 @@ void Y(sort_node_indices_radix_msdf)(INT n, INT *keys0, INT *keys1, INT rhigh)
   }
 #endif
 
-  memcpy(keys0, keys1, (size_t)(n) * 2 * sizeof(INT));
+  memcpy(keys0, keys1, (size_t)(n) * 2 * sizeof(NFFT_INT));
 
   if (rhigh >= 0)
   {

@@ -18,7 +18,7 @@
 
 #include "infft.h"
 
-INT Y(exp2i)(const INT a)
+NFFT_INT Y(exp2i)(const NFFT_INT a)
 {
   return (1U << a);
 }
@@ -29,7 +29,7 @@ INT Y(exp2i)(const INT a)
  *
  * see https://graphics.stanford.edu/~seander/bithacks.html#IntegerLogDeBruijn
  */
-INT Y(log2i)(const INT m)
+NFFT_INT Y(log2i)(const NFFT_INT m)
 {
   /* Special case, zero or negative input. */
   if (m <= 0)
@@ -37,7 +37,7 @@ INT Y(log2i)(const INT m)
 
 #if SIZEOF_PTRDIFF_T == 8
   /* Hash map with return values based on De Bruijn sequence. */
-  static INT debruijn[64] =
+  static NFFT_INT debruijn[64] =
   {
     0, 58, 1, 59, 47, 53, 2, 60, 39, 48, 27, 54, 33, 42, 3, 61, 51, 37, 40, 49,
     18, 28, 20, 55, 30, 34, 11, 43, 14, 22, 4, 62, 57, 46, 52, 38, 26, 32, 41,
@@ -63,7 +63,7 @@ INT Y(log2i)(const INT m)
   return debruijn[(uint64_t)(v * 0x03f6eaf2cd271461LU) >> 58];
 #elif SIZEOF_PTRDIFF_T == 4
   /* Hash map with return values based on De Bruijn sequence. */
-  static INT debruijn[32] =
+  static NFFT_INT debruijn[32] =
   {
     0, 9, 1, 10, 13, 21, 2, 29, 11, 14, 16, 18, 22, 25, 3, 30, 8, 12, 20, 28,
     15, 17, 24, 7, 19, 27, 23, 6, 26, 5, 4, 31
@@ -98,7 +98,7 @@ INT Y(log2i)(const INT m)
  *
  * see https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
  */
-INT Y(next_power_of_2)(const INT x)
+NFFT_INT Y(next_power_of_2)(const NFFT_INT x)
 {
     if (x < 0)
         return -1;
@@ -133,10 +133,10 @@ INT Y(next_power_of_2)(const INT x)
 
 /** Computes /f$n\ge N/f$ such that /f$n=2^j,\, j\in\mathhb{N}_0/f$.
  */
-void Y(next_power_of_2_exp)(const INT N, INT *N2, INT *t)
+void Y(next_power_of_2_exp)(const NFFT_INT N, NFFT_INT *N2, NFFT_INT *t)
 {
-  INT n,i,logn;
-  INT N_is_not_power_of_2=0;
+  NFFT_INT n,i,logn;
+  NFFT_INT N_is_not_power_of_2=0;
 
   if (N == 0)
   {

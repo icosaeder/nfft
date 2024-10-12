@@ -36,25 +36,25 @@ void Y(srand48)(long int seed)
 #endif
 }
 
-void Y(vrand_unit_complex)(C *x, const INT n)
+void Y(vrand_unit_complex)(C *x, const NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = Y(drand48)() + II * Y(drand48)();
 }
 
-void Y(vrand_shifted_unit_double)(R *x, const INT n)
+void Y(vrand_shifted_unit_double)(R *x, const NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = Y(drand48)() - K(0.5);
 }
 
-void Y(vrand_real)(R *x, const INT n, const R a, const R b)
+void Y(vrand_real)(R *x, const NFFT_INT n, const R a, const R b)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a + Y(drand48)() * (b - a);

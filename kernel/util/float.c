@@ -36,20 +36,20 @@ R Y(float_property)(const float_property p)
   {
     /* Compute eps = 2^(1-MANT_DIG).
      * The usual definition of EPSILON is too small for double-double arithmetic on PowerPC. */
-    for (INT i=0; i<MANT_DIG-1; i++)
+    for (NFFT_INT i=0; i<MANT_DIG-1; i++)
       eps /= K(2.0);
 
     /* Compute rmin */
     {
-      const INT n = 1 - MIN_EXP;
-      INT i;
+      const NFFT_INT n = 1 - MIN_EXP;
+      NFFT_INT i;
       for (i = 0; i < n; i++)
         rmin /= base;
     }
 
     /* Compute rmax */
     {
-      INT i;
+      NFFT_INT i;
       rmax -= eps;
       for (i = 0; i < emax; i++)
         rmax *= base;
@@ -93,9 +93,9 @@ R Y(float_property)(const float_property p)
 } /* dlamch_ */
 
 /** Computes double /f$\prod_{t=0}^{d-1} v_t/f$. */
-R Y(prod_real)(R *vec, INT d)
+R Y(prod_real)(R *vec, NFFT_INT d)
 {
-  INT t;
+  NFFT_INT t;
   R prod;
 
   prod = K(1.0);

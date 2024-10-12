@@ -37,7 +37,7 @@
 
 static void ndft_horner_trafo(NFFT(plan) *ths)
 {
-  INT j, k;
+  NFFT_INT j, k;
   C *f_hat_k, *f_j;
   C exp_omega_0;
 
@@ -58,7 +58,7 @@ static void ndft_horner_trafo(NFFT(plan) *ths)
 
 static void ndft_pre_full_trafo(NFFT(plan) *ths, C *A)
 {
-  INT j, k;
+  NFFT_INT j, k;
   C *f_hat_k, *f_j;
   C *A_local;
 
@@ -72,7 +72,7 @@ static void ndft_pre_full_trafo(NFFT(plan) *ths, C *A)
 
 static void ndft_pre_full_init(NFFT(plan) *ths, C *A)
 {
-  INT j, k;
+  NFFT_INT j, k;
   C *f_hat_k, *f_j, *A_local;
 
   for (j = 0, f_j = ths->f, A_local = A; j < ths->M_total; j++, f_j++)

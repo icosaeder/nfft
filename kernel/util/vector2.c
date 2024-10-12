@@ -19,36 +19,36 @@
 #include "infft.h"
 
 /** Copies \f$x \leftarrow y\f$. */
-void Y(cp_complex)(C *x, C *y, INT n)
+void Y(cp_complex)(C *x, C *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = y[k];
 }
 
 /** Copies \f$x \leftarrow y\f$. */
-void Y(cp_double)(R *x, R *y, INT n)
+void Y(cp_double)(R *x, R *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = y[k];
 }
 
 /** Copies \f$x \leftarrow a y\f$. */
-void Y(cp_a_complex)(C *x, R a, C *y, INT n)
+void Y(cp_a_complex)(C *x, R a, C *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a * y[k];
 }
 
 /** Copies \f$x \leftarrow a y\f$. */
-void Y(cp_a_double)(R *x, R a, R *y, INT n)
+void Y(cp_a_double)(R *x, R a, R *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a * y[k];
@@ -56,18 +56,18 @@ void Y(cp_a_double)(R *x, R a, R *y, INT n)
 
 
 /** Copies \f$x \leftarrow w\odot y\f$. */
-void Y(cp_w_complex)(C *x, R *w, C *y, INT n)
+void Y(cp_w_complex)(C *x, R *w, C *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = w[k]*y[k];
 }
 
 /** Copies \f$x \leftarrow w\odot y\f$. */
-void Y(cp_w_double)(R *x, R *w, R *y, INT n)
+void Y(cp_w_double)(R *x, R *w, R *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = w[k] * y[k];

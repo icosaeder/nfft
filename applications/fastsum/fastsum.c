@@ -698,7 +698,7 @@ static C SearchTree(const int d, const int t, const R *x, const C *alpha,
 static void fastsum_precompute_kernel(fastsum_plan *ths)
 {
   int j, k, t;
-  INT N[ths->d];
+  NFFT_INT N[ths->d];
   int n_total;
 #ifdef MEASURE_TIME
   ticks t0, t1;

@@ -20,9 +20,9 @@
 #include "cstripack.h"
 
 /** Compute non periodic voronoi weights for ordered nodes x_j */
-void Y(voronoi_weights_1d)(R *w, R *x, const INT M)
+void Y(voronoi_weights_1d)(R *w, R *x, const NFFT_INT M)
 {
-  INT j;
+  NFFT_INT j;
 
   w[0] = (x[1]-x[0])/K(2.0);
 

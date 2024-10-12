@@ -18,11 +18,11 @@
 
 #include "infft.h"
 
-static inline void bspline_help(const INT k, const R x, R *scratch, const INT j,
-  const INT ug, const INT og, const INT r)
+static inline void bspline_help(const NFFT_INT k, const R x, R *scratch, const NFFT_INT j,
+  const NFFT_INT ug, const NFFT_INT og, const NFFT_INT r)
 {
-  INT i; /* Row index of the de Boor scheme */
-  INT idx; /* Index in scratch */
+  NFFT_INT i; /* Row index of the de Boor scheme */
+  NFFT_INT idx; /* Index in scratch */
   R a; /* Alpha of de Boor scheme */
 
   /* computation of one column */
@@ -34,13 +34,13 @@ static inline void bspline_help(const INT k, const R x, R *scratch, const INT j,
 }
 
 /* Evaluate the cardinal B-Spline B_{n-1} supported on [0,n]. */
-R Y(bsplines)(const INT k, const R _x)
+R Y(bsplines)(const NFFT_INT k, const R _x)
 {
   const R kk = (R)k;
   R result_value;
-  INT r;
-  INT g1, g2; /* boundaries */
-  INT j, idx, ug, og; /* indices */
+  NFFT_INT r;
+  NFFT_INT g1, g2; /* boundaries */
+  NFFT_INT j, idx, ug, og; /* indices */
   R a; /* Alpha of de Boor scheme*/
   R x = _x;
   R scratch[k];
@@ -55,7 +55,7 @@ R Y(bsplines)(const INT k, const R _x)
       x = kk - x;
     }
 
-    r = (INT)LRINT(CEIL(x) - K(1.0));
+    r = (NFFT_INT)LRINT(CEIL(x) - K(1.0));
 
     /* Do not use the explicit formula x^k / k! for first interval! De Boor's
      * algorithm is more accurate. See https://github.com/NFFT/nfft/issues/16.

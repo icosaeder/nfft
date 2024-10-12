@@ -210,7 +210,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
   if(strcmp(cmd,"get_num_threads") == 0)
   {
-    INT nthreads = X(get_num_threads)();
+    NFFT_INT nthreads = X(get_num_threads)();
     plhs[0] = mxCreateDoubleScalar((double) nthreads);
     return;
   }
@@ -223,7 +223,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
   }
   else if(strcmp(cmd,"has_threads_enabled") == 0)
   {
-    INT threads_enabled = X(has_threads_enabled)();
+    NFFT_INT threads_enabled = X(has_threads_enabled)();
     plhs[0] = mxCreateDoubleScalar((double) threads_enabled);
     return;
   }

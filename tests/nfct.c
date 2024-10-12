@@ -198,7 +198,7 @@ static R trafo_direct_cost(X(plan) *p)
   }
 
   {
-    INT c = p->M_total, i;
+    NFFT_INT c = p->M_total, i;
 
     for (i = 0; i < p->d; i++)
       c *= p->N[i];

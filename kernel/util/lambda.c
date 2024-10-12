@@ -190,7 +190,7 @@
 static inline R evaluate_rational(const R z_)
 {
   R z = z_, s1, s2;
-  INT i;
+  NFFT_INT i;
 
   if (z <= K(1.0))
   {

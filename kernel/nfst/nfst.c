@@ -44,9 +44,9 @@
 #define X(name) NFST(name)
 
 /** Compute aggregated product of integer array. */
-static inline INT intprod(const INT *vec, const INT a, const INT d)
+static inline NFFT_INT intprod(const NFFT_INT *vec, const NFFT_INT a, const NFFT_INT d)
 {
-  INT t, p;
+  NFFT_INT t, p;
 
   p = 1;
   for (t = 0; t < d; t++)
@@ -94,13 +94,13 @@ void X(trafo_direct)(const X(plan) *ths)
   if (ths->d == 1)
   {
     /* specialize for univariate case, rationale: faster */
-    INT j;
+    NFFT_INT j;
 #ifdef _OPENMP
     #pragma omp parallel for default(shared) private(j)
 #endif
     for (j = 0; j < ths->M_total; j++)
     {
-      INT k_L;
+      NFFT_INT k_L;
       for (k_L = 0; k_L < ths->N_total; k_L++)
       {
         R omega = K2PI * ((R)(k_L + OFFSET)) * ths->x[j];
@@ -111,14 +111,14 @@ void X(trafo_direct)(const X(plan) *ths)
   else
   {
     /* multivariate case */
-    INT j;
+    NFFT_INT j;
 #ifdef _OPENMP
     #pragma omp parallel for default(shared) private(j)
 #endif
     for (j = 0; j < ths->M_total; j++)
     {
       R x[ths->d], omega, Omega[ths->d + 1];
-      INT t, t2, k_L, k[ths->d];
+      NFFT_INT t, t2, k_L, k[ths->d];
       Omega[0] = K(1.0);
       for (t = 0; t < ths->d; t++)
       {
@@ -157,11 +157,11 @@ void X(adjoint_direct)(const X(plan) *ths)
   {
     /* specialize for univariate case, rationale: faster */
 #ifdef _OPENMP
-      INT k_L;
+      NFFT_INT k_L;
       #pragma omp parallel for default(shared) private(k_L)
       for (k_L = 0; k_L < ths->N_total; k_L++)
       {
-        INT j;
+        NFFT_INT j;
         for (j = 0; j < ths->M_total; j++)
         {
           R omega = K2PI * ((R)(k_L + OFFSET)) * ths->x[j];
@@ -169,10 +169,10 @@ void X(adjoint_direct)(const X(plan) *ths)
         }
       }
 #else
-      INT j;
+      NFFT_INT j;
       for (j = 0; j < ths->M_total; j++)
       {
-        INT k_L;
+        NFFT_INT k_L;
         for (k_L = 0; k_L < ths->N_total; k_L++)
         {
           R omega = K2PI * ((R)(k_L + OFFSET)) * ths->x[j];
@@ -184,12 +184,12 @@ void X(adjoint_direct)(const X(plan) *ths)
   else
   {
     /* multivariate case */
-    INT j, k_L;
+    NFFT_INT j, k_L;
 #ifdef _OPENMP
     #pragma omp parallel for default(shared) private(j, k_L)
     for (k_L = 0; k_L < ths->N_total; k_L++)
     {
-      INT k[ths->d], k_temp, t;
+      NFFT_INT k[ths->d], k_temp, t;
 
       k_temp = k_L;
 
@@ -211,7 +211,7 @@ void X(adjoint_direct)(const X(plan) *ths)
     for (j = 0; j < ths->M_total; j++)
     {
       R x[ths->d], omega, Omega[ths->d+1];
-      INT t, t2, k[ths->d];
+      NFFT_INT t, t2, k[ths->d];
       Omega[0] = K(1.0);
       for (t = 0; t < ths->d; t++)
       {
@@ -258,11 +258,11 @@ void X(adjoint_direct)(const X(plan) *ths)
 
 /** computes 2m+2 indices for the matrix B
  */
-static inline void uo(const X(plan) *ths, const INT j, INT *up, INT *op,
-  const INT act_dim)
+static inline void uo(const X(plan) *ths, const NFFT_INT j, NFFT_INT *up, NFFT_INT *op,
+  const NFFT_INT act_dim)
 {
   const R xj = ths->x[j * ths->d + act_dim];
-  INT c = LRINT(xj * (2 * NN(ths->n[(act_dim)])));
+  NFFT_INT c = LRINT(xj * (2 * NN(ths->n[(act_dim)])));
 
   (*up) = c - (ths->m);
   (*op) = c + 1 + (ths->m);
@@ -333,11 +333,11 @@ static inline void D_ ## which_one (X(plan) *ths) \
 { \
   R *g_hat, *f_hat; /* local copy */ \
   R c_phi_inv_k[ths->d+1]; /* postfix product of PHI_HUT */ \
-  INT t; /* index dimensions */ \
-  INT i; \
-  INT k_L; /* plain index */ \
-  INT kg[ths->d]; /* multi index in g_hat */ \
-  INT kg_plain[ths->d+1]; /* postfix plain index */ \
+  NFFT_INT t; /* index dimensions */ \
+  NFFT_INT i; \
+  NFFT_INT k_L; /* plain index */ \
+  NFFT_INT kg[ths->d]; /* multi index in g_hat */ \
+  NFFT_INT kg_plain[ths->d+1]; /* postfix plain index */ \
 \
   f_hat = (R*)ths->f_hat; g_hat = (R*)ths->g_hat; \
   MACRO_D_init_result_ ## which_one; \
@@ -489,27 +489,27 @@ MACRO_D(T)
 #define MACRO_B(which_one) \
 static inline void B_ ## which_one (X(plan) *ths) \
 { \
-  INT lprod; /* 'regular bandwidth' of matrix B  */ \
-  INT u[ths->d], o[ths->d]; /* multi band with respect to x_j */ \
-  INT t, t2; /* index dimensions */ \
-  INT j; /* index nodes */ \
-  INT l_L, ix; /* index one row of B */ \
-  INT l[ths->d]; /* multi index u<=l<=o (real index of g in array) */ \
-  INT lj[ths->d]; /* multi index 0<=lc<2m+2 */ \
-  INT ll_plain[ths->d+1]; /* postfix plain index in g */ \
+  NFFT_INT lprod; /* 'regular bandwidth' of matrix B  */ \
+  NFFT_INT u[ths->d], o[ths->d]; /* multi band with respect to x_j */ \
+  NFFT_INT t, t2; /* index dimensions */ \
+  NFFT_INT j; /* index nodes */ \
+  NFFT_INT l_L, ix; /* index one row of B */ \
+  NFFT_INT l[ths->d]; /* multi index u<=l<=o (real index of g in array) */ \
+  NFFT_INT lj[ths->d]; /* multi index 0<=lc<2m+2 */ \
+  NFFT_INT ll_plain[ths->d+1]; /* postfix plain index in g */ \
   R phi_prod[ths->d+1]; /* postfix product of PHI */ \
   R *f, *g; /* local copy */ \
   R *fj; /* local copy */ \
   R y[ths->d]; \
   R fg_psi[ths->d][2*ths->m+2]; \
   R fg_exp_l[ths->d][2*ths->m+2]; \
-  INT l_fg,lj_fg; \
+  NFFT_INT l_fg,lj_fg; \
   R tmpEXP1, tmpEXP2, tmpEXP2sq, tmp1, tmp2, tmp3; \
   R ip_w; \
-  INT ip_u; \
-  INT ip_s = ths->K/(ths->m+2); \
-  INT lg_offset[ths->d]; /* offset in g according to u */ \
-  INT count_lg[ths->d]; /* count summands (2m+2) */ \
+  NFFT_INT ip_u; \
+  NFFT_INT ip_s = ths->K/(ths->m+2); \
+  NFFT_INT lg_offset[ths->d]; /* offset in g according to u */ \
+  NFFT_INT count_lg[ths->d]; /* count summands (2m+2) */ \
 \
   f = (R*)ths->f; g = (R*)ths->g; \
 \
@@ -778,8 +778,8 @@ void X(adjoint)(X(plan) *ths)
  */
 static inline void precompute_phi_hut(X(plan) *ths)
 {
-  INT ks[ths->d]; /* index over all frequencies */
-  INT t; /* index over all dimensions */
+  NFFT_INT ks[ths->d]; /* index over all frequencies */
+  NFFT_INT t; /* index over all dimensions */
 
   ths->c_phi_inv = (R**) Y(malloc)((size_t)(ths->d) * sizeof(R*));
 
@@ -801,8 +801,8 @@ static inline void precompute_phi_hut(X(plan) *ths)
  */
 void X(precompute_lin_psi)(X(plan) *ths)
 {
-  INT t; /**< index over all dimensions */
-  INT j; /**< index over all nodes */
+  NFFT_INT t; /**< index over all dimensions */
+  NFFT_INT j; /**< index over all nodes */
   R step; /**< step size in [0,(m+2)/n] */
 
   for (t = 0; t < ths->d; t++)
@@ -818,14 +818,14 @@ void X(precompute_lin_psi)(X(plan) *ths)
 
 void X(precompute_fg_psi)(X(plan) *ths)
 {
-  INT t; /* index over all dimensions */
-  INT u, o; /* depends on x_j */
+  NFFT_INT t; /* index over all dimensions */
+  NFFT_INT u, o; /* depends on x_j */
 
 //  sort(ths);
 
   for (t = 0; t < ths->d; t++)
   {
-    INT j;
+    NFFT_INT j;
 //    #pragma omp parallel for default(shared) private(j,u,o)
     for (j = 0; j < ths->M_total; j++)
     {
@@ -840,15 +840,15 @@ void X(precompute_fg_psi)(X(plan) *ths)
 
 void X(precompute_psi)(X(plan) *ths)
 {
-  INT t; /* index over all dimensions */
-  INT lj; /* index 0<=lj<u+o+1 */
-  INT u, o; /* depends on x_j */
+  NFFT_INT t; /* index over all dimensions */
+  NFFT_INT lj; /* index 0<=lj<u+o+1 */
+  NFFT_INT u, o; /* depends on x_j */
 
   //sort(ths);
 
   for (t = 0; t < ths->d; t++)
   {
-    INT j;
+    NFFT_INT j;
 
     for (j = 0; j < ths->M_total; j++)
     {
@@ -868,20 +868,20 @@ void X(precompute_full_psi)(X(plan) *ths)
 //
 //  nfft_precompute_full_psi_omp(ths);
 //#else
-  INT t, t2; /* index over all dimensions */
-  INT j; /* index over all nodes */
-  INT l_L; /* plain index 0 <= l_L < lprod */
-  INT l[ths->d]; /* multi index u<=l<=o */
-  INT lj[ths->d]; /* multi index 0<=lj<u+o+1 */
-  INT ll_plain[ths->d+1]; /* postfix plain index */
-  INT lprod; /* 'bandwidth' of matrix B */
-  INT u[ths->d], o[ths->d]; /* depends on x_j */
-  INT count_lg[ths->d];
-  INT lg_offset[ths->d];
+  NFFT_INT t, t2; /* index over all dimensions */
+  NFFT_INT j; /* index over all nodes */
+  NFFT_INT l_L; /* plain index 0 <= l_L < lprod */
+  NFFT_INT l[ths->d]; /* multi index u<=l<=o */
+  NFFT_INT lj[ths->d]; /* multi index 0<=lj<u+o+1 */
+  NFFT_INT ll_plain[ths->d+1]; /* postfix plain index */
+  NFFT_INT lprod; /* 'bandwidth' of matrix B */
+  NFFT_INT u[ths->d], o[ths->d]; /* depends on x_j */
+  NFFT_INT count_lg[ths->d];
+  NFFT_INT lg_offset[ths->d];
 
   R phi_prod[ths->d+1];
 
-  INT ix, ix_old;
+  NFFT_INT ix, ix_old;
 
   //sort(ths);
 
@@ -925,8 +925,8 @@ void X(precompute_one_psi)(X(plan) *ths)
 
 static inline void init_help(X(plan) *ths)
 {
-  INT t; /* index over all dimensions */
-  INT lprod; /* 'bandwidth' of matrix B */
+  NFFT_INT t; /* index over all dimensions */
+  NFFT_INT lprod; /* 'bandwidth' of matrix B */
 
   if (ths->flags & NFFT_OMP_BLOCKWISE_ADJOINT)
     ths->flags |= NFFT_SORT_NODES;
@@ -977,8 +977,8 @@ static inline void init_help(X(plan) *ths)
 
       ths->psi = (R*) Y(malloc)((size_t)(ths->M_total * lprod) * sizeof(R));
 
-      ths->psi_index_f = (INT*) Y(malloc)((size_t)(ths->M_total) * sizeof(INT));
-      ths->psi_index_g = (INT*) Y(malloc)((size_t)(ths->M_total * lprod) * sizeof(INT));
+      ths->psi_index_f = (NFFT_INT*) Y(malloc)((size_t)(ths->M_total) * sizeof(NFFT_INT));
+      ths->psi_index_g = (NFFT_INT*) Y(malloc)((size_t)(ths->M_total * lprod) * sizeof(NFFT_INT));
   }
 
   if (ths->flags & FFTW_INIT)
@@ -1002,7 +1002,7 @@ static inline void init_help(X(plan) *ths)
   }
 
 //  if(ths->flags & NFFT_SORT_NODES)
-//    ths->index_x = (INT*) Y(malloc)(sizeof(INT)*2*ths->M_total);
+//    ths->index_x = (NFFT_INT*) Y(malloc)(sizeof(NFFT_INT)*2*ths->M_total);
 //  else
 //    ths->index_x = NULL;
 
@@ -1014,16 +1014,16 @@ void X(init)(X(plan) *ths, int d, int *N, int M_total)
 {
   int t; /* index over all dimensions */
 
-  ths->d = (INT)d;
+  ths->d = (NFFT_INT)d;
 
-  ths->N = (INT*) Y(malloc)((size_t)(d) * sizeof(INT));
+  ths->N = (NFFT_INT*) Y(malloc)((size_t)(d) * sizeof(NFFT_INT));
 
   for (t = 0; t < d; t++)
-    ths->N[t] = (INT)N[t];
+    ths->N[t] = (NFFT_INT)N[t];
 
-  ths->M_total = (INT)M_total;
+  ths->M_total = (NFFT_INT)M_total;
 
-  ths->n = (INT*) Y(malloc)((size_t)(d) * sizeof(INT));
+  ths->n = (NFFT_INT*) Y(malloc)((size_t)(d) * sizeof(NFFT_INT));
 
   for (t = 0; t < d; t++)
     ths->n[t] = 2 * (Y(next_power_of_2)(ths->N[t]) - 1) + OFFSET;
@@ -1052,21 +1052,21 @@ void X(init)(X(plan) *ths, int d, int *N, int M_total)
 void X(init_guru)(X(plan) *ths, int d, int *N, int M_total, int *n, int m,
   unsigned flags, unsigned fftw_flags)
 {
-  INT t; /* index over all dimensions */
+  NFFT_INT t; /* index over all dimensions */
 
-  ths->d = (INT)d;
-  ths->M_total = (INT)M_total;
-  ths->N = (INT*)Y(malloc)((size_t)(ths->d) * sizeof(INT));
-
-  for (t = 0; t < d; t++)
-    ths->N[t] = (INT)N[t];
-
-  ths->n = (INT*)Y(malloc)((size_t)(ths->d) * sizeof(INT));
+  ths->d = (NFFT_INT)d;
+  ths->M_total = (NFFT_INT)M_total;
+  ths->N = (NFFT_INT*)Y(malloc)((size_t)(ths->d) * sizeof(NFFT_INT));
 
   for (t = 0; t < d; t++)
-    ths->n[t] = (INT)n[t];
+    ths->N[t] = (NFFT_INT)N[t];
 
-  ths->m = (INT)m;
+  ths->n = (NFFT_INT*)Y(malloc)((size_t)(ths->d) * sizeof(NFFT_INT));
+
+  for (t = 0; t < d; t++)
+    ths->n[t] = (NFFT_INT)n[t];
+
+  ths->m = (NFFT_INT)m;
 
   ths->flags = flags;
   ths->fftw_flags = fftw_flags;
@@ -1106,7 +1106,7 @@ void X(init_3d)(X(plan) *ths, int N1, int N2, int N3, int M_total)
 
 const char* X(check)(X(plan) *ths)
 {
-  INT j;
+  NFFT_INT j;
 
   if (!ths->f)
       return "Member f not initialized.";
@@ -1138,7 +1138,7 @@ const char* X(check)(X(plan) *ths)
 
 void X(finalize)(X(plan) *ths)
 {
-  INT t; /* index over dimensions */
+  NFFT_INT t; /* index over dimensions */
 
 //  if(ths->flags & NFFT_SORT_NODES)
 //    Y(free)(ths->index_x);

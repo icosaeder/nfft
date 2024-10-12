@@ -3852,7 +3852,7 @@ int jrand_(int *n, int *ix, int *iy, int *iz)
 
 /* Modules required by JRAND:  None */
 
-/* Intrinsic functions called by JRAND:  INT, MOD, REAL */
+/* Intrinsic functions called by JRAND:  NFFT_INT, MOD, REAL */
 
 /* *********************************************************** */
 

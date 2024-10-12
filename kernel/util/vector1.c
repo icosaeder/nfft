@@ -19,9 +19,9 @@
 #include "infft.h"
 
 /** Computes the inner/dot product \f$x^H x\f$. */
-R Y(dot_complex)(C *x, INT n)
+R Y(dot_complex)(C *x, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R dot;
 
   for (k = 0, dot = K(0.0); k < n; k++)
@@ -31,9 +31,9 @@ R Y(dot_complex)(C *x, INT n)
 }
 
 /** Computes the inner/dot product \f$x^H x\f$. */
-R Y(dot_double)(R *x, INT n)
+R Y(dot_double)(R *x, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R dot;
 
   for (k = 0, dot = K(0.0); k < n; k++)
@@ -44,9 +44,9 @@ R Y(dot_double)(R *x, INT n)
 
 
 /** Computes the weighted inner/dot product \f$x^H (w \odot x)\f$. */
-R Y(dot_w_complex)(C *x, R *w, INT n)
+R Y(dot_w_complex)(C *x, R *w, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R dot;
 
   for (k = 0, dot = K(0.0); k < n; k++)
@@ -56,9 +56,9 @@ R Y(dot_w_complex)(C *x, R *w, INT n)
 }
 
 /** Computes the weighted inner/dot product \f$x^H (w \odot x)\f$. */
-R Y(dot_w_double)(R *x, R *w, INT n)
+R Y(dot_w_double)(R *x, R *w, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R dot;
 
   for (k = 0, dot = K(0.0); k < n; k++)
@@ -69,9 +69,9 @@ R Y(dot_w_double)(R *x, R *w, INT n)
 
 
 /** Computes the weighted inner/dot product \f$x^H (w\odot w2\odot w2 \odot x)\f$. */
-R Y(dot_w_w2_complex)(C *x, R *w, R *w2, INT n)
+R Y(dot_w_w2_complex)(C *x, R *w, R *w2, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R dot;
 
   for (k = 0, dot = K(0.0); k < n; k++)
@@ -81,9 +81,9 @@ R Y(dot_w_w2_complex)(C *x, R *w, R *w2, INT n)
 }
 
 /** Computes the weighted inner/dot product \f$x^H (w2\odot w2 \odot x)\f$. */
-R Y(dot_w2_complex)(C *x, R *w2, INT n)
+R Y(dot_w2_complex)(C *x, R *w2, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R dot;
 
   for (k = 0, dot = K(0.0); k < n; k++)

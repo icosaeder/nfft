@@ -19,18 +19,18 @@
 #include "infft.h"
 
 /** Updates \f$x \leftarrow a x + y\f$. */
-void Y(upd_axpy_complex)(C *x, R a, C *y, INT n)
+void Y(upd_axpy_complex)(C *x, R a, C *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a * x[k] + y[k];
 }
 
 /** Updates \f$x \leftarrow a x + y\f$. */
-void Y(upd_axpy_double)(R *x, R a, R *y, INT n)
+void Y(upd_axpy_double)(R *x, R a, R *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a * x[k] + y[k];
@@ -38,84 +38,84 @@ void Y(upd_axpy_double)(R *x, R a, R *y, INT n)
 
 
 /** Updates \f$x \leftarrow x + a y\f$. */
-void Y(upd_xpay_complex)(C *x, R a, C *y, INT n)
+void Y(upd_xpay_complex)(C *x, R a, C *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] += a * y[k];
 }
 
 /** Updates \f$x \leftarrow x + a y\f$. */
-void Y(upd_xpay_double)(R *x, R a, R *y, INT n)
+void Y(upd_xpay_double)(R *x, R a, R *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] += a * y[k];
 }
 
 /** Updates \f$x \leftarrow a x + b y\f$. */
-void Y(upd_axpby_complex)(C *x, R a, C *y, R b, INT n)
+void Y(upd_axpby_complex)(C *x, R a, C *y, R b, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a * x[k] + b * y[k];
 }
 
 /** Updates \f$x \leftarrow a x + b y\f$. */
-void Y(upd_axpby_double)(R *x, R a, R *y, R b, INT n)
+void Y(upd_axpby_double)(R *x, R a, R *y, R b, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a * x[k] + b * y[k];
 }
 
 /** Updates \f$x \leftarrow x + a w\odot y\f$. */
-void Y(upd_xpawy_complex)(C *x, R a, R *w, C *y, INT n)
+void Y(upd_xpawy_complex)(C *x, R a, R *w, C *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] += a * w[k] * y[k];
 }
 
 /** Updates \f$x \leftarrow x + a w\odot y\f$. */
-void Y(upd_xpawy_double)(R *x, R a, R *w, R *y, INT n)
+void Y(upd_xpawy_double)(R *x, R a, R *w, R *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] += a * w[k] * y[k];
 }
 
 /** Updates \f$x \leftarrow a x +  w\odot y\f$. */
-void Y(upd_axpwy_complex)(C *x, R a, R *w, C *y, INT n)
+void Y(upd_axpwy_complex)(C *x, R a, R *w, C *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a * x[k] + w[k] * y[k];
 }
 
 /** Updates \f$x \leftarrow a x +  w\odot y\f$. */
-void Y(upd_axpwy_double)(R *x, R a, R *w, R *y, INT n)
+void Y(upd_axpwy_double)(R *x, R a, R *w, R *y, NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
 
   for (k = 0; k < n; k++)
     x[k] = a * x[k] + w[k] * y[k];
 }
 
 /** Swaps each half over N[d]/2. */
-void Y(fftshift_complex)(C *x, INT d, INT* N)
+void Y(fftshift_complex)(C *x, NFFT_INT d, NFFT_INT* N)
 {
-  INT d_pre, d_act, d_post;
-  INT N_pre, N_act, N_post;
-  INT k_pre, k_act, k_post;
-  INT k, k_swap;
+  NFFT_INT d_pre, d_act, d_post;
+  NFFT_INT N_pre, N_act, N_post;
+  NFFT_INT k_pre, k_act, k_post;
+  NFFT_INT k, k_swap;
 
   C x_swap;
 

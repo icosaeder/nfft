@@ -18,9 +18,9 @@
 
 #include "infft.h"
 
-static R cnrm1(const C *x, const INT n)
+static R cnrm1(const C *x, const NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R nrm = K(0.0);
 
   for (k = 0; k < n; k++)
@@ -29,9 +29,9 @@ static R cnrm1(const C *x, const INT n)
   return nrm;
 }
 
-static R nrm1(const R *x, const INT n)
+static R nrm1(const R *x, const NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R nrm = K(0.0);
 
   for (k = 0; k < n; k++)
@@ -40,9 +40,9 @@ static R nrm1(const R *x, const INT n)
   return nrm;
 }
 
-static R cerr2(const C *x, const C *y, const INT n)
+static R cerr2(const C *x, const C *y, const NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R err = K(0.0);
 
   if (!y)
@@ -59,9 +59,9 @@ static R cerr2(const C *x, const C *y, const INT n)
   return SQRT(err);
 }
 
-static R err2(const R *x, const R *y, const INT n)
+static R err2(const R *x, const R *y, const NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R err = K(0.0);
 
   if (!y)
@@ -78,9 +78,9 @@ static R err2(const R *x, const R *y, const INT n)
   return SQRT(err);
 }
 
-static R cerri(const C *x, const C *y, const INT n)
+static R cerri(const C *x, const C *y, const NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R err = K(0.0), t;
 
   if (!y)
@@ -103,9 +103,9 @@ static R cerri(const C *x, const C *y, const INT n)
   return err;
 }
 
-static R erri(const R *x, const R *y, const INT n)
+static R erri(const R *x, const R *y, const NFFT_INT n)
 {
-  INT k;
+  NFFT_INT k;
   R err = K(0.0), t;
 
   if (!y)
@@ -130,44 +130,44 @@ static R erri(const R *x, const R *y, const INT n)
 
 /** computes \f$\frac{\|x-y\|_{\infty}}{\|x\|_{\infty}} \f$
  */
-R Y(error_l_infty_complex)(const C *x, const C *y, const INT n)
+R Y(error_l_infty_complex)(const C *x, const C *y, const NFFT_INT n)
 {
   return (cerri(x, y, n)/cerri(x, 0, n));
 }
 
 /** computes \f$\frac{\|x-y\|_{\infty}}{\|x\|_{\infty}} \f$
  */
-R Y(error_l_infty_double)(const R *x, const R *y, const INT n)
+R Y(error_l_infty_double)(const R *x, const R *y, const NFFT_INT n)
 {
   return (erri(x, y, n)/erri(x, 0, n));
 }
 
 /** computes \f$\frac{\|x-y\|_{\infty}}{\|z\|_1} \f$
  */
-R Y(error_l_infty_1_complex)(const C *x, const C *y, const INT n,
-  const C *z, const INT m)
+R Y(error_l_infty_1_complex)(const C *x, const C *y, const NFFT_INT n,
+  const C *z, const NFFT_INT m)
 {
   return (cerri(x, y, n)/cnrm1(z, m));
 }
 
 /** computes \f$\frac{\|x-y\|_{\infty}}{\|z\|_1} \f$
  */
-R Y(error_l_infty_1_double)(const R *x, const R *y, const INT n, const R *z,
-  const INT m)
+R Y(error_l_infty_1_double)(const R *x, const R *y, const NFFT_INT n, const R *z,
+  const NFFT_INT m)
 {
   return (erri(x, y, n)/nrm1(z, m));
 }
 
 /** computes \f$\frac{\|x-y\|_2}{\|x\|_2} \f$
  */
-R Y(error_l_2_complex)(const C *x, const C *y, const INT n)
+R Y(error_l_2_complex)(const C *x, const C *y, const NFFT_INT n)
 {
   return (cerr2(x, y, n)/cerr2(x, 0, n));
 }
 
 /** computes \f$\frac{\|x-y\|_2}{\|x\|_2} \f$
  */
-R Y(error_l_2_double)(const R *x, const R *y, const INT n)
+R Y(error_l_2_double)(const R *x, const R *y, const NFFT_INT n)
 {
   return (err2(x, y, n)/err2(x, NULL, n));
 }

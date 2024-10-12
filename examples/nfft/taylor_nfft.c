@@ -41,7 +41,7 @@
 typedef struct
 {
   NFFT(plan) p; /* used for fftw and data */
-  INT *idx0; /* index of next neighbour of x_j on the oversampled regular grid */
+  NFFT_INT *idx0; /* index of next neighbour of x_j on the oversampled regular grid */
   R *deltax0; /* distance to the grid point */
 } taylor_plan;
 
@@ -63,7 +63,7 @@ static void taylor_init(taylor_plan *ths, int N, int M, int n, int m)
       MALLOC_X | MALLOC_F_HAT | MALLOC_F | FFTW_INIT | FFT_OUT_OF_PLACE,
       FFTW_ESTIMATE | FFTW_PRESERVE_INPUT);
 
-  ths->idx0 = (INT*) NFFT(malloc)((size_t)(M) * sizeof(INT));
+  ths->idx0 = (NFFT_INT*) NFFT(malloc)((size_t)(M) * sizeof(NFFT_INT));
   ths->deltax0 = (R*) NFFT(malloc)((size_t)(M) * sizeof(R));
 }
 
@@ -76,7 +76,7 @@ static void taylor_init(taylor_plan *ths, int N, int M, int n, int m)
  */
 static void taylor_precompute(taylor_plan *ths)
 {
-  INT j;
+  NFFT_INT j;
 
   NFFT(plan)* cths = (NFFT(plan)*) ths;
 
@@ -116,10 +116,10 @@ static void taylor_finalize(taylor_plan *ths)
  */
 static void taylor_trafo(taylor_plan *ths)
 {
-  INT j, k, l, ll;
+  NFFT_INT j, k, l, ll;
   C *f, *f_hat, *g1;
   R *deltax;
-  INT *idx;
+  NFFT_INT *idx;
 
   NFFT(plan) *cths = (NFFT(plan)*) ths;
 

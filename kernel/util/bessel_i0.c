@@ -261,15 +261,15 @@
   };
 #endif
 
-static const INT N1 = sizeof(P1)/sizeof(P1[0]);
-static const INT M1 = sizeof(Q1)/sizeof(Q1[0]);
-static const INT N2 = sizeof(P2)/sizeof(P2[0]);
-static const INT M2 = sizeof(Q2)/sizeof(Q2[0]);
+static const NFFT_INT N1 = sizeof(P1)/sizeof(P1[0]);
+static const NFFT_INT M1 = sizeof(Q1)/sizeof(Q1[0]);
+static const NFFT_INT N2 = sizeof(P2)/sizeof(P2[0]);
+static const NFFT_INT M2 = sizeof(Q2)/sizeof(Q2[0]);
 
-static inline R evaluate_chebyshev(const INT n, const R *c, const R x)
+static inline R evaluate_chebyshev(const NFFT_INT n, const R *c, const R x)
 {
   R a = c[n-2], b = c[n-1], t;
-  INT j;
+  NFFT_INT j;
   
   A(n >= 2);
   
@@ -282,10 +282,10 @@ static inline R evaluate_chebyshev(const INT n, const R *c, const R x)
   return a + x * b;
 }
 
-static inline R evaluate_polynomial(const INT n, const R *c, const R x)
+static inline R evaluate_polynomial(const NFFT_INT n, const R *c, const R x)
 {
   R r = c[n-1];
-  INT j;
+  NFFT_INT j;
 
   A(n >= 2);
 
