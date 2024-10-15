@@ -146,8 +146,6 @@ void X(trafo_direct)(const X(plan) *ths)
 {
   C *f_hat = (C*)ths->f_hat, *f = (C*)ths->f;
 
-  memset(f, 0, (size_t)(ths->M_total) * sizeof(C));
-
   if (ths->d == 1)
   {
     /* specialize for univariate case, rationale: faster */
@@ -157,16 +155,22 @@ void X(trafo_direct)(const X(plan) *ths)
 #endif
     for (j = 0; j < ths->M_total; j++)
     {
+      C v = K(0.0);
       INT k_L;
       for (k_L = 0; k_L < ths->N_total; k_L++)
       {
         R omega = K2PI * ((R)(k_L - ths->N_total/2)) * ths->x[j];
-        f[j] += f_hat[k_L] * BASE(-II * omega);
+        v += f_hat[k_L] * (COS(omega) - II * SIN(omega));
       }
+
+      f[j] = v;
     }
   }
   else
   {
+
+    memset(f, 0, (size_t)(ths->M_total) * sizeof(C));
+
     /* multivariate case */
     INT j;
 #ifdef _OPENMP
