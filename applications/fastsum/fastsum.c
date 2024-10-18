@@ -874,7 +874,7 @@ void fastsum_init_guru_kernel(fastsum_plan *ths, NFFT_INT d, kernel k, R *param,
     FFTW(plan_with_nthreads)(nthreads);
 #endif
 
-  ths->fft_plan = FFTW(plan_dft)(d, N, ths->b, ths->b, FFTW_FORWARD,
+  ths->fft_plan = Y(plan_dft)(d, N, ths->b, ths->b, FFTW_FORWARD,
       FFTW_ESTIMATE);
 
 #ifdef _OPENMP

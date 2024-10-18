@@ -6027,8 +6027,8 @@ static void init_help(X(plan) *ths)
       for (t = 0; t < ths->d; t++)
         _n[t] = (NFFT_INT)(ths->n[t]);
 
-      ths->my_fftw_plan1 = FFTW(plan_dft)((NFFT_INT)ths->d, _n, ths->g1, ths->g2, FFTW_FORWARD, ths->fftw_flags);
-      ths->my_fftw_plan2 = FFTW(plan_dft)((NFFT_INT)ths->d, _n, ths->g2, ths->g1, FFTW_BACKWARD, ths->fftw_flags);
+      ths->my_fftw_plan1 = Y(plan_dft)((NFFT_INT)ths->d, _n, ths->g1, ths->g2, FFTW_FORWARD, ths->fftw_flags);
+      ths->my_fftw_plan2 = Y(plan_dft)((NFFT_INT)ths->d, _n, ths->g2, ths->g1, FFTW_BACKWARD, ths->fftw_flags);
       Y(free)(_n);
     }
 #ifdef _OPENMP

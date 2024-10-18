@@ -1601,11 +1601,11 @@ static void nsfft_init_2d(nsfft_plan *ths, NFFT_INT J, NFFT_INT M, NFFT_INT m, u
       N[0]=X(exp2i)(r);   n[0]=ths->sigma*N[0];
       N[1]=X(exp2i)(J-r); n[1]=ths->sigma*N[1];
       ths->set_fftw_plan1[r] =
-	fftw_plan_dft(2, n, ths->act_nfft_plan->g1, ths->act_nfft_plan->g2,
+	Y(plan_dft)(2, n, ths->act_nfft_plan->g1, ths->act_nfft_plan->g2,
 		      FFTW_FORWARD, ths->act_nfft_plan->fftw_flags);
 
       ths->set_fftw_plan2[r] =
-	fftw_plan_dft(2, n, ths->act_nfft_plan->g2, ths->act_nfft_plan->g1,
+	Y(plan_dft)(2, n, ths->act_nfft_plan->g2, ths->act_nfft_plan->g1,
 		      FFTW_BACKWARD, ths->act_nfft_plan->fftw_flags);
     }
 
@@ -1689,10 +1689,10 @@ static void nsfft_init_3d(nsfft_plan *ths, NFFT_INT J, NFFT_INT M, NFFT_INT m, u
   ths->act_nfft_plan->g2 = nfft_malloc(ths->sigma*ths->sigma*ths->sigma*X(exp2i)(J+(J+1)/2)*sizeof(double _Complex));
 
   ths->act_nfft_plan->my_fftw_plan1 =
-    fftw_plan_dft(3, n, ths->act_nfft_plan->g1, ths->act_nfft_plan->g2,
+    Y(plan_dft)(3, n, ths->act_nfft_plan->g1, ths->act_nfft_plan->g2,
 		  FFTW_FORWARD, ths->act_nfft_plan->fftw_flags);
   ths->act_nfft_plan->my_fftw_plan2 =
-    fftw_plan_dft(3, n, ths->act_nfft_plan->g2, ths->act_nfft_plan->g1,
+    Y(plan_dft)(3, n, ths->act_nfft_plan->g2, ths->act_nfft_plan->g1,
 		  FFTW_BACKWARD, ths->act_nfft_plan->fftw_flags);
 
   ths->set_fftw_plan1[0]=ths->act_nfft_plan->my_fftw_plan1;
@@ -1713,10 +1713,10 @@ static void nsfft_init_3d(nsfft_plan *ths, NFFT_INT J, NFFT_INT M, NFFT_INT m, u
       n[2]=ths->sigma*X(exp2i)(J-r);
 
       ths->set_fftw_plan1[rr] =
-	fftw_plan_dft(3, n, ths->act_nfft_plan->g1, ths->act_nfft_plan->g2,
+	Y(plan_dft)(3, n, ths->act_nfft_plan->g1, ths->act_nfft_plan->g2,
 		      FFTW_FORWARD, ths->act_nfft_plan->fftw_flags);
       ths->set_fftw_plan2[rr] =
-	fftw_plan_dft(3, n, ths->act_nfft_plan->g2, ths->act_nfft_plan->g1,
+	Y(plan_dft)(3, n, ths->act_nfft_plan->g2, ths->act_nfft_plan->g1,
 		      FFTW_BACKWARD, ths->act_nfft_plan->fftw_flags);
     }
 

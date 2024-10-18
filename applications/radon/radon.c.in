@@ -131,7 +131,7 @@ static NFFT_INT Radon_trafo(NFFT_INT (*gridfcn)(), NFFT_INT T, NFFT_INT S, NFFT_
   n[1] = 2 * N[1];
 
   fft = (NFFT_C *) NFFT(malloc)((size_t)(S) * sizeof(NFFT_C));
-  my_fftw_plan = FFTW(plan_dft_1d)(S, fft, fft, FFTW_BACKWARD, FFTW_MEASURE);
+  my_fftw_plan = Y(plan_dft_1d)(S, fft, fft, FFTW_BACKWARD, FFTW_MEASURE);
 
   x = (NFFT_R *) NFFT(malloc)((size_t)(2 * T * S) * (sizeof(NFFT_R)));
   if (x == NULL)

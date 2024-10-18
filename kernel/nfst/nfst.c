@@ -996,7 +996,7 @@ static inline void init_help(X(plan) *ths)
       for (t = 0; t < ths->d; t++)
         _n[t] = (NFFT_INT)(ths->n[t]);
 
-      ths->my_fftw_r2r_plan = FFTW(plan_r2r)((NFFT_INT)ths->d, _n, ths->g1, ths->g2, ths->r2r_kind, ths->fftw_flags);
+      ths->my_fftw_r2r_plan = Y(plan_r2r)((NFFT_INT)ths->d, _n, ths->g1, ths->g2, ths->r2r_kind, ths->fftw_flags);
       Y(free)(_n);
     }
   }

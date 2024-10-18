@@ -202,7 +202,7 @@ static void fgt_init_guru(fgt_plan *ths, NFFT_INT N, NFFT_INT M, NFFT_C sigma, N
 
   if (ths->flags & FGT_APPROX_B)
   {
-    fplan = FFTW(plan_dft_1d)(ths->n, ths->b, ths->b, FFTW_FORWARD,
+    fplan = Y(plan_dft_1d)(ths->n, ths->b, ths->b, FFTW_FORWARD,
     FFTW_MEASURE);
 
     for (j = 0; j < ths->n; j++)

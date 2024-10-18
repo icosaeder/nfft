@@ -326,7 +326,7 @@ static NFFT_INT comparison_fft(FILE *fp, NFFT_INT N, NFFT_INT T, NFFT_INT rr)
   f_hat = (NFFT_C *) NFFT(malloc)(sizeof(NFFT_C) * (size_t)(N * N));
   f = (NFFT_C *) NFFT(malloc)(sizeof(NFFT_C) * (size_t)((T * rr / 4) * 5));
 
-  my_fftw_plan = FFTW(plan_dft_2d)(N, N, f_hat, f, FFTW_BACKWARD, FFTW_MEASURE);
+  my_fftw_plan = Y(plan_dft_2d)(N, N, f_hat, f, FFTW_BACKWARD, FFTW_MEASURE);
 
   for (k = 0; k < N * N; k++)
     f_hat[k] = NFFT(drand48)() + _Complex_I * NFFT(drand48)();

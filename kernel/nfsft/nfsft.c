@@ -1276,7 +1276,7 @@ void nfsft_trafo(nfsft_plan *plan)
       {
         FFTW(plan_with_nthreads)(nthreads);
 #endif
-        plan_fftw = fftw_plan_dft(2, N, plan->f_hat_intern, plan->f_hat_intern, FFTW_FORWARD, FFTW_ESTIMATE);
+        plan_fftw = Y(plan_dft)(2, N, plan->f_hat_intern, plan->f_hat_intern, FFTW_FORWARD, FFTW_ESTIMATE);
 #ifdef _OPENMP
       }
 #endif
@@ -1381,7 +1381,7 @@ void nfsft_adjoint(nfsft_plan *plan)
         for (NFFT_INT k=N[1]/2; k<N[1]+1; k++)
           plan->f_hat[j*N[1]+k%N[1]] = plan->f[j*(N[1]/2+1)+k-N[1]/2] * ((j+k)%2 ? -1 : 1);
       }
-      fftw_plan plan_fftw = FFTW(plan_dft)(2, N, plan->f_hat, plan->f_hat, FFTW_BACKWARD, FFTW_ESTIMATE);
+      fftw_plan plan_fftw = Y(plan_dft)(2, N, plan->f_hat, plan->f_hat, FFTW_BACKWARD, FFTW_ESTIMATE);
       fftw_execute(plan_fftw);
       for (NFFT_INT j=0; j<N[0]; j++)
         for (NFFT_INT k=0; k<N[1]; k++)

@@ -105,7 +105,7 @@ static void measure_time_nfft(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
   FFTW_INIT | FFT_OUT_OF_PLACE,
   FFTW_MEASURE | FFTW_DESTROY_INPUT);
 
-  p_fft = FFTW(plan_dft)(d, NN, p.f_hat, p.f, FFTW_FORWARD, FFTW_MEASURE);
+  p_fft = Y(plan_dft)(d, NN, p.f_hat, p.f, FFTW_FORWARD, FFTW_MEASURE);
 
   /** init pseudo random nodes */
   NFFT(vrand_shifted_unit_double)(p.x, p.d * p.M_total);
@@ -243,7 +243,7 @@ static void measure_time_nfft_XXX2(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
   FFTW_INIT | FFT_OUT_OF_PLACE,
   FFTW_MEASURE | FFTW_DESTROY_INPUT);
 
-  p_fft = FFTW(plan_dft)(d, NN, p.f_hat, p.f, FFTW_FORWARD, FFTW_MEASURE);
+  p_fft = Y(plan_dft)(d, NN, p.f_hat, p.f, FFTW_FORWARD, FFTW_MEASURE);
 
   C *swapndft = (C*) NFFT(malloc)((size_t)(p.M_total) * sizeof(C));
 
@@ -363,7 +363,7 @@ static void measure_time_nfft_XXX3(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
   FFTW_INIT | FFT_OUT_OF_PLACE,
   FFTW_MEASURE | FFTW_DESTROY_INPUT);
 
-  p_fft = FFTW(plan_dft)(d, NN, p.f, p.f_hat, FFTW_BACKWARD, FFTW_MEASURE);
+  p_fft = Y(plan_dft)(d, NN, p.f, p.f_hat, FFTW_BACKWARD, FFTW_MEASURE);
 
   C *swapndft = (C*) NFFT(malloc)((size_t)(p.N_total) * sizeof(C));
 
@@ -483,7 +483,7 @@ static void measure_time_nfft_XXX4(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
   FFTW_INIT | FFT_OUT_OF_PLACE,
   FFTW_MEASURE | FFTW_DESTROY_INPUT);
 
-  p_fft = FFTW(plan_dft)(d, NN, p.f_hat, p.f, FFTW_FORWARD, FFTW_MEASURE);
+  p_fft = Y(plan_dft)(d, NN, p.f_hat, p.f, FFTW_FORWARD, FFTW_MEASURE);
 
   C *swapndft = (C*) NFFT(malloc)((size_t)(p.M_total) * sizeof(C));
 
@@ -616,7 +616,7 @@ static void measure_time_nfft_XXX5(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
   FFTW_INIT | FFT_OUT_OF_PLACE,
   FFTW_MEASURE | FFTW_DESTROY_INPUT);
 
-  p_fft = FFTW(plan_dft)(d, NN, p.f, p.f_hat, FFTW_FORWARD, FFTW_MEASURE);
+  p_fft = Y(plan_dft)(d, NN, p.f, p.f_hat, FFTW_FORWARD, FFTW_MEASURE);
 
   C *swapndft = (C*) NFFT(malloc)((size_t)(p.N_total) * sizeof(C));
 
@@ -745,7 +745,7 @@ static void measure_time_nfft_XXX6(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
   FFTW_INIT | FFT_OUT_OF_PLACE,
   FFTW_MEASURE | FFTW_DESTROY_INPUT);
 
-  p_fft = FFTW(plan_dft)(d, NN, p.f_hat, p.f, FFTW_FORWARD, FFTW_MEASURE);
+  p_fft = Y(plan_dft)(d, NN, p.f_hat, p.f, FFTW_FORWARD, FFTW_MEASURE);
 
   C *swapndft = (C*) NFFT(malloc)((size_t)(p.M_total) * sizeof(C));
 
@@ -875,7 +875,7 @@ static void measure_time_nfft_XXX7(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
   FFTW_INIT | FFT_OUT_OF_PLACE,
   FFTW_MEASURE | FFTW_DESTROY_INPUT);
 
-  p_fft = FFTW(plan_dft)(d, NN, p.f, p.f_hat, FFTW_FORWARD, FFTW_MEASURE);
+  p_fft = Y(plan_dft)(d, NN, p.f, p.f_hat, FFTW_FORWARD, FFTW_MEASURE);
 
   C *swapndft = (C*) NFFT(malloc)((size_t)(p.N_total) * sizeof(C));
 
