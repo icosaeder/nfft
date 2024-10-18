@@ -127,7 +127,7 @@ NFFT_INT Y(next_power_of_2)(const NFFT_INT x)
         /* Add one to get power of two. */
         v++;
 
-        return v;
+        return (NFFT_INT)v;
     }
 }
 

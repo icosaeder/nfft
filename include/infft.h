@@ -1453,7 +1453,7 @@ void Y(sort_node_indices_radix_msdf)(NFFT_INT n, NFFT_INT *keys0, NFFT_INT *keys
 void Y(sort_node_indices_radix_lsdf)(NFFT_INT n, NFFT_INT *keys0, NFFT_INT *keys1, NFFT_INT rhigh);
 
 /* assert.c */
-void Y(assertion_failed)(const char *s, NFFT_INT line, const char *file);
+void Y(assertion_failed)(const char *s, int line, const char *file);
 
 /* vector1.c */
 /** Computes the inner/dot product \f$x^H x\f$. */
