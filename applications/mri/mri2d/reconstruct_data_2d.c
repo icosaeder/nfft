@@ -30,9 +30,9 @@
 /**
  * reconstruct makes an inverse 2d nfft
  */
-static void reconstruct(char* filename,int N,int M,int iteration, int weight)
+static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration, NFFT_INT weight)
 {
-  int j,k,l;                    /* some variables  */
+  NFFT_INT j,k,l;                    /* some variables  */
   double t0, t1;
   double real,imag,t;           /* to read the real and imag part of a complex number */
   nfft_plan my_plan;            /* plan for the two dimensional nfft  */
@@ -40,11 +40,11 @@ static void reconstruct(char* filename,int N,int M,int iteration, int weight)
   FILE* fin;                    /* input file                         */
   FILE* fout_real;              /* output file                        */
   FILE* fout_imag;              /* output file                        */
-  int my_N[2],my_n[2];          /* to init the nfft */
+  NFFT_INT my_N[2],my_n[2];          /* to init the nfft */
   double epsilon=0.0000003;     /* epsilon is a the break criterium for
                                    the iteration */
   unsigned infft_flags = CGNR | PRECOMPUTE_DAMP;  /* flags for the infft*/
-  int m = 6;
+  NFFT_INT m = 6;
   double alpha = 2.0;
   /* initialise my_plan */
   my_N[0]=N; my_n[0]=ceil(N*alpha);
@@ -81,8 +81,8 @@ static void reconstruct(char* filename,int N,int M,int iteration, int weight)
   {
     for(j=0;j<N;j++){
       for(k=0;k<N;k++) {
-        int j2= j-N/2;
-        int k2= k-N/2;
+        NFFT_INT j2= j-N/2;
+        NFFT_INT k2= k-N/2;
         double r=sqrt(j2*j2+k2*k2);
         if(r>(double) N/2)
           my_iplan.w_hat[j*N+k]=0.0;

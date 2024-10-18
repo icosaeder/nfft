@@ -31,13 +31,13 @@
  * \{
  */
 
-static void construct(char * file, int N, int M, int Z)
+static void construct(char * file, NFFT_INT N, NFFT_INT M, NFFT_INT Z)
 {
-  int j,k,l;                /* some variables */
+  NFFT_INT j,k,l;                /* some variables */
   double real;
   nfft_plan my_plan;        /* plan for the three dimensional nfft  */
   FILE* fp,*fk;
-  int my_N[3],my_n[3];      /* to init the nfft */
+  NFFT_INT my_N[3],my_n[3];      /* to init the nfft */
 
 
   /* initialise my_plan */

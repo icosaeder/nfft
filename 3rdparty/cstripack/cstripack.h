@@ -20,105 +20,105 @@
 
 /* #include <f2c.h> */
 
-int addnod_(int *nst, int *k, double *x, double *y, double *z__,
-  int *list, int *lptr, int *lend, int *lnew, int *ier);
+NFFT_INT addnod_(NFFT_INT *nst, NFFT_INT *k, double *x, double *y, double *z__,
+  NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew, NFFT_INT *ier);
 
 double areas_(double *v1, double *v2, double *v3);
 
-int bdyadd_(int *kk, int *i1, int *i2, int *list, int *lptr,
-  int *lend, int *lnew);
+NFFT_INT bdyadd_(NFFT_INT *kk, NFFT_INT *i1, NFFT_INT *i2, NFFT_INT *list, NFFT_INT *lptr,
+  NFFT_INT *lend, NFFT_INT *lnew);
 
-int bnodes_(int *n, int *list, int *lptr, int *lend,
-  int *nodes, int *nb, int *na, int *nt);
+NFFT_INT bnodes_(NFFT_INT *n, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend,
+  NFFT_INT *nodes, NFFT_INT *nb, NFFT_INT *na, NFFT_INT *nt);
 
-int circum_(double *v1, double *v2, double *v3, double *c__, int *ier);
+NFFT_INT circum_(double *v1, double *v2, double *v3, double *c__, NFFT_INT *ier);
 
-int covsph_(int *kk, int *n0, int *list, int *lptr,
-  int *lend, int *lnew);
+NFFT_INT covsph_(NFFT_INT *kk, NFFT_INT *n0, NFFT_INT *list, NFFT_INT *lptr,
+  NFFT_INT *lend, NFFT_INT *lnew);
 
-int crlist_(int *n, int *ncol, double *x, double *y, double *z__,
-  int *list, int *lend, int *lptr, int *lnew, int *ltri,
-  int *listc, int *nb, double *xc, double *yc, double *zc, double *rc,
-  int *ier);
+NFFT_INT crlist_(NFFT_INT *n, NFFT_INT *ncol, double *x, double *y, double *z__,
+  NFFT_INT *list, NFFT_INT *lend, NFFT_INT *lptr, NFFT_INT *lnew, NFFT_INT *ltri,
+  NFFT_INT *listc, NFFT_INT *nb, double *xc, double *yc, double *zc, double *rc,
+  NFFT_INT *ier);
 
-int delarc_(int *n, int *io1, int *io2, int * list,
-  int *lptr, int *lend, int *lnew, int *ier);
+NFFT_INT delarc_(NFFT_INT *n, NFFT_INT *io1, NFFT_INT *io2, NFFT_INT * list,
+  NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew, NFFT_INT *ier);
 
-int delnb_(int *n0, int *nb, int *n, int *list,
-  int *lptr, int *lend, int *lnew, int *lph);
+NFFT_INT delnb_(NFFT_INT *n0, NFFT_INT *nb, NFFT_INT *n, NFFT_INT *list,
+  NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew, NFFT_INT *lph);
 
-int delnod_(int *k, int *n, double *x, double *y, double *z__, int *list,
- int *lptr, int *lend, int *lnew, int *lwk, int *iwk,
- int *ier);
+NFFT_INT delnod_(NFFT_INT *k, NFFT_INT *n, double *x, double *y, double *z__, NFFT_INT *list,
+ NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew, NFFT_INT *lwk, NFFT_INT *iwk,
+ NFFT_INT *ier);
 
-int edge_(int *in1, int *in2, double *x, double *y, double *z__, int *lwk,
-  int *iwk, int *list, int *lptr, int *lend, int *ier);
+NFFT_INT edge_(NFFT_INT *in1, NFFT_INT *in2, double *x, double *y, double *z__, NFFT_INT *lwk,
+  NFFT_INT *iwk, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *ier);
 
-int getnp_(double *x, double *y, double *z__, int *list, int *lptr,
-  int *lend, int *l, int *npts, double *df, int *ier);
+NFFT_INT getnp_(double *x, double *y, double *z__, NFFT_INT *list, NFFT_INT *lptr,
+  NFFT_INT *lend, NFFT_INT *l, NFFT_INT *npts, double *df, NFFT_INT *ier);
 
-int insert_(int *k, int *lp, int *list, int *lptr,
-  int *lnew);
+NFFT_INT insert_(NFFT_INT *k, NFFT_INT *lp, NFFT_INT *list, NFFT_INT *lptr,
+  NFFT_INT *lnew);
 
-int inside_(double *p, int *lv, double *xv, double *yv, double *zv, int *
-  nv, int *listv, int *ier);
+NFFT_INT inside_(double *p, NFFT_INT *lv, double *xv, double *yv, double *zv, NFFT_INT *
+  nv, NFFT_INT *listv, NFFT_INT *ier);
 
-int intadd_(int *kk, int *i1, int *i2, int *i3, int *list,
-  int *lptr, int *lend, int *lnew);
+NFFT_INT intadd_(NFFT_INT *kk, NFFT_INT *i1, NFFT_INT *i2, NFFT_INT *i3, NFFT_INT *list,
+  NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew);
 
-int intrsc_(double *p1, double *p2, double *cn, double *p, int *ier);
+NFFT_INT intrsc_(double *p1, double *p2, double *cn, double *p, NFFT_INT *ier);
 
-int jrand_(int *n, int *ix, int *iy, int *iz);
+NFFT_INT jrand_(NFFT_INT *n, NFFT_INT *ix, NFFT_INT *iy, NFFT_INT *iz);
 
-int left_(double *x1, double *y1, double *z1, double *x2, double *y2, double *z2,
+NFFT_INT left_(double *x1, double *y1, double *z1, double *x2, double *y2, double *z2,
   double *x0, double *y0, double *z0);
 
-int lstptr_(int *lpl, int *nb, int *list, int *lptr);
+NFFT_INT lstptr_(NFFT_INT *lpl, NFFT_INT *nb, NFFT_INT *list, NFFT_INT *lptr);
 
-int nbcnt_(int *lpl, int *lptr);
+NFFT_INT nbcnt_(NFFT_INT *lpl, NFFT_INT *lptr);
 
-int nearnd_(double *p, int *ist, int *n, double *x, double *y,
-  double *z__, int *list, int *lptr, int *lend, double *al);
+NFFT_INT nearnd_(double *p, NFFT_INT *ist, NFFT_INT *n, double *x, double *y,
+  double *z__, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, double *al);
 
-int optim_(double *x, double *y, double *z__, int *na, int *list,
-  int *lptr, int *lend, int *nit, int *iwk, int *ier);
+NFFT_INT optim_(double *x, double *y, double *z__, NFFT_INT *na, NFFT_INT *list,
+  NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *nit, NFFT_INT *iwk, NFFT_INT *ier);
 
-int scoord_(double *px, double *py, double *pz, double *plat, double *plon, double *pnrm);
+NFFT_INT scoord_(double *px, double *py, double *pz, double *plat, double *plon, double *pnrm);
 
 double store_(double *x);
 
-int swap_(int *in1, int *in2, int *io1, int *	io2,
-  int *list, int *lptr, int *lend, int *lp21);
+NFFT_INT swap_(NFFT_INT *in1, NFFT_INT *in2, NFFT_INT *io1, NFFT_INT *	io2,
+  NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lp21);
 
-int swptst_(int *n1, int *n2, int *n3, int *n4, double *x,
+NFFT_INT swptst_(NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *n3, NFFT_INT *n4, double *x,
   double *y, double *z__);
 
-int trans_(int *n, double *rlat, double *rlon, double *x, double *y, double *z__);
+NFFT_INT trans_(NFFT_INT *n, double *rlat, double *rlon, double *x, double *y, double *z__);
 
-int trfind_(int *nst, double *p, int *n, double *x, double *y, double *z__,
-  int *list, int *lptr, int *lend, double *b1, double *b2,
-  double *b3, int *i1, int *i2, int *i3);
+NFFT_INT trfind_(NFFT_INT *nst, double *p, NFFT_INT *n, double *x, double *y, double *z__,
+  NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, double *b1, double *b2,
+  double *b3, NFFT_INT *i1, NFFT_INT *i2, NFFT_INT *i3);
 
-int trlist_(int *n, int *list, int *lptr, int *lend,
-  int *nrow, int *nt, int *ltri, int *ier);
+NFFT_INT trlist_(NFFT_INT *n, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend,
+  NFFT_INT *nrow, NFFT_INT *nt, NFFT_INT *ltri, NFFT_INT *ier);
 
-int trlprt_(int *n, double *x, double *y, double *z__, int *iflag,
-  int *nrow, int *nt, int *ltri, int *lout);
+NFFT_INT trlprt_(NFFT_INT *n, double *x, double *y, double *z__, NFFT_INT *iflag,
+  NFFT_INT *nrow, NFFT_INT *nt, NFFT_INT *ltri, NFFT_INT *lout);
 
-int trmesh_(int *n, double *x, double *y, double *z__, int	*list,
-  int *lptr, int *lend, int *lnew, int *near__, int *next,
-  double *dist, int *ier);
+NFFT_INT trmesh_(NFFT_INT *n, double *x, double *y, double *z__, NFFT_INT	*list,
+  NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew, NFFT_INT *near__, NFFT_INT *next,
+  double *dist, NFFT_INT *ier);
 
-int trplot_(int *lun, double *pltsiz, double *elat, double *elon, double *a,
-  int *n, double *x, double *y, double *z__, int *list, int *lptr,
-  int *lend, char *title, int *numbr, int *ier, short title_len);
+NFFT_INT trplot_(NFFT_INT *lun, double *pltsiz, double *elat, double *elon, double *a,
+  NFFT_INT *n, double *x, double *y, double *z__, NFFT_INT *list, NFFT_INT *lptr,
+  NFFT_INT *lend, char *title, NFFT_INT *numbr, NFFT_INT *ier, short title_len);
 
-int trprnt_(int *n, double *x, double *y, double *z__, int *iflag,
-  int *list, int *lptr, int *lend, int *lout);
+NFFT_INT trprnt_(NFFT_INT *n, double *x, double *y, double *z__, NFFT_INT *iflag,
+  NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lout);
 
-int vrplot_(int *lun, double *pltsiz, double *elat, double *elon, double *a,
-  int *n, double *x, double *y, double *z__, int *nt, int *listc,
-  int *lptr, int *lend, double *xc, double *yc, double *zc, char *title,
-  int *numbr, int *ier, short title_len);
+NFFT_INT vrplot_(NFFT_INT *lun, double *pltsiz, double *elat, double *elon, double *a,
+  NFFT_INT *n, double *x, double *y, double *z__, NFFT_INT *nt, NFFT_INT *listc,
+  NFFT_INT *lptr, NFFT_INT *lend, double *xc, double *yc, double *zc, char *title,
+  NFFT_INT *numbr, NFFT_INT *ier, short title_len);
 
 #endif

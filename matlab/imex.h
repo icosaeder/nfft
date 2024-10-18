@@ -45,17 +45,17 @@ extern void *nfft_mex_malloc(size_t n);
 extern void nfft_mex_free(void *p);
 extern void nfft_mex_install_mem_hooks(void);
 
-int nfft_mex_get_int(const mxArray *p, const char *errmsg);
+NFFT_INT nfft_mex_get_int(const mxArray *p, const char *errmsg);
 double nfft_mex_get_double(const mxArray *p, const char *errmsg);
 
-void nfft_mex_get_nm(const mxArray *prhs[], int *n, int *m);
-void nfft_mex_get_nm_odd(const mxArray *prhs[], int *n, int *m);
-void nfft_mex_get_n1n2m(const mxArray *prhs[], int *n1, int *n2, int *m);
-void nfft_mex_get_n1n2m_odd(const mxArray *prhs[], int *n1, int *n2, int *m);
-void nfft_mex_get_n1n2n3m(const mxArray *prhs[], int *n1, int *n2, int *n3, int *m);
-void nfft_mex_get_n1n2n3m_odd(const mxArray *prhs[], int *n1, int *n2, int *n3, int *m);
-void nfft_mex_check_nargs(const int nrhs, const int n, const char* errmsg);
-int nfft_mex_set_num_threads_check(const int nrhs, const mxArray *prhs[], void **plans, const int plans_num_allocated);
+void nfft_mex_get_nm(const mxArray *prhs[], NFFT_INT *n, NFFT_INT *m);
+void nfft_mex_get_nm_odd(const mxArray *prhs[], NFFT_INT *n, NFFT_INT *m);
+void nfft_mex_get_n1n2m(const mxArray *prhs[], NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *m);
+void nfft_mex_get_n1n2m_odd(const mxArray *prhs[], NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *m);
+void nfft_mex_get_n1n2n3m(const mxArray *prhs[], NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *n3, NFFT_INT *m);
+void nfft_mex_get_n1n2n3m_odd(const mxArray *prhs[], NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *n3, NFFT_INT *m);
+void nfft_mex_check_nargs(const NFFT_INT nrhs, const NFFT_INT n, const char* errmsg);
+NFFT_INT nfft_mex_set_num_threads_check(const NFFT_INT nrhs, const mxArray *prhs[], void **plans, const NFFT_INT plans_num_allocated);
 
 
 #ifdef MATLAB_ARGCHECKS

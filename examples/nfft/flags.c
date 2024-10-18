@@ -66,10 +66,10 @@ static void flags_cp(NFFT(plan) *dst, NFFT(plan) *src)
   dst->my_fftw_plan2 = src->my_fftw_plan2;
 }
 
-static void time_accuracy(int d, int N, int M, int n, int m, unsigned test_ndft,
+static void time_accuracy(NFFT_INT d, NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_INT m, unsigned test_ndft,
     unsigned test_pre_full_psi)
 {
-  int r, NN[d], nn[d];
+  NFFT_INT r, NN[d], nn[d];
   R t_ndft, t, e;
   C *swapndft = NULL;
   ticks t0, t1;
@@ -212,9 +212,9 @@ static void time_accuracy(int d, int N, int M, int n, int m, unsigned test_ndft,
     NFFT(free)(swapndft);
 }
 
-static void accuracy_pre_lin_psi(int d, int N, int M, int n, int m, int K)
+static void accuracy_pre_lin_psi(NFFT_INT d, NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_INT m, NFFT_INT K)
 {
-  int r, NN[d], nn[d];
+  NFFT_INT r, NN[d], nn[d];
   R e;
   C *swapndft;
 
@@ -270,7 +270,7 @@ static void accuracy_pre_lin_psi(int d, int N, int M, int n, int m, int K)
 
 int main(int argc, char **argv)
 {
-  int l, trial;
+  NFFT_INT l, trial;
 
   if (argc <= 2)
   {
@@ -289,20 +289,20 @@ int main(int argc, char **argv)
   fprintf(stderr, "t_fftw, t_B, t_fg_psi, t_pre_lin_psi, t_pre_fg_psi, ");
   fprintf(stderr, "t_pre_psi, t_pre_full_psi\n\n");
 
-  int arg2 = atoi(argv[2]);
-  int arg3 = atoi(argv[3]);
-  int arg4 = atoi(argv[4]);
+  NFFT_INT arg2 = (NFFT_INT)atoi(argv[2]);
+  NFFT_INT arg3 = (NFFT_INT)atoi(argv[3]);
+  NFFT_INT arg4 = (NFFT_INT)atoi(argv[4]);
 
   /* time vs. N=M */
   if (atoi(argv[1]) == 0)
   {
-    int d = atoi(argv[5]);
-    int m = atoi(argv[6]);
+    NFFT_INT d = (NFFT_INT)atoi(argv[5]);
+    NFFT_INT m = (NFFT_INT)atoi(argv[6]);
 
     for (l = arg2; l <= arg3; l++)
     {
-      int N = (int)(1U << l);
-      int M = (int)(1U << (d * l));
+      NFFT_INT N = (NFFT_INT)(1U << l);
+      NFFT_INT M = (NFFT_INT)(1U << (d * l));
       for (trial = 0; trial < arg4; trial++)
       {
         time_accuracy(d, N, M, 2 * N, m, 0, 0);
@@ -311,36 +311,36 @@ int main(int argc, char **argv)
   }
   else if (atoi(argv[1]) == 1) /* accuracy vs. time */
   {
-    int d = atoi(argv[5]);
-    int N = atoi(argv[6]);
-    int m;
+    NFFT_INT d = (NFFT_INT)atoi(argv[5]);
+    NFFT_INT N = (NFFT_INT)atoi(argv[6]);
+    NFFT_INT m;
 
     for (m = arg2; m <= arg3; m++)
     {
       for (trial = 0; trial < arg4; trial++)
       {
-        time_accuracy(d, N, (int)(LRINT(POW((R)(N), (R)(d)))), 2 * N, m, 1, 1);
+        time_accuracy(d, N, (NFFT_INT)(LRINT(POW((R)(N), (R)(d)))), 2 * N, m, 1, 1);
       }
     }
   }
   else if (atoi(argv[1]) == 2) /* accuracy vs. K for linear interpolation, assumes (m+1)|K */
   {
-    int d = atoi(argv[5]);
-    int N = atoi(argv[6]);
-    int m = atoi(argv[7]);
+    NFFT_INT d = (NFFT_INT)atoi(argv[5]);
+    NFFT_INT N = (NFFT_INT)atoi(argv[6]);
+    NFFT_INT m = (NFFT_INT)atoi(argv[7]);
 
     printf("$\\log_2(K/(m+1))$&\t");
 
     for (l = arg2; l < arg3; l++)
-      printf("$%d$&\t", l);
+      printf("$%d$&\t", (int)l);
 
-    printf("$%d$\\\\\n", arg3);
+    printf("$%d$\\\\\n", (int)arg3);
 
     printf("$\\tilde E_2$&\t");
     for (l = arg2; l <= arg3; l++)
     {
-      int x = (m + 1) * (int)(1U << l);
-      accuracy_pre_lin_psi(d, N, (int)(LRINT(POW((R)(N), (R)(d)))), 2 * N, m, x);
+      NFFT_INT x = (m + 1) * (NFFT_INT)(1U << l);
+      accuracy_pre_lin_psi(d, N, (NFFT_INT)(LRINT(POW((R)(N), (R)(d)))), 2 * N, m, x);
     }
 
     printf("\n");

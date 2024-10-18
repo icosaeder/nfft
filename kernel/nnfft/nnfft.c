@@ -50,9 +50,9 @@
 #define MACRO_nndft(which_one)                                                \
 void nnfft_ ## which_one ## _direct (nnfft_plan *ths)                                    \
 {                                                                             \
-  int j;                               /**< index over all nodes (time)     */\
-  int t;                               /**< index for dimensions            */\
-  int l;                               /**< index over all nodes (fourier)  */\
+  NFFT_INT j;                               /**< index over all nodes (time)     */\
+  NFFT_INT t;                               /**< index for dimensions            */\
+  NFFT_INT l;                               /**< index over all nodes (fourier)  */\
   double _Complex *f_hat, *f;          /**< dito                            */\
   double _Complex *f_hat_k;            /**< actual Fourier coefficient      */\
   double _Complex *fj;                 /**< actual sample                   */\
@@ -83,10 +83,10 @@ MACRO_nndft(adjoint)
 
 /** computes 2m+2 indices for the matrix B
  */
-static void nnfft_uo(nnfft_plan *ths,int j,int *up,int *op,int act_dim)
+static void nnfft_uo(nnfft_plan *ths,NFFT_INT j,NFFT_INT *up,NFFT_INT *op,NFFT_INT act_dim)
 {
   double c;
-  int u,o;
+  NFFT_INT u,o;
 
   c = ths->v[j*ths->d+act_dim] * ths->n[act_dim];
 
@@ -146,7 +146,7 @@ static void nnfft_uo(nnfft_plan *ths,int j,int *up,int *op,int act_dim)
     {                                                                         \
       y[t2] = fabs(((-ths->N1[t2]*ths->v[j*ths->d+t2]+(double)l[t2])          \
           * ((double)ths->K))/(ths->m+1));                                    \
-      y_u[t2] = (int)y[t2];                                                   \
+      y_u[t2] = (NFFT_INT)y[t2];                                                   \
     } /* for(t2) */                                                           \
 }
 
@@ -174,19 +174,19 @@ static void nnfft_uo(nnfft_plan *ths,int j,int *up,int *op,int act_dim)
 #define MACRO_nnfft_B(which_one)                                              \
 static inline void nnfft_B_ ## which_one (nnfft_plan *ths)                    \
 {                                                                             \
-  int lprod;                           /**< 'regular bandwidth' of matrix B */\
-  int u[ths->d], o[ths->d];            /**< multi band with respect to x_j  */\
-  int t, t2;                           /**< index dimensions                */\
-  int j;                               /**< index nodes                     */\
-  int l_L, ix;                         /**< index one row of B              */\
-  int l[ths->d];                       /**< multi index u<=l<=o             */\
-  int lj[ths->d];                      /**< multi index 0<=lj<u+o+1         */\
-  int ll_plain[ths->d+1];              /**< postfix plain index in g        */\
+  NFFT_INT lprod;                           /**< 'regular bandwidth' of matrix B */\
+  NFFT_INT u[ths->d], o[ths->d];            /**< multi band with respect to x_j  */\
+  NFFT_INT t, t2;                           /**< index dimensions                */\
+  NFFT_INT j;                               /**< index nodes                     */\
+  NFFT_INT l_L, ix;                         /**< index one row of B              */\
+  NFFT_INT l[ths->d];                       /**< multi index u<=l<=o             */\
+  NFFT_INT lj[ths->d];                      /**< multi index 0<=lj<u+o+1         */\
+  NFFT_INT ll_plain[ths->d+1];              /**< postfix plain index in g        */\
   double phi_prod[ths->d+1];           /**< postfix product of PHI          */\
   double _Complex *f, *g;              /**< local copy                      */\
   double _Complex *fj;                 /**< local copy                      */\
   double y[ths->d];                                                           \
-  int y_u[ths->d];                                                            \
+  NFFT_INT y_u[ths->d];                                                            \
                                                                               \
   f=ths->f_hat; g=ths->F;                                                     \
                                                                               \
@@ -265,7 +265,7 @@ MACRO_nnfft_B(A)
 MACRO_nnfft_B(T)
 
 static inline void nnfft_D (nnfft_plan *ths){
-  int j,t;
+  NFFT_INT j,t;
   double tmp;
 
   if(ths->nnfft_flags & PRE_PHI_HUT)
@@ -290,7 +290,7 @@ static inline void nnfft_D (nnfft_plan *ths){
  */
 void nnfft_trafo(nnfft_plan *ths)
 {
-  int j,t;
+  NFFT_INT j,t;
 
   nnfft_B_T(ths);
 
@@ -318,7 +318,7 @@ void nnfft_trafo(nnfft_plan *ths)
 
 void nnfft_adjoint(nnfft_plan *ths)
 {
-  int j,t;
+  NFFT_INT j,t;
 
   nnfft_D(ths);
 
@@ -346,8 +346,8 @@ void nnfft_adjoint(nnfft_plan *ths)
  */
 void nnfft_precompute_phi_hut(nnfft_plan *ths)
 {
-  int j;                                /**< index over all frequencies       */
-  int t;                                /**< index over all dimensions        */
+  NFFT_INT j;                                /**< index over all frequencies       */
+  NFFT_INT t;                                /**< index over all dimensions        */
   double tmp;
 
   ths->c_phi_inv= (double*)nfft_malloc(ths->M_total*sizeof(double));
@@ -366,8 +366,8 @@ void nnfft_precompute_phi_hut(nnfft_plan *ths)
  */
 void nnfft_precompute_lin_psi(nnfft_plan *ths)
 {
-  int t;                                /**< index over all dimensions        */
-  int j;                                /**< index over all nodes             */
+  NFFT_INT t;                                /**< index over all dimensions        */
+  NFFT_INT j;                                /**< index over all nodes             */
   double step;                          /**< step size in [0,(m+1)/n]         */
 
   nfft_precompute_lin_psi(ths->direct_plan);
@@ -384,11 +384,11 @@ void nnfft_precompute_lin_psi(nnfft_plan *ths)
 
 void nnfft_precompute_psi(nnfft_plan *ths)
 {
-  int t;                                /**< index over all dimensions        */
-  int j;                                /**< index over all nodes             */
-  int l;                                /**< index u<=l<=o                    */
-  int lj;                               /**< index 0<=lj<u+o+1                */
-  int u, o;                             /**< depends on v_j                   */
+  NFFT_INT t;                                /**< index over all dimensions        */
+  NFFT_INT j;                                /**< index over all nodes             */
+  NFFT_INT l;                                /**< index u<=l<=o                    */
+  NFFT_INT lj;                               /**< index 0<=lj<u+o+1                */
+  NFFT_INT u, o;                             /**< depends on v_j                   */
 
   for (t=0; t<ths->d; t++)
     for(j=0;j<ths->N_total;j++)
@@ -423,18 +423,18 @@ void nnfft_precompute_psi(nnfft_plan *ths)
  */
 void nnfft_precompute_full_psi(nnfft_plan *ths)
 {
-  int t,t2;                             /**< index over all dimensions        */
-  int j;                                /**< index over all nodes             */
-  int l_L;                              /**< plain index 0<=l_L<lprod         */
-  int l[ths->d];                       /**< multi index u<=l<=o              */
-  int lj[ths->d];                      /**< multi index 0<=lj<u+o+1          */
-  int ll_plain[ths->d+1];              /**< postfix plain index              */
-  int lprod;                            /**< 'bandwidth' of matrix B          */
-  int u[ths->d], o[ths->d];           /**< depends on x_j                   */
+  NFFT_INT t,t2;                             /**< index over all dimensions        */
+  NFFT_INT j;                                /**< index over all nodes             */
+  NFFT_INT l_L;                              /**< plain index 0<=l_L<lprod         */
+  NFFT_INT l[ths->d];                       /**< multi index u<=l<=o              */
+  NFFT_INT lj[ths->d];                      /**< multi index 0<=lj<u+o+1          */
+  NFFT_INT ll_plain[ths->d+1];              /**< postfix plain index              */
+  NFFT_INT lprod;                            /**< 'bandwidth' of matrix B          */
+  NFFT_INT u[ths->d], o[ths->d];           /**< depends on x_j                   */
 
   double phi_prod[ths->d+1];
 
-  int ix,ix_old;
+  NFFT_INT ix,ix_old;
 
   for(j=0;j<ths->M_total;j++) {
     for(t=0;t<ths->d;t++) {
@@ -491,13 +491,13 @@ void nnfft_precompute_one_psi(nnfft_plan *ths)
 	  nnfft_precompute_phi_hut(ths);
 }
 
-static void nnfft_init_help(nnfft_plan *ths, int m2, unsigned nfft_flags, unsigned fftw_flags)
+static void nnfft_init_help(nnfft_plan *ths, NFFT_INT m2, unsigned nfft_flags, unsigned fftw_flags)
 {
-  int t;                                /**< index over all dimensions       */
-  int lprod;                            /**< 'bandwidth' of matrix B         */
-  int N2[ths->d];
+  NFFT_INT t;                                /**< index over all dimensions       */
+  NFFT_INT lprod;                            /**< 'bandwidth' of matrix B         */
+  NFFT_INT N2[ths->d];
 
-  ths->aN1 = (int*) nfft_malloc(ths->d*sizeof(int));
+  ths->aN1 = (NFFT_INT*) nfft_malloc(ths->d*sizeof(NFFT_INT));
 
   ths->a = (double*) nfft_malloc(ths->d*sizeof(double));
 
@@ -559,8 +559,8 @@ static void nnfft_init_help(nnfft_plan *ths, int m2, unsigned nfft_flags, unsign
 
       ths->psi = (double*)nfft_malloc(ths->N_total*lprod*sizeof(double));
 
-      ths->psi_index_f = (int*) nfft_malloc(ths->N_total*sizeof(int));
-      ths->psi_index_g = (int*) nfft_malloc(ths->N_total*lprod*sizeof(int));
+      ths->psi_index_f = (NFFT_INT*) nfft_malloc(ths->N_total*sizeof(NFFT_INT));
+      ths->psi_index_g = (NFFT_INT*) nfft_malloc(ths->N_total*lprod*sizeof(NFFT_INT));
   }
   ths->direct_plan = (nfft_plan*)nfft_malloc(sizeof(nfft_plan));
   nfft_init_guru(ths->direct_plan, ths->d, ths->aN1, ths->M_total, N2, m2,
@@ -574,10 +574,10 @@ static void nnfft_init_help(nnfft_plan *ths, int m2, unsigned nfft_flags, unsign
   ths->mv_adjoint = (void (*) (void* ))nnfft_adjoint;
 }
 
-void nnfft_init_guru(nnfft_plan *ths, int d, int N_total, int M_total, int *N, int *N1,
-		     int m, unsigned nnfft_flags)
+void nnfft_init_guru(nnfft_plan *ths, NFFT_INT d, NFFT_INT N_total, NFFT_INT M_total, NFFT_INT *N, NFFT_INT *N1,
+		     NFFT_INT m, unsigned nnfft_flags)
 {
-  int t;                             /**< index over all dimensions        */
+  NFFT_INT t;                             /**< index over all dimensions        */
 
   unsigned nfft_flags;
   unsigned fftw_flags;
@@ -600,8 +600,8 @@ void nnfft_init_guru(nnfft_plan *ths, int d, int N_total, int M_total, int *N, i
   if(ths->nnfft_flags & PRE_LIN_PSI)
     nfft_flags = nfft_flags | PRE_LIN_PSI;
 
-  ths->N = (int*) nfft_malloc(ths->d*sizeof(int));
-  ths->N1 = (int*) nfft_malloc(ths->d*sizeof(int));
+  ths->N = (NFFT_INT*) nfft_malloc(ths->d*sizeof(NFFT_INT));
+  ths->N1 = (NFFT_INT*) nfft_malloc(ths->d*sizeof(NFFT_INT));
 
   for(t=0; t<d; t++) {
     ths->N[t] = N[t];
@@ -610,9 +610,9 @@ void nnfft_init_guru(nnfft_plan *ths, int d, int N_total, int M_total, int *N, i
   nnfft_init_help(ths,m,nfft_flags,fftw_flags);
 }
 
-void nnfft_init(nnfft_plan *ths, int d, int N_total, int M_total, int *N)
+void nnfft_init(nnfft_plan *ths, NFFT_INT d, NFFT_INT N_total, NFFT_INT M_total, NFFT_INT *N)
 {
-  int t;                            /**< index over all dimensions        */
+  NFFT_INT t;                            /**< index over all dimensions        */
 
   unsigned nfft_flags;
   unsigned fftw_flags;
@@ -628,8 +628,8 @@ void nnfft_init(nnfft_plan *ths, int d, int N_total, int M_total, int *N)
 ths->m=WINDOW_HELP_ESTIMATE_m;
 
 
-  ths->N = (int*) nfft_malloc(ths->d*sizeof(int));
-  ths->N1 = (int*) nfft_malloc(ths->d*sizeof(int));
+  ths->N = (NFFT_INT*) nfft_malloc(ths->d*sizeof(NFFT_INT));
+  ths->N1 = (NFFT_INT*) nfft_malloc(ths->d*sizeof(NFFT_INT));
 
   for(t=0; t<d; t++) {
     ths->N[t] = N[t];
@@ -649,7 +649,7 @@ ths->m=WINDOW_HELP_ESTIMATE_m;
   nnfft_init_help(ths,ths->m,nfft_flags,fftw_flags);
 }
 
-void nnfft_init_1d(nnfft_plan *ths,int N1, int M_total)
+void nnfft_init_1d(nnfft_plan *ths,NFFT_INT N1, NFFT_INT M_total)
 {
   nnfft_init(ths,1,N1,M_total,&N1);
 }

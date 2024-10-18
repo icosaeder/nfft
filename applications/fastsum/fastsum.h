@@ -65,7 +65,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-typedef C (*kernel)(R , int , const R *);
+typedef C (*kernel)(R , NFFT_INT , const R *);
 
 /**
  * Constant symbols
@@ -83,10 +83,10 @@ typedef struct fastsum_plan_
 {
   /** api */
 
-  int d;                                /**< number of dimensions            */
+  NFFT_INT d;                                /**< number of dimensions            */
 
-  int N_total;                          /**< number of source knots          */
-  int M_total;                          /**< number of target knots          */
+  NFFT_INT N_total;                          /**< number of source knots          */
+  NFFT_INT M_total;                          /**< number of target knots          */
 
   C *alpha;                       /**< source coefficients             */
   C *f;                           /**< target evaluations              */
@@ -105,11 +105,11 @@ typedef struct fastsum_plan_
   C *pre_K;                       /**< precomputed K(x_j-y_l)          */
 
   /** FS__ - fast summation */
-  int n;                                /**< expansion degree                */
+  NFFT_INT n;                                /**< expansion degree                */
   C *b;                      /**< expansion coefficients          */
   C *f_hat;  /**< Fourier coefficients of nfft plans */
 
-  int p;                                /**< degree of smoothness of regularization */
+  NFFT_INT p;                                /**< degree of smoothness of regularization */
   R eps_I;                         /**< inner boundary                  */  /* fixed to p/n so far  */
   R eps_B;                         /**< outer boundary                  */  /* fixed to 1/16 so far */
 
@@ -117,19 +117,19 @@ typedef struct fastsum_plan_
   X(plan) mv2;                        /**< target nfft plan                */
 
   /** near field */
-  int Ad;                               /**< number of spline knots for nearfield computation of regularized kernel */
+  NFFT_INT Ad;                               /**< number of spline knots for nearfield computation of regularized kernel */
   C *Add;                 /**< spline values */
 
   /* things for computing *b - are they used only once?? */
   FFTW(plan) fft_plan;
 
-  int box_count;
-  int box_count_per_dim;
-  int *box_offset;
+  NFFT_INT box_count;
+  NFFT_INT box_count_per_dim;
+  NFFT_INT *box_offset;
   R *box_x;
   C *box_alpha;
   
-  int *permutation_x_alpha;    /**< permutation vector of source nodes if STORE_PERMUTATION_X_ALPHA is set */
+  NFFT_INT *permutation_x_alpha;    /**< permutation vector of source nodes if STORE_PERMUTATION_X_ALPHA is set */
 
   R MEASURE_TIME_t[8]; /**< Measured time for each step if MEASURE_TIME is set */
 
@@ -151,7 +151,7 @@ typedef struct fastsum_plan_
  * \param eps_B the outer boundary.
  *
  */
-void fastsum_init_guru(fastsum_plan *ths, int d, int N_total, int M_total, kernel k, R *param, unsigned flags, int nn, int m, int p, R eps_I, R eps_B);
+void fastsum_init_guru(fastsum_plan *ths, NFFT_INT d, NFFT_INT N_total, NFFT_INT M_total, kernel k, R *param, unsigned flags, NFFT_INT nn, NFFT_INT m, NFFT_INT p, R eps_I, R eps_B);
 
 /** initialize node independent part of fast summation plan
  *
@@ -166,8 +166,8 @@ void fastsum_init_guru(fastsum_plan *ths, int d, int N_total, int M_total, kerne
  * \param eps_B the outer boundary.
  *
  */
-void fastsum_init_guru_kernel(fastsum_plan *ths, int d, kernel k, R *param,
-    unsigned flags, int nn, int p, R eps_I, R eps_B);
+void fastsum_init_guru_kernel(fastsum_plan *ths, NFFT_INT d, kernel k, R *param,
+    unsigned flags, NFFT_INT nn, NFFT_INT p, R eps_I, R eps_B);
 
 /** initialize source nodes dependent part of fast summation plan
  *
@@ -177,7 +177,7 @@ void fastsum_init_guru_kernel(fastsum_plan *ths, int d, kernel k, R *param,
  * \param m The cut-off parameter for the NFFT.
  *
  */
-void fastsum_init_guru_source_nodes(fastsum_plan *ths, int N_total, int nn_oversampled, int m);
+void fastsum_init_guru_source_nodes(fastsum_plan *ths, NFFT_INT N_total, NFFT_INT nn_oversampled, NFFT_INT m);
 
 /** initialize target nodes dependent part of fast summation plan
  *
@@ -187,7 +187,7 @@ void fastsum_init_guru_source_nodes(fastsum_plan *ths, int N_total, int nn_overs
  * \param m The cut-off parameter for the NFFT.
  *
  */
-void fastsum_init_guru_target_nodes(fastsum_plan *ths, int M_total, int nn_oversampled, int m);
+void fastsum_init_guru_target_nodes(fastsum_plan *ths, NFFT_INT M_total, NFFT_INT nn_oversampled, NFFT_INT m);
 
 /** finalize plan
  *
@@ -244,11 +244,11 @@ void fastsum_precompute(fastsum_plan *ths);
 void fastsum_trafo(fastsum_plan *ths);
 /* \} */
 
-C regkern(kernel k, R xx, int p, const R *param, R a, R b);
+C regkern(kernel k, R xx, NFFT_INT p, const R *param, R a, R b);
 
 /** cubic spline interpolation in near field with even kernels */
 C kubintkern(const R x, const C *Add,
-  const int Ad, const R a);
+  const NFFT_INT Ad, const R a);
 
 #ifdef __cplusplus
 }  /* extern "C" */

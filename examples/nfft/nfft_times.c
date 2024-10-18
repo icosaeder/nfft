@@ -28,21 +28,21 @@
 #include "nfft3.h"
 #include "infft.h"
 
-int global_n;
-int global_d;
+NFFT_INT global_n;
+NFFT_INT global_d;
 
-static int comp1(const void *x, const void *y)
+static NFFT_INT comp1(const void *x, const void *y)
 {
   return ((*(const R*) x) < (*(const R*) y) ? -1 : 1);
 }
 
-static int comp2(const void *x, const void *y)
+static NFFT_INT comp2(const void *x, const void *y)
 {
-  int nx0, nx1, ny0, ny1;
-  nx0 = global_n * (int)LRINT(*((const R*) x + 0));
-  nx1 = global_n * (int)LRINT(*((const R*) x + 1));
-  ny0 = global_n * (int)LRINT(*((const R*) y + 0));
-  ny1 = global_n * (int)LRINT(*((const R*) y + 1));
+  NFFT_INT nx0, nx1, ny0, ny1;
+  nx0 = global_n * (NFFT_INT)LRINT(*((const R*) x + 0));
+  nx1 = global_n * (NFFT_INT)LRINT(*((const R*) x + 1));
+  ny0 = global_n * (NFFT_INT)LRINT(*((const R*) y + 0));
+  ny1 = global_n * (NFFT_INT)LRINT(*((const R*) y + 1));
 
   if (nx0 < ny0)
     return -1;
@@ -55,15 +55,15 @@ static int comp2(const void *x, const void *y)
     return 1;
 }
 
-static int comp3(const void *x, const void *y)
+static NFFT_INT comp3(const void *x, const void *y)
 {
-  int nx0, nx1, nx2, ny0, ny1, ny2;
-  nx0 = global_n * (int)LRINT(*((const R*) x + 0));
-  nx1 = global_n * (int)LRINT(*((const R*) x + 1));
-  nx2 = global_n * (int)LRINT(*((const R*) x + 2));
-  ny0 = global_n * (int)LRINT(*((const R*) y + 0));
-  ny1 = global_n * (int)LRINT(*((const R*) y + 1));
-  ny2 = global_n * (int)LRINT(*((const R*) y + 2));
+  NFFT_INT nx0, nx1, nx2, ny0, ny1, ny2;
+  nx0 = global_n * (NFFT_INT)LRINT(*((const R*) x + 0));
+  nx1 = global_n * (NFFT_INT)LRINT(*((const R*) x + 1));
+  nx2 = global_n * (NFFT_INT)LRINT(*((const R*) x + 2));
+  ny0 = global_n * (NFFT_INT)LRINT(*((const R*) y + 0));
+  ny1 = global_n * (NFFT_INT)LRINT(*((const R*) y + 1));
+  ny2 = global_n * (NFFT_INT)LRINT(*((const R*) y + 2));
 
   if (nx0 < ny0)
     return -1;
@@ -81,9 +81,9 @@ static int comp3(const void *x, const void *y)
     return 1;
 }
 
-static void measure_time_nfft(int d, int N, unsigned test_ndft)
+static void measure_time_nfft(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
 {
-  int r, M, NN[d], nn[d];
+  NFFT_INT r, M, NN[d], nn[d];
   R t, t_fft, t_ndft, t_nfft;
   ticks t0, t1;
 
@@ -217,9 +217,9 @@ static void measure_time_nfft(int d, int N, unsigned test_ndft)
   NFFT(finalize)(&p);
 }
 
-static void measure_time_nfft_XXX2(int d, int N, unsigned test_ndft)
+static void measure_time_nfft_XXX2(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
 {
-  int r, M, NN[d], nn[d];
+  NFFT_INT r, M, NN[d], nn[d];
   R t, t_fft, t_ndft, t_nfft;
   ticks t0, t1;
 
@@ -337,9 +337,9 @@ static void measure_time_nfft_XXX2(int d, int N, unsigned test_ndft)
   NFFT(finalize)(&p);
 }
 
-static void measure_time_nfft_XXX3(int d, int N, unsigned test_ndft)
+static void measure_time_nfft_XXX3(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
 {
-  int r, M, NN[d], nn[d];
+  NFFT_INT r, M, NN[d], nn[d];
   R t, t_fft, t_ndft, t_nfft;
   ticks t0, t1;
 
@@ -457,9 +457,9 @@ static void measure_time_nfft_XXX3(int d, int N, unsigned test_ndft)
   NFFT(finalize)(&p);
 }
 
-static void measure_time_nfft_XXX4(int d, int N, unsigned test_ndft)
+static void measure_time_nfft_XXX4(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
 {
-  int r, M, NN[d], nn[d];
+  NFFT_INT r, M, NN[d], nn[d];
   R t, t_fft, t_ndft, t_nfft;
   ticks t0, t1;
 
@@ -590,9 +590,9 @@ static void measure_time_nfft_XXX4(int d, int N, unsigned test_ndft)
   NFFT(finalize)(&p);
 }
 
-static void measure_time_nfft_XXX5(int d, int N, unsigned test_ndft)
+static void measure_time_nfft_XXX5(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
 {
-  int r, M, NN[d], nn[d];
+  NFFT_INT r, M, NN[d], nn[d];
   R t, t_fft, t_ndft, t_nfft;
   ticks t0, t1;
 
@@ -719,9 +719,9 @@ static void measure_time_nfft_XXX5(int d, int N, unsigned test_ndft)
   NFFT(finalize)(&p);
 }
 
-static void measure_time_nfft_XXX6(int d, int N, unsigned test_ndft)
+static void measure_time_nfft_XXX6(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
 {
-  int r, M, NN[d], nn[d];
+  NFFT_INT r, M, NN[d], nn[d];
   R t, t_fft, t_ndft, t_nfft;
   ticks t0, t1;
 
@@ -849,9 +849,9 @@ static void measure_time_nfft_XXX6(int d, int N, unsigned test_ndft)
   NFFT(finalize)(&p);
 }
 
-static void measure_time_nfft_XXX7(int d, int N, unsigned test_ndft)
+static void measure_time_nfft_XXX7(NFFT_INT d, NFFT_INT N, unsigned test_ndft)
 {
-  int r, M, NN[d], nn[d];
+  NFFT_INT r, M, NN[d], nn[d];
   R t, t_fft, t_ndft, t_nfft;
   ticks t0, t1;
 
@@ -980,13 +980,13 @@ static void measure_time_nfft_XXX7(int d, int N, unsigned test_ndft)
 
 //static int main(void)
 //{
-//  int l, d, logIN;
+//  NFFT_INT l, d, logIN;
 //
 //  for (l = 3; l <= 6; l++)
 //  {
 //    d = 3;
 //    logIN = d * l;
-//    int N = (int)(1U << (logIN / d));
+//    NFFT_INT N = (NFFT_INT)(1U << (logIN / d));
 //    measure_time_nfft_XXX6(d, N, logIN <= 15 ? 1 : 0);
 //    measure_time_nfft_XXX7(d, N, logIN <= 15 ? 1 : 0);
 //  }
@@ -995,7 +995,7 @@ static void measure_time_nfft_XXX7(int d, int N, unsigned test_ndft)
 //  {
 //    d = 2;
 //    logIN = d * l;
-//    int N = (int)(1U << (logIN / d));
+//    NFFT_INT N = (NFFT_INT)(1U << (logIN / d));
 //    measure_time_nfft_XXX4(d, N, logIN <= 15 ? 1 : 0);
 //    measure_time_nfft_XXX5(d, N, logIN <= 15 ? 1 : 0);
 //  }
@@ -1003,7 +1003,7 @@ static void measure_time_nfft_XXX7(int d, int N, unsigned test_ndft)
 //  for (l = 3; l <= 12; l++)
 //  {
 //    logIN = l;
-//    int N = (int)(1U << (logIN));
+//    NFFT_INT N = (NFFT_INT)(1U << (logIN));
 //    measure_time_nfft_XXX2(1, N, logIN <= 15 ? 1 : 0);
 //    measure_time_nfft_XXX3(1, N, logIN <= 15 ? 1 : 0);
 //  }
@@ -1013,7 +1013,7 @@ static void measure_time_nfft_XXX7(int d, int N, unsigned test_ndft)
 
 int main(void)
 {
-  int l, d, logIN;
+  NFFT_INT l, d, logIN;
 
   UNUSED(measure_time_nfft_XXX2);
   UNUSED(measure_time_nfft_XXX3);
@@ -1028,7 +1028,7 @@ int main(void)
   {
     d = 1;
     logIN = l;
-    int N = (int)(1U << (logIN / d));
+    NFFT_INT N = (NFFT_INT)(1U << (logIN / d));
     measure_time_nfft(d, N, logIN <= 15 ? 1 : 0);
 
     fflush(stdout);
@@ -1040,7 +1040,7 @@ int main(void)
   {
     d = 2;
     logIN = d * l;
-    int N = (int)(1U << (logIN / d));
+    NFFT_INT N = (NFFT_INT)(1U << (logIN / d));
     measure_time_nfft(d, N, logIN <= 15 ? 1 : 0);
 
     fflush(stdout);
@@ -1051,7 +1051,7 @@ int main(void)
   {
     d = 3;
     logIN = d * l;
-    int N = (int)(1U << (logIN / d));
+    NFFT_INT N = (NFFT_INT)(1U << (logIN / d));
     measure_time_nfft(d, N, logIN <= 15 ? 1 : 0);
 
     fflush(stdout);

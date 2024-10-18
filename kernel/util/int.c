@@ -172,10 +172,10 @@ void Y(next_power_of_2_exp)(const NFFT_INT N, NFFT_INT *N2, NFFT_INT *t)
   }
 }
 
-void Y(next_power_of_2_exp_int)(const int N, int *N2, int *t)
+void Y(next_power_of_2_exp_int)(const NFFT_INT N, NFFT_INT *N2, NFFT_INT *t)
 {
-  int n,i,logn;
-  int N_is_not_power_of_2=0;
+  NFFT_INT n,i,logn;
+  NFFT_INT N_is_not_power_of_2=0;
 
   if (N == 0)
   {

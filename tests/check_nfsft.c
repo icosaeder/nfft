@@ -1303,10 +1303,10 @@ static const C f[] =
 
 static void check_nfsft(void)
 {
-  const int M = sizeof(theta)/sizeof(theta[0]);
-  const int N = sqrt((R)(sizeof(f_hat)/sizeof(f_hat[0]))) - 1 ;
+  const NFFT_INT M = sizeof(theta)/sizeof(theta[0]);
+  const NFFT_INT N = sqrt((R)(sizeof(f_hat)/sizeof(f_hat[0]))) - 1 ;
   NFSFT(plan) p;
-  int j, k, n;
+  NFFT_INT j, k, n;
   
   NFSFT(precompute)(N, 1000.0, 0U, 0U);
 

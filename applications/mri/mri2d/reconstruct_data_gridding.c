@@ -34,9 +34,9 @@
 /**
  * reconstruct makes a 2d-adjoint-nfft
  */
-static void reconstruct(char* filename, int N, int M, int weight)
+static void reconstruct(char* filename, NFFT_INT N, NFFT_INT M, NFFT_INT weight)
 {
-  int j;                   /* some variables  */
+  NFFT_INT j;                   /* some variables  */
   double weights;          /* store one weight temporary */
   double real,imag;        /* to read the real and imag part of a complex number */
   nfft_plan my_plan;       /* plan for the two dimensional nfft  */
@@ -44,7 +44,7 @@ static void reconstruct(char* filename, int N, int M, int weight)
   FILE* fweight;           /* input file for the weights */
   FILE *fout_real;         /* output file  */
   FILE *fout_imag;         /* output file  */
-  int my_N[2],my_n[2];
+  NFFT_INT my_N[2],my_n[2];
   int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
                       MALLOC_F| FFTW_INIT| FFTW_MEASURE;
 

@@ -26,7 +26,7 @@
  * Structure for a transform plan 
  */
 
-/*! \fn void nfst_init_1d(nfst_plan *ths_plan, int N0, int M_total)
+/*! \fn void nfst_init_1d(nfst_plan *ths_plan, NFFT_INT N0, NFFT_INT M_total)
  * Creates a 1-dimensional transform plan.
  *
  * \arg ths_plan The plan for the transform
@@ -36,7 +36,7 @@
  * \author Steffen Klatt
  */
 
-/*! \fn void nfst_init_2d(nfst_plan *ths_plan, int N0, int N1, int M_total)
+/*! \fn void nfst_init_2d(nfst_plan *ths_plan, NFFT_INT N0, NFFT_INT N1, NFFT_INT M_total)
  * Creates a 3-dimensional transform plan.
  *
  * \arg ths_plan The plan for the transform
@@ -47,7 +47,7 @@
  * \author Steffen Klatt
  */
 
-/*! \fn void nfst_init_3d(nfst_plan *ths_plan, int N0, int N1, int N2, int M_total)
+/*! \fn void nfst_init_3d(nfst_plan *ths_plan, NFFT_INT N0, NFFT_INT N1, NFFT_INT N2, NFFT_INT M_total)
  * Creates a 3-dimensional transform plan.
  *
  * \arg ths_plan The plan for the transform
@@ -59,7 +59,7 @@
  * \author Steffen Klatt
  */
 
-/*! \fn void nfst_init(nfst_plan *ths_plan, int d, int *N, int M_total)
+/*! \fn void nfst_init(nfst_plan *ths_plan, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total)
  * Creates a d-dimensional transform plan.
  *
  * \arg ths_plan The plan for the transform
@@ -70,7 +70,7 @@
  * \author Steffen Klatt
  */
 
-/*! \fn void nfst_init_m(nfst_plan *ths_plan, int d, int *N, int M_total, int m)
+/*! \fn void nfst_init_m(nfst_plan *ths_plan, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total, NFFT_INT m)
  * Creates a d-dimensional transform plan with pcific m.
  * (just for convenience)
  *
@@ -83,7 +83,7 @@
  * \author Steffen Klatt
  */
 
-/*! \fn void nfst_init_guru(nfst_plan *ths_plan, int d, int *N, int M_total, int *n, int m, unsigned flags, unsigned fftw_flags)
+/*! \fn void nfst_init_guru(nfst_plan *ths_plan, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total, NFFT_INT *n, NFFT_INT m, unsigned flags, unsigned fftw_flags)
  * Creates a d-dimensional transform plan.
  *
  * \arg ths_plan The plan for the transform
@@ -159,7 +159,7 @@
  *
  */
 
-/*! \fn R nfst_phi_hut(nfst_plan *ths_plan, int k, int d)
+/*! \fn R nfst_phi_hut(nfst_plan *ths_plan, NFFT_INT k, NFFT_INT d)
  * do some adjustments (N,n) then compute PHI_HUT
  *
  * \arg ths_plan the plan for the transform
@@ -169,7 +169,7 @@
  * \author Steffen Klatt
  */
 
-/*! \fn R nfst_phi(nfst_plan *ths_plan, R x, int d)
+/*! \fn R nfst_phi(nfst_plan *ths_plan, R x, NFFT_INT d)
  * do some adjustments (N,n) then compute PHI
  *
  * \arg ths_plan the plan for the transform
@@ -179,7 +179,7 @@
  * \author Steffen Klatt
  */
 
-/*! \fn int nfst_fftw_2N(int n)
+/*! \fn NFFT_INT nfst_fftw_2N(NFFT_INT n)
  * returns 2(n+1),  fftw related issue
  *
  * \arg n       i.e. length of dst-1
@@ -187,7 +187,7 @@
  * \author Steffen Klatt
  */
 
-/*! \fn int nfst_fftw_2N_rev(int n)
+/*! \fn NFFT_INT nfst_fftw_2N_rev(NFFT_INT n)
  * returns 0.5n-1,  fftw related issue
  *
  * \arg n       i.e. length of dct-1

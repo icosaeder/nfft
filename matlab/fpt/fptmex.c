@@ -43,10 +43,10 @@ static unsigned int gflags = FPT_MEX_FIRST_CALL;
 
 static fpt_set** sets = NULL; /* sets */
 static unsigned int sets_num_allocated = 0;
-static int n_max = -1; /* maximum degree precomputed */
+static NFFT_INT n_max = -1; /* maximum degree precomputed */
 static char cmd[CMD_LEN_MAX];
 
-static inline void check_nargs(const int nrhs, const int n, const char* errmsg)
+static inline void check_nargs(const NFFT_INT nrhs, const NFFT_INT n, const char* errmsg)
 {
   DM(if (nrhs != n)
     mexErrMsgTxt(errmsg);)
@@ -54,8 +54,8 @@ static inline void check_nargs(const int nrhs, const int n, const char* errmsg)
 
 static inline unsigned int get_set(const mxArray *pm)
 {
-  int i = nfft_mex_get_int(pm,"Input argument set must be a scalar.");
-  DM(if (i < 0 || i >= (int) sets_num_allocated || sets[i] == NULL)
+  NFFT_INT i = nfft_mex_get_int(pm,"Input argument set must be a scalar.");
+  DM(if (i < 0 || i >= (NFFT_INT) sets_num_allocated || sets[i] == NULL)
     mexErrMsgTxt("Set was not initialized or has already been finalized");)
   return (unsigned int) i;
 }
@@ -111,7 +111,7 @@ static void cleanup(void)
   }
 }
 
-void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+void mexFunction(NFFT_INT nlhs, mxArray *plhs[], NFFT_INT nrhs, const mxArray *prhs[])
 {
   if (gflags & FPT_MEX_FIRST_CALL)
   {
@@ -138,10 +138,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
   if(strcmp(cmd,"init") == 0)
   {
     check_nargs(nrhs,3,"Wrong number of arguments for init.");
-    int t = nfft_mex_get_int(prhs[1],"t must be scalar"); // maximal exponent of the length of the transformation 2^t
+    NFFT_INT t = nfft_mex_get_int(prhs[1],"t must be scalar"); // maximal exponent of the length of the transformation 2^t
     DM( if (t <= 0)
       mexErrMsgTxt("Input argument t must be positive.");)
-    int flags_int = nfft_mex_get_int(prhs[2],"Input argument flags must be a scalar."); // flags
+    NFFT_INT flags_int = nfft_mex_get_int(prhs[2],"Input argument flags must be a scalar."); // flags
     DM( if (flags_int < 0)
       mexErrMsgTxt("Input argument flags must be non-negative.");)
     unsigned flags = (unsigned) flags_int;
@@ -164,7 +164,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *gam = mxGetPr(prhs[4]);
     DM(if (!(mxIsDouble(prhs[4])) || (mxGetNumberOfDimensions(prhs[4]) > 2) || (mxGetN(prhs[4]) != 1) || (mxGetM(prhs[4]) != (*sets[i])->N+2))
         mexErrMsgTxt("Input argument gamma must be a N_max+2 x 1 array");)
-    int k_start = nfft_mex_get_int(prhs[5],"k_start must be scalar");
+    NFFT_INT k_start = nfft_mex_get_int(prhs[5],"k_start must be scalar");
     DM(if (!((0 <= k_start ) && (k_start <= (*sets[i])->N)))
         mexErrMsgTxt("k_start has to be greater than or equal to 0 and less than or equal to N_max.");)
 
@@ -179,7 +179,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     unsigned int i = get_set(prhs[1]);
 
-    int k_end = nfft_mex_get_int(prhs[3],"k_end must be scalar"); // k_end
+    NFFT_INT k_end = nfft_mex_get_int(prhs[3],"k_end must be scalar"); // k_end
     DM(if (!(((*sets[i])->dpt->k_start <= k_end) && (k_end <= (*sets[i])->N)))
         mexErrMsgTxt("k_end has to be greater than or equal to k_start and less than or equal to N_max.");)
 
@@ -198,7 +198,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         a[j] = a_real[j];
     }
 
-    int flags_int = nfft_mex_get_int(prhs[4],"Input argument flags must be a scalar."); // flags
+    NFFT_INT flags_int = nfft_mex_get_int(prhs[4],"Input argument flags must be a scalar."); // flags
     DM( if (flags_int < 0)
       mexErrMsgTxt("Input argument flags must be non-negative.");)
     unsigned flags = (unsigned) flags_int;
@@ -230,7 +230,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     unsigned int i = get_set(prhs[1]);
 
-    int k_end = nfft_mex_get_int(prhs[3],"k_end must be scalar"); // k_end
+    NFFT_INT k_end = nfft_mex_get_int(prhs[3],"k_end must be scalar"); // k_end
     DM(if (!(((*sets[i])->dpt->k_start <= k_end) && (k_end <= (*sets[i])->N)))
         mexErrMsgTxt("k_end has to be greater than or equal to k_start and less than or equal to N_max.");)
 
@@ -249,7 +249,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         b[j] = b_real[j];
     }
 
-    int flags_int = nfft_mex_get_int(prhs[4],"Input argument flags must be a scalar."); // flags
+    NFFT_INT flags_int = nfft_mex_get_int(prhs[4],"Input argument flags must be a scalar."); // flags
     DM( if (flags_int < 0)
       mexErrMsgTxt("Input argument flags must be non-negative.");)
     unsigned flags = (unsigned) flags_int;

@@ -114,16 +114,16 @@
  */
 static inline void c2e(nfsft_plan *plan)
 {
-  int k;               /**< The degree k                                     */
-  int n;               /**< The order k                                      */
+  NFFT_INT k;               /**< The degree k                                     */
+  NFFT_INT n;               /**< The order k                                      */
   double _Complex last; /**< Stores temporary values                          */
   double _Complex act;  /**< Stores temporary values                          */
   double _Complex *xp;  /**< Auxilliary pointer                               */
   double _Complex *xm;  /**< Auxilliary pointer                               */
-  int low;             /**< Lower loop bound                                 */
-  int up;              /**< Upper loop bound                                 */
-  int lowe;            /**< Lower loop bound for even terms                  */
-  int upe;             /**< Upper loop bound for even terms                  */
+  NFFT_INT low;             /**< Lower loop bound                                 */
+  NFFT_INT up;              /**< Upper loop bound                                 */
+  NFFT_INT lowe;            /**< Lower loop bound for even terms                  */
+  NFFT_INT upe;             /**< Upper loop bound for even terms                  */
 
   /* Set the first row to order to zero since it is unused. */
   memset(plan->f_hat_intern,0U,(2*plan->N+2)*sizeof(double _Complex));
@@ -192,16 +192,16 @@ static inline void c2e(nfsft_plan *plan)
  */
 static inline void c2e_transposed(nfsft_plan *plan)
 {
-  int k;               /**< The degree k                                     */
-  int n;               /**< The order k                                      */
+  NFFT_INT k;               /**< The degree k                                     */
+  NFFT_INT n;               /**< The order k                                      */
   double _Complex last; /**< Stores temporary values                          */
   double _Complex act;  /**< Stores temporary values                          */
   double _Complex *xp;  /**< Auxilliary pointer                               */
   double _Complex *xm;  /**< Auxilliary pointer                               */
-  int low;             /**< Lower loop bound                                 */
-  int up;              /**< Upper loop bound                                 */
-  int lowe;            /**< Lower loop bound for even terms                  */
-  int upe;             /**< Upper loop bound for even terms                  */
+  NFFT_INT low;             /**< Lower loop bound                                 */
+  NFFT_INT up;              /**< Upper loop bound                                 */
+  NFFT_INT lowe;            /**< Lower loop bound for even terms                  */
+  NFFT_INT upe;             /**< Upper loop bound for even terms                  */
 
   /* Determine lower and upper bounds for loop processing even terms. */
   lowe = -plan->N + (plan->N%2);
@@ -257,14 +257,14 @@ static inline void c2e_transposed(nfsft_plan *plan)
   }
 }
 
-void nfsft_init(nfsft_plan *plan, int N, int M)
+void nfsft_init(nfsft_plan *plan, NFFT_INT N, NFFT_INT M)
 {
   /* Call nfsft_init_advanced with default flags. */
   nfsft_init_advanced(plan, N, M, NFSFT_MALLOC_X | NFSFT_MALLOC_F |
     NFSFT_MALLOC_F_HAT);
 }
 
-void nfsft_init_advanced(nfsft_plan* plan, int N, int M,
+void nfsft_init_advanced(nfsft_plan* plan, NFFT_INT N, NFFT_INT M,
                          unsigned int flags)
 {
   /* Call nfsft_init_guru with the flags and default NFFT cut-off. */
@@ -272,11 +272,11 @@ void nfsft_init_advanced(nfsft_plan* plan, int N, int M,
                          NFSFT_DEFAULT_NFFT_CUTOFF);
 }
 
-void nfsft_init_guru(nfsft_plan *plan, int N, int M, unsigned int flags,
-  unsigned int nfft_flags, int nfft_cutoff)
+void nfsft_init_guru(nfsft_plan *plan, NFFT_INT N, NFFT_INT M, unsigned int flags,
+  unsigned int nfft_flags, NFFT_INT nfft_cutoff)
 {
-  int *nfft_size; /*< NFFT size                                              */
-  int *fftw_size; /*< FFTW size                                              */
+  NFFT_INT *nfft_size; /*< NFFT size                                              */
+  NFFT_INT *fftw_size; /*< FFTW size                                              */
 
   /* Save the flags in the plan. */
   plan->flags = flags;
@@ -324,8 +324,8 @@ void nfsft_init_guru(nfsft_plan *plan, int N, int M, unsigned int flags,
     plan->x = (double*) nfft_malloc(plan->M_total*2*sizeof(double));
     if (plan->flags & NFSFT_EQUISPACED)
       /* Set equispaced nodes. This way also trafo_direct works correctly. */
-      for (int i=0; i<2*plan->N+2; i++)
-        for (int j=0; j<plan->N+2; j++)
+      for (NFFT_INT i=0; i<2*plan->N+2; i++)
+        for (NFFT_INT j=0; j<plan->N+2; j++)
         {
           plan->x[2*(i*(plan->N+1) + j)] = ((double)i-plan->N-1)/(2.0*plan->N+2);
           plan->x[2*(i*(plan->N+1) + j) + 1] = ((double)j)/(2.0*plan->N+2);
@@ -338,8 +338,8 @@ void nfsft_init_guru(nfsft_plan *plan, int N, int M, unsigned int flags,
   }
   else
   {
-      nfft_size = (int*)nfft_malloc(2*sizeof(int));
-      fftw_size = (int*)nfft_malloc(2*sizeof(int));
+      nfft_size = (NFFT_INT*)nfft_malloc(2*sizeof(NFFT_INT));
+      fftw_size = (NFFT_INT*)nfft_malloc(2*sizeof(NFFT_INT));
 
       /** \todo Replace 4*plan->N by next_power_of_2(2*this->n). */
       nfft_size[0] = 2*plan->N+2;
@@ -373,10 +373,10 @@ void nfsft_init_guru(nfsft_plan *plan, int N, int M, unsigned int flags,
   plan->mv_adjoint = (void (*) (void* ))nfsft_adjoint;
 }
 
-void nfsft_precompute(int N, double kappa, unsigned int nfsft_flags,
+void nfsft_precompute(NFFT_INT N, double kappa, unsigned int nfsft_flags,
   unsigned int fpt_flags)
 {
-  int n; /*< The order n                                                     */
+  NFFT_INT n; /*< The order n                                                     */
 
   /*  Check if already initialized. */
   if (wisdom.initialized == true)
@@ -463,7 +463,7 @@ void nfsft_precompute(int N, double kappa, unsigned int nfsft_flags,
         /* Perform the first part of precomputation which contains most allocations in one thread */
         #pragma omp master
         {
-          for (int n = 0; n <= wisdom.N_MAX; n++)
+          for (NFFT_INT n = 0; n <= wisdom.N_MAX; n++)
             fpt_precompute_1(wisdom.set_threads[0],n,n);
         }
         #pragma omp barrier
@@ -521,7 +521,7 @@ void nfsft_precompute(int N, double kappa, unsigned int nfsft_flags,
         /* Perform the first part of precomputation which contains most allocations in one thread */
         #pragma omp master
         {
-          for (int n = 0; n <= wisdom.N_MAX; n++)
+          for (NFFT_INT n = 0; n <= wisdom.N_MAX; n++)
             fpt_precompute_1(wisdom.set_threads[0],n,n);
         }
         #pragma omp barrier
@@ -607,7 +607,7 @@ void nfsft_forget(void)
   else if (wisdom.N_MAX >= NFSFT_BREAK_EVEN)
   {
 #ifdef _OPENMP
-    int k;
+    NFFT_INT k;
     for (k = 0; k < wisdom.nthreads; k++)
       fpt_finalize(wisdom.set_threads[k]);
     nfft_free(wisdom.set_threads);
@@ -664,7 +664,7 @@ void nfsft_finalize(nfsft_plan *plan)
 
 static void nfsft_set_f_nan(nfsft_plan *plan)
 {
-  int m;
+  NFFT_INT m;
   double nan_value = nan("");
   for (m = 0; m < plan->M_total; m++)
     plan->f[m] = nan_value;
@@ -672,10 +672,10 @@ static void nfsft_set_f_nan(nfsft_plan *plan)
 
 void nfsft_trafo_direct(nfsft_plan *plan)
 {
-  int m;               /*< The node index                                    */
-  int k;               /*< The degree k                                      */
-  int n;               /*< The order n                                       */
-  int n_abs;           /*< The absolute value of the order n, ie n_abs = |n| */
+  NFFT_INT m;               /*< The node index                                    */
+  NFFT_INT k;               /*< The degree k                                      */
+  NFFT_INT n;               /*< The order n                                       */
+  NFFT_INT n_abs;           /*< The absolute value of the order n, ie n_abs = |n| */
   double *alpha;       /*< Pointer to current three-term recurrence
                            coefficient alpha_k^n for associated Legendre
                            functions P_k^n                                   */
@@ -844,7 +844,7 @@ void nfsft_trafo_direct(nfsft_plan *plan)
 
 static void nfsft_set_f_hat_nan(nfsft_plan *plan)
 {
-  int k, n;
+  NFFT_INT k, n;
   double nan_value = nan("");
   for (k = 0; k <= plan->N; k++)
     for (n = -k; n <= k; n++)
@@ -853,10 +853,10 @@ static void nfsft_set_f_hat_nan(nfsft_plan *plan)
 
 void nfsft_adjoint_direct(nfsft_plan *plan)
 {
-  int m;               /*< The node index                                    */
-  int k;               /*< The degree k                                      */
-  int n;               /*< The order n                                       */
-  int n_abs;           /*< The absolute value of the order n, ie n_abs = |n| */
+  NFFT_INT m;               /*< The node index                                    */
+  NFFT_INT k;               /*< The degree k                                      */
+  NFFT_INT n;               /*< The order n                                       */
+  NFFT_INT n_abs;           /*< The absolute value of the order n, ie n_abs = |n| */
   double *alpha;       /*< Pointer to current three-term recurrence
                            coefficient alpha_k^n for associated Legendre
                            functions P_k^n                                   */
@@ -1067,8 +1067,8 @@ void nfsft_adjoint_direct(nfsft_plan *plan)
 
 void nfsft_trafo(nfsft_plan *plan)
 {
-  int k; /*< The degree k                                                    */
-  int n; /*< The order n                                                     */
+  NFFT_INT k; /*< The degree k                                                    */
+  NFFT_INT n; /*< The order n                                                     */
 #ifdef MEASURE_TIME
   ticks t0, t1;
 #endif
@@ -1166,7 +1166,7 @@ void nfsft_trafo(nfsft_plan *plan)
         &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
         plan->N,0U);
 
-      int n_abs;
+      NFFT_INT n_abs;
       #pragma omp parallel for default(shared) private(n_abs,n) num_threads(wisdom.nthreads) schedule(dynamic)
       for (n_abs = 1; n_abs <= plan->N; n_abs++)
       {
@@ -1204,7 +1204,7 @@ void nfsft_trafo(nfsft_plan *plan)
         &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
         plan->N,0U);
 
-      int n_abs;
+      NFFT_INT n_abs;
       #pragma omp parallel for default(shared) private(n_abs,n) num_threads(wisdom.nthreads) schedule(dynamic)
       for (n_abs = 1; n_abs <= plan->N; n_abs++)
       {
@@ -1260,13 +1260,13 @@ void nfsft_trafo(nfsft_plan *plan)
       NFFT_INT nthreads = Y(get_num_threads)();
 #endif
 
-      int N[2];
+      NFFT_INT N[2];
       N[0] = 2*plan->N+2;
       N[1] = 2*plan->N+2;
       fftw_plan plan_fftw;
 
-      for (int j=0; j<N[0]; j++)
-        for (int k=0; k<N[1]; k++)
+      for (NFFT_INT j=0; j<N[0]; j++)
+        for (NFFT_INT k=0; k<N[1]; k++)
           if ((j+k)%2)
             plan->f_hat_intern[j*N[1]+k] *= -1;
 //	  f_hat[j*N[1]+k] = plan->f_hat_intern[j*N[1]+k] * CEXP(II*KPI*(j+k));
@@ -1281,10 +1281,10 @@ void nfsft_trafo(nfsft_plan *plan)
       }
 #endif
       fftw_execute(plan_fftw);
-      for (int j=0; j<N[0]; j++)
-//	for (int k=j%2-1; k<N[1]; k+=2)
+      for (NFFT_INT j=0; j<N[0]; j++)
+//	for (NFFT_INT k=j%2-1; k<N[1]; k+=2)
 //	    plan->f[j*N[1]+k] *= -1;
-        for (int k=N[1]/2; k<N[1]+1; k++)
+        for (NFFT_INT k=N[1]/2; k<N[1]+1; k++)
           plan->f[j*(N[1]/2+1)+(k-N[1]/2)] = plan->f_hat_intern[j*N[1]+k%N[1]] * ((j+k)%2 ? -1 : 1);
 //          plan->f[j*N[1]+k] *= CEXP(II*KPI*(j-N[0]/2 + k-N[1]/2));
 #ifdef _OPENMP
@@ -1315,8 +1315,8 @@ void nfsft_trafo(nfsft_plan *plan)
 
 void nfsft_adjoint(nfsft_plan *plan)
 {
-  int k; /*< The degree k                                                    */
-  int n; /*< The order n                                                     */
+  NFFT_INT k; /*< The degree k                                                    */
+  NFFT_INT n; /*< The order n                                                     */
 #ifdef MEASURE_TIME
   ticks t0, t1;
 #endif
@@ -1370,21 +1370,21 @@ void nfsft_adjoint(nfsft_plan *plan)
     {
       /* Algorithm for equispaced nodes.
        * plan_nfft is not initialized if NFSFT_EQUISPACED is set. */
-      int N[2];
+      NFFT_INT N[2];
       N[0] = 2*plan->N+2;
       N[1] = 2*plan->N+2;
 
-      for (int j=0; j<N[0]; j++)
+      for (NFFT_INT j=0; j<N[0]; j++)
       {
-        for (int k=0; k<N[1]/2+1; k++)
+        for (NFFT_INT k=0; k<N[1]/2+1; k++)
           plan->f_hat[j*N[1]+k] = 0;
-        for (int k=N[1]/2; k<N[1]+1; k++)
+        for (NFFT_INT k=N[1]/2; k<N[1]+1; k++)
           plan->f_hat[j*N[1]+k%N[1]] = plan->f[j*(N[1]/2+1)+k-N[1]/2] * ((j+k)%2 ? -1 : 1);
       }
       fftw_plan plan_fftw = FFTW(plan_dft)(2, N, plan->f_hat, plan->f_hat, FFTW_BACKWARD, FFTW_ESTIMATE);
       fftw_execute(plan_fftw);
-      for (int j=0; j<N[0]; j++)
-        for (int k=0; k<N[1]; k++)
+      for (NFFT_INT j=0; j<N[0]; j++)
+        for (NFFT_INT k=0; k<N[1]; k++)
           if ((j+k)%2)
             plan->f_hat[j*N[1]+k] *= -1;
       fftw_destroy_plan(plan_fftw);
@@ -1437,7 +1437,7 @@ void nfsft_adjoint(nfsft_plan *plan)
         &plan->f_hat[NFSFT_INDEX(0,n,plan)],
         plan->N,0U);
 
-      int n_abs;
+      NFFT_INT n_abs;
       #pragma omp parallel for default(shared) private(n_abs,n) num_threads(wisdom.nthreads) schedule(dynamic)
       for (n_abs = 1; n_abs <= plan->N; n_abs++)
       {
@@ -1475,7 +1475,7 @@ void nfsft_adjoint(nfsft_plan *plan)
         &plan->f_hat[NFSFT_INDEX(0,n,plan)],
         plan->N,0U);
 
-      int n_abs;
+      NFFT_INT n_abs;
        #pragma omp parallel for default(shared) private(n_abs,n) num_threads(wisdom.nthreads) schedule(dynamic)
        for (n_abs = 1; n_abs <= plan->N; n_abs++)
        {

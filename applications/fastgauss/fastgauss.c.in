@@ -65,8 +65,8 @@
 /** Structure for the Gauss transform */
 typedef struct
 {
-  int N; /**< number of source nodes          */
-  int M; /**< number of target nodes          */
+  NFFT_INT N; /**< number of source nodes          */
+  NFFT_INT M; /**< number of target nodes          */
 
   NFFT_C *alpha; /**< source coefficients             */
   NFFT_C *f; /**< target evaluations              */
@@ -81,7 +81,7 @@ typedef struct
 
   NFFT_C *pre_cexp; /**< precomputed values for dgt      */
 
-  int n; /**< expansion degree                */
+  NFFT_INT n; /**< expansion degree                */
   NFFT_R p; /**< period, at least 1              */
 
   NFFT_C *b; /**< expansion coefficients          */
@@ -163,10 +163,10 @@ static void fgt_trafo(fgt_plan *ths)
  *
  * \author Stefan Kunis
  */
-static void fgt_init_guru(fgt_plan *ths, int N, int M, NFFT_C sigma, int n, NFFT_R p, int m,
+static void fgt_init_guru(fgt_plan *ths, NFFT_INT N, NFFT_INT M, NFFT_C sigma, NFFT_INT n, NFFT_R p, NFFT_INT m,
     unsigned flags)
 {
-  int j, n_fftw;
+  NFFT_INT j, n_fftw;
   FFTW(plan) fplan;
 
   ths->M = M;
@@ -187,7 +187,7 @@ static void fgt_init_guru(fgt_plan *ths, int N, int M, NFFT_C sigma, int n, NFFT
   ths->nplan1 = (NFFT(plan)*) NFFT(malloc)(sizeof(NFFT(plan)));
   ths->nplan2 = (NFFT(plan)*) NFFT(malloc)(sizeof(NFFT(plan)));
 
-  n_fftw = (int)NFFT(next_power_of_2)(2 * ths->n);
+  n_fftw = (NFFT_INT)NFFT(next_power_of_2)(2 * ths->n);
 
   {
     NFFT(init_guru)(ths->nplan1, 1, &(ths->n), ths->N, &n_fftw, m, PRE_PHI_HUT |
@@ -237,17 +237,17 @@ static void fgt_init_guru(fgt_plan *ths, int N, int M, NFFT_C sigma, int n, NFFT
  *
  * \author Stefan Kunis
  */
-static void fgt_init(fgt_plan *ths, int N, int M, NFFT_C sigma, NFFT_R eps)
+static void fgt_init(fgt_plan *ths, NFFT_INT N, NFFT_INT M, NFFT_C sigma, NFFT_R eps)
 {
   NFFT_R p;
-  int n;
+  NFFT_INT n;
 
   p = NFFT_K(0.5) + NFFT_M(sqrt)(-NFFT_M(log)(eps) / NFFT_M(creal)(sigma));
 
   if (p < NFFT_K(1.0))
     p = NFFT_K(1.0);
 
-  n = (int)(2 * (NFFT_M(lrint)(NFFT_M(ceil)(p * NFFT_M(cabs)(sigma) / NFFT_KPI * NFFT_M(sqrt)(-NFFT_M(log)(eps) / NFFT_M(creal)(sigma))))));
+  n = (NFFT_INT)(2 * (NFFT_M(lrint)(NFFT_M(ceil)(p * NFFT_M(cabs)(sigma) / NFFT_KPI * NFFT_M(sqrt)(-NFFT_M(log)(eps) / NFFT_M(creal)(sigma))))));
 
   fgt_init_guru(ths, N, M, sigma, n, p, 7, N * M <= ((NFFT_INT) (1U << 20)) ? DGT_PRE_CEXP : 0);
 }
@@ -260,7 +260,7 @@ static void fgt_init(fgt_plan *ths, int N, int M, NFFT_C sigma, NFFT_R eps)
  */
 static void fgt_init_node_dependent(fgt_plan *ths)
 {
-  int j, k, l;
+  NFFT_INT j, k, l;
 
   if (ths->flags & DGT_PRE_CEXP)
   {
@@ -337,7 +337,7 @@ static void fgt_test_init_rand(fgt_plan *ths)
  */
 static NFFT_R fgt_test_measure_time(fgt_plan *ths, unsigned dgt)
 {
-  int r;
+  NFFT_INT r;
   NFFT_R t0, t1, time_diff;
   NFFT_R t_out;
   NFFT_R tau = NFFT_K(0.01);
@@ -370,7 +370,7 @@ static NFFT_R fgt_test_measure_time(fgt_plan *ths, unsigned dgt)
  *
  * \author Stefan Kunis
  */
-static void fgt_test_simple(int N, int M, NFFT_C sigma, NFFT_R eps)
+static void fgt_test_simple(NFFT_INT N, NFFT_INT M, NFFT_C sigma, NFFT_R eps)
 {
   fgt_plan my_plan;
   NFFT_C *swap_dgt;
@@ -410,12 +410,12 @@ static void fgt_test_andersson(void)
 {
   fgt_plan my_plan;
   NFFT_C *swap_dgt;
-  int N;
+  NFFT_INT N;
 
   NFFT_C sigma = NFFT_K(4.0) * (NFFT_K(138.0) + _Complex_I * NFFT_K(100.0));
-  int n = 128;
-  int N_dgt_pre_exp = (int) (1U << 11);
-  int N_dgt = (int) (1U << 19);
+  NFFT_INT n = 128;
+  NFFT_INT N_dgt_pre_exp = (NFFT_INT) (1U << 11);
+  NFFT_INT N_dgt = (NFFT_INT) (1U << 19);
 
   printf("n=%d, sigma=%1.3" NFFT__FES__ "+i%1.3" NFFT__FES__ "\n", n, NFFT_M(creal)(sigma), NFFT_M(cimag)(sigma));
 
@@ -476,12 +476,12 @@ static void fgt_test_error(void)
 {
   fgt_plan my_plan;
   NFFT_C *swap_dgt;
-  int n, mi;
+  NFFT_INT n, mi;
 
   NFFT_C sigma = NFFT_K(4.0) * (NFFT_K(138.0) + _Complex_I * NFFT_K(100.0));
-  int N = 1000;
-  int M = 1000;
-  int m[2] = { 7, 3 };
+  NFFT_INT N = 1000;
+  NFFT_INT M = 1000;
+  NFFT_INT m[2] = { 7, 3 };
 
   printf("N=%d;\tM=%d;\nsigma=%1.3" NFFT__FES__ "+i*%1.3" NFFT__FES__ ";\n", N, M, NFFT_M(creal)(sigma),
       NFFT_M(cimag)(sigma));
@@ -528,11 +528,11 @@ static void fgt_test_error_p(void)
 {
   fgt_plan my_plan;
   NFFT_C *swap_dgt;
-  int n, pi;
+  NFFT_INT n, pi;
 
   NFFT_C sigma = NFFT_K(20.0) + NFFT_K(40.0) * _Complex_I;
-  int N = 1000;
-  int M = 1000;
+  NFFT_INT N = 1000;
+  NFFT_INT M = 1000;
   NFFT_R p[3] = {NFFT_K(1.0), NFFT_K(1.5), NFFT_K(2.0)};
 
   printf("N=%d;\tM=%d;\nsigma=%1.3" NFFT__FES__ "+i*%1.3" NFFT__FES__ ";\n", N, M, NFFT_M(creal)(sigma),

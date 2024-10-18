@@ -34,9 +34,9 @@
 /**
  * construct makes an 2d-nfft for every slice
  */
-static void construct(char * file, int N, int M, int Z, fftw_complex *mem)
+static void construct(char * file, NFFT_INT N, NFFT_INT M, NFFT_INT Z, fftw_complex *mem)
 {
-  int j,z;                /* some variables */
+  NFFT_INT j,z;                /* some variables */
   double tmp;             /* a placeholder */
   nfft_plan my_plan;      /* plan for the two dimensional nfft  */
   FILE* fp;
@@ -80,7 +80,7 @@ static void construct(char * file, int N, int M, int Z, fftw_complex *mem)
  * fft makes an 1D-ftt for every knot through
  * all layers
  */
-static void fft(int N,int M,int Z, fftw_complex *mem)
+static void fft(NFFT_INT N,NFFT_INT M,NFFT_INT Z, fftw_complex *mem)
 {
   fftw_plan plan;
   plan = fftw_plan_many_dft(1, &Z, N*N,
@@ -98,9 +98,9 @@ static void fft(int N,int M,int Z, fftw_complex *mem)
  * read fills the memory with the file input_data_f.dat as
  * the real part of f and with zeros for the imag part of f
  */
-static void read_data(int N,int M,int Z, fftw_complex *mem)
+static void read_data(NFFT_INT N,NFFT_INT M,NFFT_INT Z, fftw_complex *mem)
 {
-  int i,z;
+  NFFT_INT i,z;
   double real;
   FILE* fin;
   fin=fopen("input_f.dat","r");

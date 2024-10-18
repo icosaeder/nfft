@@ -28,10 +28,10 @@
 
 void simple_test_nnfft_1d(void)
 {
-  int j,k;                              /**< index for nodes and freqencies   */
+  NFFT_INT j,k;                              /**< index for nodes and freqencies   */
   nnfft_plan my_plan;                    /**< plan for the nfft                */
 
-  int N[1];
+  NFFT_INT N[1];
   N[0]=10;
 
   /** init an one dimensional plan */
@@ -84,10 +84,10 @@ nnfft_precompute_one_psi(&my_plan);
 
 static void simple_test_adjoint_nnfft_1d(void)
 {
-  int j;                                 /**< index for nodes and freqencies   */
+  NFFT_INT j;                                 /**< index for nodes and freqencies   */
   nnfft_plan my_plan;                    /**< plan for the nfft                */
 
-  int N[1];
+  NFFT_INT N[1];
   N[0]=12;
 
   /** init an one dimensional plan */
@@ -138,10 +138,10 @@ static void simple_test_adjoint_nnfft_1d(void)
 
 static void simple_test_nnfft_2d(void)
 {
-  int j,k;                              /**< index for nodes and freqencies   */
+  NFFT_INT j,k;                              /**< index for nodes and freqencies   */
   nnfft_plan my_plan;                    /**< plan for the nfft                */
 
-  int N[2];
+  NFFT_INT N[2];
   N[0]=12;
   N[1]=14;
 
@@ -197,7 +197,7 @@ static void simple_test_nnfft_2d(void)
 
 static void simple_test_innfft_1d(void)
 {
-  int j,k,l,N=8;                        /**< index for nodes, freqencies, iter*/
+  NFFT_INT j,k,l,N=8;                        /**< index for nodes, freqencies, iter*/
   nnfft_plan my_plan;                   /**< plan for the nnfft               */
   solver_plan_complex my_iplan;         /**< plan for the inverse nnfft       */
 
@@ -261,9 +261,9 @@ static void simple_test_innfft_1d(void)
 
 static void measure_time_nnfft_1d(void)
 {
-  int j,k;                              /**< index for nodes and freqencies   */
+  NFFT_INT j,k;                              /**< index for nodes and freqencies   */
   nnfft_plan my_plan;                    /**< plan for the nfft                */
-  int my_N,N=4;
+  NFFT_INT my_N,N=4;
   double t;
   double t0, t1;
 

@@ -27,12 +27,12 @@
 #include "nfft3.h"
 #include "infft.h"
 
-void nfsft_benchomp_createdataset(unsigned int trafo_adjoint, int N, int M)
+void nfsft_benchomp_createdataset(unsigned int trafo_adjoint, NFFT_INT N, NFFT_INT M)
 {
-  int t, j, k, n;
+  NFFT_INT t, j, k, n;
   R *x;
   C *f, *f_hat;
-  int N_total = (2*N+2) * (2*N+2);
+  NFFT_INT N_total = (2*N+2) * (2*N+2);
   nfsft_plan ptemp;
 
   nfsft_init_guru(&ptemp, N, M, NFSFT_MALLOC_X | NFSFT_MALLOC_F |
@@ -89,9 +89,9 @@ void nfsft_benchomp_createdataset(unsigned int trafo_adjoint, int N, int M)
 
 int main(int argc, char **argv)
 {
-  int trafo_adjoint;
-  int N;
-  int M;
+  NFFT_INT trafo_adjoint;
+  NFFT_INT N;
+  NFFT_INT M;
 
   if (argc < 4) {
     fprintf(stderr, "usage: tr_adj N M\n");

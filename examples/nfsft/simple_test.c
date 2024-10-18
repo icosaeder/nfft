@@ -31,10 +31,10 @@
 
 static void simple_test_nfsft(void)
 {
-  const int N = 4; /* bandwidth/maximum degree */
-  const int M = 8; /* number of nodes */
+  const NFFT_INT N = 4; /* bandwidth/maximum degree */
+  const NFFT_INT M = 8; /* number of nodes */
   nfsft_plan plan; /* transform plan */
-  int j, k, n; /* loop variables */
+  NFFT_INT j, k, n; /* loop variables */
 
   /* precomputation (for fast polynomial transform) */
   nfsft_precompute(N,1000.0,0U,0U);

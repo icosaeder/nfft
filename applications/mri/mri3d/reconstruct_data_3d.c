@@ -34,16 +34,16 @@
 /**
  * reconstruct makes an inverse 3d-nfft
  */
-static void reconstruct(char* filename,int N,int M,int Z,int iteration, int weight)
+static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT Z,NFFT_INT iteration, NFFT_INT weight)
 {
-  int j,k,z,l;                  /* some variables  */
+  NFFT_INT j,k,z,l;                  /* some variables  */
   double real,imag;             /* to read the real and imag part of a complex number */
   nfft_plan my_plan;            /* plan for the two dimensional nfft  */
   solver_plan_complex my_iplan;          /* plan for the two dimensional infft */
   FILE* fin;                    /* input file                         */
   FILE* fout_real;              /* output file (real part) */
   FILE* fout_imag;              /* output file (imag part) */
-  int my_N[3],my_n[3];          /* to init the nfft */
+  NFFT_INT my_N[3],my_n[3];          /* to init the nfft */
   double epsilon=0.0000003;     /* tmp to read the obsolent z from 700.acs
                                    epsilon is a the break criterion for
                                    the iteration */
@@ -86,9 +86,9 @@ static void reconstruct(char* filename,int N,int M,int Z,int iteration, int weig
     for(j=0;j<N;j++){
       for(k=0;k<N;k++) {
         for(z=0;z<N;z++) {
-        int j2= j-N/2;
-        int k2= k-N/2;
-        int z2= z-N/2;
+        NFFT_INT j2= j-N/2;
+        NFFT_INT k2= k-N/2;
+        NFFT_INT z2= z-N/2;
         double r=sqrt(j2*j2+k2*k2+z2*z2);
         if(r>(double) N/2)
           my_iplan.w_hat[z*N*N+j*N+k]=0.0;

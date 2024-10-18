@@ -31,8 +31,8 @@ static void simple_test_nfct_1d(void)
 
   const char *error_str;
 
-  int N = 14;
-  int M = 19;
+  NFFT_INT N = 14;
+  NFFT_INT M = 19;
 
   /** init an one dimensional plan */
   NFCT(init_1d)(&p,N,M);

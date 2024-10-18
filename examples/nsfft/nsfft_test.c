@@ -28,7 +28,7 @@
 #define CSWAP(x,y) {double _Complex * NFFT_SWAP_temp__; \
   NFFT_SWAP_temp__=(x); (x)=(y); (y)=NFFT_SWAP_temp__;}
 
-static void accuracy_nsfft(int d, int J, int M, int m)
+static void accuracy_nsfft(NFFT_INT d, NFFT_INT J, NFFT_INT M, NFFT_INT m)
 {
   nsfft_plan p;
   double _Complex *swap_sndft_trafo, *swap_sndft_adjoint;
@@ -78,9 +78,9 @@ static void accuracy_nsfft(int d, int J, int M, int m)
   nsfft_finalize(&p);
 }
 
-static void time_nsfft(int d, int J, int M, unsigned test_nsdft, unsigned test_nfft)
+static void time_nsfft(NFFT_INT d, NFFT_INT J, NFFT_INT M, unsigned test_nsdft, unsigned test_nfft)
 {
-  int r, N[d], n[d];
+  NFFT_INT r, N[d], n[d];
   double t, t_nsdft, t_nfft, t_nsfft;
   double t0, t1;
 
@@ -170,7 +170,7 @@ static void time_nsfft(int d, int J, int M, unsigned test_nsdft, unsigned test_n
 
 int main(int argc,char **argv)
 {
-  int d, J, M;
+  NFFT_INT d, J, M;
 
   if(argc<=2)
   {

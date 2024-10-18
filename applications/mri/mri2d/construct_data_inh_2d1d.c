@@ -39,22 +39,22 @@
 /**
  * construct
  */
-static void construct(char * file, int N, int M)
+static void construct(char * file, NFFT_INT N, NFFT_INT M)
 {
-  int j;                  /* some variables */
+  NFFT_INT j;                  /* some variables */
   double real;
   double w;
   double time,min_time,max_time,min_inh,max_inh;
   mri_inh_2d1d_plan my_plan;
   FILE *fp,*fout,*fi,*finh,*ftime;
-  int my_N[3],my_n[3];
+  NFFT_INT my_N[3],my_n[3];
   int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
                       MALLOC_F| FFTW_INIT| FFTW_MEASURE;
 
   double Ts;
   double W,T;
-  int N3;
-  int m=2;
+  NFFT_INT N3;
+  NFFT_INT m=2;
   double sigma = 1.25;
 
   ftime=fopen("readout_time.dat","r");

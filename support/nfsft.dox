@@ -275,7 +275,7 @@
  * NFSFT transform plan
  */
 
-/*! \fn void nfsft_init(nfsft_plan *plan, int N, int M)
+/*! \fn void nfsft_init(nfsft_plan *plan, NFFT_INT N, NFFT_INT M)
  * Creates a transform plan.
  *
  * \arg plan a pointer to a \ref nfsft_plan structure
@@ -285,7 +285,7 @@
  * \author Jens Keiner
  */
 
-/*! \fn void nfsft_init_advanced(nfsft_plan* plan, int N, int M, unsigned int nfsft_flags)
+/*! \fn void nfsft_init_advanced(nfsft_plan* plan, NFFT_INT N, NFFT_INT M, unsigned int nfsft_flags)
  * Creates a transform plan.
  *
  * \arg plan a pointer to a \verbatim nfsft_plan \endverbatim structure
@@ -296,7 +296,7 @@
  * \author Jens Keiner
  */
 
-/*! \fn void nfsft_init_guru(nfsft_plan *plan, int N, int M, unsigned int nfsft_flags, nsigned int nfft_flags, int nfft_cutoff)
+/*! \fn void nfsft_init_guru(nfsft_plan *plan, NFFT_INT N, NFFT_INT M, unsigned int nfsft_flags, nsigned NFFT_INT nfft_flags, NFFT_INT nfft_cutoff)
  * Creates a transform plan.
  *
  * \arg plan a pointer to a \verbatim nfsft_plan \endverbatim structure
@@ -308,7 +308,7 @@
  * \author Jens Keiner
  */
 
-/*! \fn void nfsft_precompute(int N, R kappa, unsigned int nfsft_flags, unsigned int fpt_flags)
+/*! \fn void nfsft_precompute(NFFT_INT N, R kappa, unsigned int nfsft_flags, unsigned int fpt_flags)
  * Performes precomputation up to the next power of two with respect to a given
  * bandwidth \f$N \in \mathbb{N}_2\f$. The threshold parameter \f$\kappa \in
  * \mathbb{R}^{+}\f$ determines the number of stabilization steps computed in

@@ -92,7 +92,7 @@ void check_result_value(const int val, const int ok, const char *msg)
   }
 }
 
-void run_test_create(int d, int trafo_adjoint, int N, int M, double sigma)
+void run_test_create(int d, int trafo_adjoint, NFFT_INT N, NFFT_INT M, double sigma)
 {
   char cmd[1025];
 
@@ -121,10 +121,10 @@ typedef struct
 {
   int d;
   int trafo_adjoint;
-  int N;
-  int M;
+  NFFT_INT N;
+  NFFT_INT M;
   double sigma;
-  int m;
+  NFFT_INT m;
   int flags;
 } s_param;
 
@@ -148,7 +148,7 @@ typedef struct
   int nresults;
 } s_testset;
 
-void run_test(s_resval *res, int nrepeat, int m, int flags, int nthreads)
+void run_test(s_resval *res, int nrepeat, NFFT_INT m, int flags, int nthreads)
 {
   char cmd[1025];
   int r,t;
@@ -261,11 +261,11 @@ unsigned int determine_different_parameters(s_testset *testsets, int ntestsets)
   return mask;
 }
 
-void get_plot_title(char *outstr, int maxlen, char *hostname, s_param param, unsigned int diff_mask)
+void get_plot_title(char *outstr, NFFT_INT maxlen, char *hostname, s_param param, unsigned int diff_mask)
 {
   unsigned int mask = ~diff_mask;
-  int offset = 0;
-  int len;
+  NFFT_INT offset = 0;
+  NFFT_INT len;
 
   len = snprintf(outstr, maxlen, "%s", hostname);
   if (len < 0 || len+offset >= maxlen-1) return;
@@ -459,7 +459,7 @@ fprintf(stderr, "FLAGS: %d\n", testset.param.flags);
   fflush(out);
 }
 
-void run_testset(s_testset *testset, int d, int trafo_adjoint, int N, int M, double sigma, int m, int flags, int *nthreads_array, int n_threads_array_size)
+void run_testset(s_testset *testset, int d, int trafo_adjoint, NFFT_INT N, NFFT_INT M, double sigma, NFFT_INT m, int flags, int *nthreads_array, int n_threads_array_size)
 {
   int i;
   testset->param.d = d;
@@ -482,7 +482,7 @@ void run_testset(s_testset *testset, int d, int trafo_adjoint, int N, int M, dou
 
 }
 
-void test1(int *nthreads_array, int n_threads_array_size, int m)
+void test1(int *nthreads_array, int n_threads_array_size, NFFT_INT m)
 {
   s_testset testsets[15];
 
@@ -575,7 +575,7 @@ void test1(int *nthreads_array, int n_threads_array_size, int m)
 
 }
 
-void test2(int *nthreads_array, int n_threads_array_size, int m)
+void test2(int *nthreads_array, int n_threads_array_size, NFFT_INT m)
 {
   s_testset testsets[15];
 

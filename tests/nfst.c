@@ -34,8 +34,8 @@
 /* Testcase delegate. */
 typedef struct testcase_delegate_s testcase_delegate_t;
 
-typedef void (*setup_t)(const testcase_delegate_t *ego_, int *d, int **N, int *NN, int *M, R **x, R **f_hat, R **f);
-typedef void (*destroy_t)(const testcase_delegate_t *ego_, int *N, R *x, R *f_hat, R *f);
+typedef void (*setup_t)(const testcase_delegate_t *ego_, NFFT_INT *d, NFFT_INT **N, NFFT_INT *NN, NFFT_INT *M, R **x, R **f_hat, R **f);
+typedef void (*destroy_t)(const testcase_delegate_t *ego_, NFFT_INT *N, R *x, R *f_hat, R *f);
 
 struct testcase_delegate_s
 {
@@ -50,38 +50,38 @@ typedef struct testcase_delegate_file_s
   const char *filename;
 } testcase_delegate_file_t;
 
-static void setup_file(const testcase_delegate_t *ego_, int *d, int **N, int *NN, int *M, R **x, R **f_hat, R **f);
-static void destroy_file(const testcase_delegate_t *ego_, int *N, R *x, R *f_hat, R *f);
+static void setup_file(const testcase_delegate_t *ego_, NFFT_INT *d, NFFT_INT **N, NFFT_INT *NN, NFFT_INT *M, R **x, R **f_hat, R **f);
+static void destroy_file(const testcase_delegate_t *ego_, NFFT_INT *N, R *x, R *f_hat, R *f);
 
 typedef struct testcase_delegate_online_s
 {
   setup_t setup;
   destroy_t destroy;
-  const int d;
-  const int N;
-  const int M;
+  const NFFT_INT d;
+  const NFFT_INT N;
+  const NFFT_INT M;
 } testcase_delegate_online_t;
 
-static void setup_online(const testcase_delegate_t *ego_, int *d, int **N, int *NN, int *M, R **x, R **f_hat, R **f);
-static void destroy_online(const testcase_delegate_t *ego_, int *N, R *x, R *f_hat, R *f);
+static void setup_online(const testcase_delegate_t *ego_, NFFT_INT *d, NFFT_INT **N, NFFT_INT *NN, NFFT_INT *M, R **x, R **f_hat, R **f);
+static void destroy_online(const testcase_delegate_t *ego_, NFFT_INT *N, R *x, R *f_hat, R *f);
 
 /* Initialization delegate. */
 typedef struct init_delegate_s init_delegate_t;
-typedef void (*init_t)(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M);
+typedef void (*init_t)(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M);
 
 struct init_delegate_s
 {
   const char *name;
   init_t init;
-  const int m;
+  const NFFT_INT m;
   const unsigned flags;
   const unsigned fftw_flags;
 };
 
 /* Prepare delegate. */
 typedef struct check_delegate_s check_delegate_t;
-typedef void (*prepare_t)(check_delegate_t *ego, X(plan) *p, const int NN, const int M, const R *f, const R *f_hat);
-typedef R (*compare_t)(check_delegate_t *ego, X(plan) *p, const int NN, const int M, const R *f, const R *f_hat);
+typedef void (*prepare_t)(check_delegate_t *ego, X(plan) *p, const NFFT_INT NN, const NFFT_INT M, const R *f, const R *f_hat);
+typedef R (*compare_t)(check_delegate_t *ego, X(plan) *p, const NFFT_INT NN, const NFFT_INT M, const R *f, const R *f_hat);
 
 struct check_delegate_s
 {
@@ -121,11 +121,11 @@ static void check_many(const size_t nf, const size_t ni, const size_t nt,
   check_delegate_t *check_delegate, trafo_delegate_t **trafos);
 
 /* Initializers. */
-static void init_1d_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M);
-static void init_2d_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M);
-static void init_3d_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M);
-static void init_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M);
-static void init_advanced_pre_psi_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M);
+static void init_1d_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M);
+static void init_2d_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M);
+static void init_3d_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M);
+static void init_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M);
+static void init_advanced_pre_psi_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M);
 
 #define DEFAULT_NFFT_FLAGS MALLOC_X | MALLOC_F | MALLOC_F_HAT | FFTW_INIT | FFT_OUT_OF_PLACE
 #define DEFAULT_FFTW_FLAGS FFTW_ESTIMATE | FFTW_DESTROY_INPUT
@@ -153,7 +153,7 @@ static R trafo_direct_cost(X(plan) *p)
 {
   if (trafo_direct_cost_factor == 0.0)
   {
-    int M, d, Nd, x = 0;
+    NFFT_INT M, d, Nd, x = 0;
     for (d = 1; d <= 4; d++)
     {
       for (Nd = 4; Nd < 128; Nd *= 2)
@@ -161,7 +161,7 @@ static R trafo_direct_cost(X(plan) *p)
         for (M = 4; M <= 128; M *= 2)
         {
           X(plan) p2;
-          int *N = Y(malloc)((size_t)(d) * sizeof(int)), i;
+          NFFT_INT *N = Y(malloc)((size_t)(d) * sizeof(NFFT_INT)), i;
           for (i = 0; i < d; i++)
           {
             N[i] = Nd;
@@ -221,7 +221,7 @@ static R err_trafo(X(plan) *p)
   R b;
   R eps = Y(float_property)(NFFT_EPSILON);
   R err;
-  int i;
+  NFFT_INT i;
   for (i = 0, s = ((R)p->sigma[0]); i < p->d; i++)
     s = FMIN(s, ((R)p->sigma[i]));
 #if defined(GAUSSIAN)
@@ -290,7 +290,7 @@ static int check_single(const testcase_delegate_t *testcase,
 {
   int ok = 0;
   X(plan) p;
-  int d, j, *N, NN, M;
+  NFFT_INT d, j, *N, NN, M;
   R *x;
   R *f_hat, *f;
 
@@ -381,10 +381,10 @@ static void check_many(const size_t nf, const size_t ni, const size_t nt,
   CU_ASSERT(ok);
 }
 
-static void setup_file(const testcase_delegate_t *ego_, int *d, int **N, int *NN, int *M, R **x, R **f_hat, R **f)
+static void setup_file(const testcase_delegate_t *ego_, NFFT_INT *d, NFFT_INT **N, NFFT_INT *NN, NFFT_INT *M, R **x, R **f_hat, R **f)
 {
   const testcase_delegate_file_t *ego = (const testcase_delegate_file_t*)ego_;
-  int j;
+  NFFT_INT j;
   char filename[200];
   char* c = strrchr(ego->filename, '/');
   FILE *file = fopen(ego->filename, "r");
@@ -397,7 +397,7 @@ static void setup_file(const testcase_delegate_t *ego_, int *d, int **N, int *NN
   /* Dimensions. */
   fscanf(file, "%d", d);
   /* Bandwidths. */
-  *N = Y(malloc)((size_t)(*d) * sizeof(int));
+  *N = Y(malloc)((size_t)(*d) * sizeof(NFFT_INT));
   for (j = 0; j < *d; j++)
     fscanf(file, "%d", &((*N)[j]));
   /* Number of nodes. */
@@ -448,7 +448,7 @@ static void setup_file(const testcase_delegate_t *ego_, int *d, int **N, int *NN
   fclose(file);
 }
 
-static void destroy_file(const testcase_delegate_t *ego_, int *N, R *x, R *f_hat, R *f)
+static void destroy_file(const testcase_delegate_t *ego_, NFFT_INT *N, R *x, R *f_hat, R *f)
 {
   UNUSED(ego_);
   Y(free)(N);
@@ -457,15 +457,15 @@ static void destroy_file(const testcase_delegate_t *ego_, int *N, R *x, R *f_hat
   Y(free)(f);
 }
 
-static void setup_online(const testcase_delegate_t *ego_, int *d, int **N, int *NN, int *M, R **x, R **f_hat, R **f)
+static void setup_online(const testcase_delegate_t *ego_, NFFT_INT *d, NFFT_INT **N, NFFT_INT *NN, NFFT_INT *M, R **x, R **f_hat, R **f)
 {
   const testcase_delegate_online_t *ego = (const testcase_delegate_online_t*)ego_;
-  int j;
+  NFFT_INT j;
 
   /* Dimensions. */
   *d = ego->d;
   /* Bandwidths. */
-  *N = Y(malloc)((size_t)(*d) * sizeof(int));
+  *N = Y(malloc)((size_t)(*d) * sizeof(NFFT_INT));
   for (j = 0; j < *d; j++)
     (*N)[j] = ego->N;
   /* Number of nodes. */
@@ -538,16 +538,16 @@ static void setup_online(const testcase_delegate_t *ego_, int *d, int **N, int *
   }
 }
 
-static void setup_adjoint_online(const testcase_delegate_t *ego_, int *d, int **N, int *NN, int *M, R **x, R **f_hat, R **f)
+static void setup_adjoint_online(const testcase_delegate_t *ego_, NFFT_INT *d, NFFT_INT **N, NFFT_INT *NN, NFFT_INT *M, R **x, R **f_hat, R **f)
 {
   const testcase_delegate_online_t *ego = (const testcase_delegate_online_t*)ego_;
-  int j;
+  NFFT_INT j;
 
   /* Dimensions. */
   *d = ego->d;
 
   /* Bandwidths. */
-  *N = Y(malloc)((size_t)(*d) * sizeof(int));
+  *N = Y(malloc)((size_t)(*d) * sizeof(NFFT_INT));
 
   for (j = 0; j < *d; j++)
     (*N)[j] = ego->N;
@@ -624,7 +624,7 @@ static void setup_adjoint_online(const testcase_delegate_t *ego_, int *d, int **
   }
 }
 
-static void destroy_online(const testcase_delegate_t *ego_, int *N, R *x, R *f_hat, R *f)
+static void destroy_online(const testcase_delegate_t *ego_, NFFT_INT *N, R *x, R *f_hat, R *f)
 {
   UNUSED(ego_);
   Y(free)(N);
@@ -634,39 +634,39 @@ static void destroy_online(const testcase_delegate_t *ego_, int *N, R *x, R *f_h
 }
 
 /* Initializers. */
-static void init_1d_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M)
+static void init_1d_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M)
 {
   UNUSED(ego);
   UNUSED(d);
   X(init_1d)(p, N[0], M);
 }
 
-static void init_2d_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M)
+static void init_2d_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M)
 {
   UNUSED(ego);
   UNUSED(d);
   X(init_2d)(p, N[0], N[1], M);
 }
 
-static void init_3d_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M)
+static void init_3d_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M)
 {
   UNUSED(ego);
   UNUSED(d);
   X(init_3d)(p, N[0], N[1], N[2], M);
 }
 
-static void init_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M)
+static void init_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M)
 {
   UNUSED(ego);
   X(init)(p, d, N, M);
 }
 
-static void init_advanced_pre_psi_(init_delegate_t *ego, X(plan) *p, const int d, const int *N, const int M)
+static void init_advanced_pre_psi_(init_delegate_t *ego, X(plan) *p, const NFFT_INT d, const NFFT_INT *N, const NFFT_INT M)
 {
-  int *n = Y(malloc)((size_t)(d)*sizeof(int));
-  int i;
+  NFFT_INT *n = Y(malloc)((size_t)(d)*sizeof(NFFT_INT));
+  NFFT_INT i;
   for (i = 0; i < d; i++)
-    n[i] = 2 * (int)(Y(next_power_of_2)(N[i]));
+    n[i] = 2 * (NFFT_INT)(Y(next_power_of_2)(N[i]));
   X(init_guru)(p, d, N, M, n, ego->m, ego->flags, ego->fftw_flags);
   Y(free)(n);
 }
@@ -684,12 +684,12 @@ static init_delegate_t init_advanced_pre_fg_psi = {"init_guru (PRE FG PSI)", ini
 #endif
 
 /* Check routines. */
-static void prepare_trafo(check_delegate_t *ego, X(plan) *p, const int NN, const int M, const R *f, const R *f_hat)
+static void prepare_trafo(check_delegate_t *ego, X(plan) *p, const NFFT_INT NN, const NFFT_INT M, const R *f, const R *f_hat)
 {
   UNUSED(ego);
   UNUSED(M);
   UNUSED(f);
-  int j;
+  NFFT_INT j;
 
   /* Fourier coefficients. */
   for (j = 0; j < NN; j++)
@@ -698,12 +698,12 @@ static void prepare_trafo(check_delegate_t *ego, X(plan) *p, const int NN, const
   }
 }
 
-static void prepare_adjoint(check_delegate_t *ego, X(plan) *p, const int NN, const int M, const R *f, const R *f_hat)
+static void prepare_adjoint(check_delegate_t *ego, X(plan) *p, const NFFT_INT NN, const NFFT_INT M, const R *f, const R *f_hat)
 {
   UNUSED(ego);
   UNUSED(NN);
   UNUSED(f_hat);
-  int j;
+  NFFT_INT j;
 
   /* Fourier coefficients. */
   for (j = 0; j < M; j++)
@@ -712,11 +712,11 @@ static void prepare_adjoint(check_delegate_t *ego, X(plan) *p, const int NN, con
   }
 }
 
-static R compare_trafo(check_delegate_t *ego, X(plan) *p, const int NN, const int M, const R *f, const R *f_hat)
+static R compare_trafo(check_delegate_t *ego, X(plan) *p, const NFFT_INT NN, const NFFT_INT M, const R *f, const R *f_hat)
 {
   UNUSED(ego);
   UNUSED(f_hat);
-  int j;
+  NFFT_INT j;
   R numerator = K(0.0), denominator = K(0.0);
 
   /* debug */
@@ -734,11 +734,11 @@ static R compare_trafo(check_delegate_t *ego, X(plan) *p, const int NN, const in
   return numerator == K(0.0) ? K(0.0) : numerator/denominator;
 }
 
-static R compare_adjoint(check_delegate_t *ego, X(plan) *p, const int NN, const int M, const R *f, const R *f_hat)
+static R compare_adjoint(check_delegate_t *ego, X(plan) *p, const NFFT_INT NN, const NFFT_INT M, const R *f, const R *f_hat)
 {
   UNUSED(ego);
   UNUSED(f);
-  int j;
+  NFFT_INT j;
   R numerator = K(0.0), denominator = K(0.0);
 
   /* debug */

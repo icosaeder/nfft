@@ -37,7 +37,7 @@ int main(void)
    *   f(x) = a_0 P_0(x) + a_1 P_1(x) + ... + a_N P_N(x)                     (1)
    *
    * at the Chebyshev nodes x_j = cos(j*pi/N), j=0,1,...,N. */
-  const int N = 8;
+  const NFFT_INT N = 8;
 
   /* An fpt_set is a data structure that contains precomputed data for a number
    * of different polynomial transforms. Here, we need only one transform. the
@@ -57,7 +57,7 @@ int main(void)
 
   /* Actual three-term recurrence coefficients for Legendre polynomials */
   {
-    int k;
+    NFFT_INT k;
     for (k = 0; k <= N; k++)
     {
       alpha[k+1] = ((double)(2*k+1))/((double)(k+1));
@@ -95,14 +95,14 @@ int main(void)
     double *f = malloc((N+1)*sizeof(double _Complex));
 
     /* Plan for discrete cosine transform */
-    const int NP1 = N + 1;
+    const NFFT_INT NP1 = N + 1;
     fftw_r2r_kind kind = FFTW_REDFT00;
     fftw_plan p = fftw_plan_many_r2r(1, &NP1, 1, (double*)b, NULL, 2, 1,
       (double*)f, NULL, 1, 1, &kind, 0U);
 
     /* random Fourier coefficients */
     {
-      int k;
+      NFFT_INT k;
       printf("\n2) Random Fourier coefficients a_k, k=0,1,...,N:\n");
       for (k = 0; k <= N; k++)
       {
@@ -119,7 +119,7 @@ int main(void)
      * http://www.fftw.org/fftw3_doc/1d-Real_002deven-DFTs-_0028DCTs_0029.html
      * for details */
     {
-      int j;
+      NFFT_INT j;
       for (j = 1; j < N; j++)
         b[j] *= 0.5;
     }
@@ -128,7 +128,7 @@ int main(void)
     fftw_execute(p);
 
     {
-      int j;
+      NFFT_INT j;
       printf("\n3) Function values f_j, j=1,1,...,M:\n");
       for (j = 0; j <= N; j++)
         printf("   f_%-2d = %+5.3lE\n",j,f[j]);

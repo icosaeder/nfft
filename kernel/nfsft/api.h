@@ -46,8 +46,8 @@
   typedef enum {false = 0,true = 1} bool;
 #endif
 
-//#define FIRST_L (int)floor(ntilde/(double)plength)
-//#define LAST_L (int)ceil((Mtilde+1)/(double)plength)-1
+//#define FIRST_L (NFFT_INT)floor(ntilde/(double)plength)
+//#define LAST_L (NFFT_INT)ceil((Mtilde+1)/(double)plength)-1
 
 
 /**
@@ -60,9 +60,9 @@ struct nfsft_wisdom
   unsigned int flags;
   /** Stores precomputation flags. */
   /** The maximum bandwidth /f$N_{\text{max}} \in \mathbb{N}_0/f$ */
-  int N_MAX;
+  NFFT_INT N_MAX;
   /** The logarithm /f$t = \log_2 N_{\text{max}}/f$ of the maximum bandwidth */
-  int T_MAX;
+  NFFT_INT T_MAX;
 
   /* Data for the direct algorithms */
 

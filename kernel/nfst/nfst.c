@@ -991,12 +991,12 @@ static inline void init_help(X(plan) *ths)
       ths->g2 = ths->g1;
 
     {
-      int *_n = Y(malloc)((size_t)(ths->d) * sizeof(int));
+      NFFT_INT *_n = Y(malloc)((size_t)(ths->d) * sizeof(NFFT_INT));
 
       for (t = 0; t < ths->d; t++)
-        _n[t] = (int)(ths->n[t]);
+        _n[t] = (NFFT_INT)(ths->n[t]);
 
-      ths->my_fftw_r2r_plan = FFTW(plan_r2r)((int)ths->d, _n, ths->g1, ths->g2, ths->r2r_kind, ths->fftw_flags);
+      ths->my_fftw_r2r_plan = FFTW(plan_r2r)((NFFT_INT)ths->d, _n, ths->g1, ths->g2, ths->r2r_kind, ths->fftw_flags);
       Y(free)(_n);
     }
   }
@@ -1010,9 +1010,9 @@ static inline void init_help(X(plan) *ths)
   ths->mv_adjoint = (void (*) (void* ))X(adjoint);
 }
 
-void X(init)(X(plan) *ths, int d, int *N, int M_total)
+void X(init)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total)
 {
-  int t; /* index over all dimensions */
+  NFFT_INT t; /* index over all dimensions */
 
   ths->d = (NFFT_INT)d;
 
@@ -1049,7 +1049,7 @@ void X(init)(X(plan) *ths, int d, int *N, int M_total)
   init_help(ths);
 }
 
-void X(init_guru)(X(plan) *ths, int d, int *N, int M_total, int *n, int m,
+void X(init_guru)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total, NFFT_INT *n, NFFT_INT m,
   unsigned flags, unsigned fftw_flags)
 {
   NFFT_INT t; /* index over all dimensions */
@@ -1074,18 +1074,18 @@ void X(init_guru)(X(plan) *ths, int d, int *N, int M_total, int *n, int m,
   init_help(ths);
 }
 
-void X(init_1d)(X(plan) *ths, int N1, int M_total)
+void X(init_1d)(X(plan) *ths, NFFT_INT N1, NFFT_INT M_total)
 {
-  int N[1];
+  NFFT_INT N[1];
 
   N[0] = N1;
 
   X(init)(ths, 1, N, M_total);
 }
 
-void X(init_2d)(X(plan) *ths, int N1, int N2, int M_total)
+void X(init_2d)(X(plan) *ths, NFFT_INT N1, NFFT_INT N2, NFFT_INT M_total)
 {
-  int N[2];
+  NFFT_INT N[2];
 
   N[0] = N1;
   N[1] = N2;
@@ -1093,9 +1093,9 @@ void X(init_2d)(X(plan) *ths, int N1, int N2, int M_total)
   X(init)(ths, 2, N, M_total);
 }
 
-void X(init_3d)(X(plan) *ths, int N1, int N2, int N3, int M_total)
+void X(init_3d)(X(plan) *ths, NFFT_INT N1, NFFT_INT N2, NFFT_INT N3, NFFT_INT M_total)
 {
-  int N[3];
+  NFFT_INT N[3];
 
   N[0] = N1;
   N[1] = N2;

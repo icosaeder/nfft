@@ -24,9 +24,9 @@
 
 #include "nfft3.h"
 
-static void simple_test_nsfft(int d, int J, int M)
+static void simple_test_nsfft(NFFT_INT d, NFFT_INT J, NFFT_INT M)
 {
-  int K=12;
+  NFFT_INT K=12;
   nsfft_plan p;
 
   nsfft_init(&p, d, J, M, 6, NSDFT);
@@ -57,7 +57,7 @@ static void simple_test_nsfft(int d, int J, int M)
 
 int main(int argc,char **argv)
 {
-  int d, J, M;
+  NFFT_INT d, J, M;
 
   system("clear");
   printf("1) computing a two dimensional nsdft, nsfft and adjoints\n\n");

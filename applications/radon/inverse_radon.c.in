@@ -52,9 +52,9 @@
 /** generates the points x with weights w
  *  for the polar grid with T angles and R offsets
  */
-static int polar_grid(int T, int S, NFFT_R *x, NFFT_R *w)
+static NFFT_INT polar_grid(NFFT_INT T, NFFT_INT S, NFFT_R *x, NFFT_R *w)
 {
-  int t, r;
+  NFFT_INT t, r;
   NFFT_R W = (NFFT_R) T * (((NFFT_R) S / NFFT_K(2.0)) * ((NFFT_R) S / NFFT_K(2.0)) + NFFT_K(1.0) / NFFT_K(4.0));
 
   for (t = -T / 2; t < T / 2; t++)
@@ -76,9 +76,9 @@ static int polar_grid(int T, int S, NFFT_R *x, NFFT_R *w)
 /** generates the points x with weights w
  *  for the linogram grid with T slopes and R offsets
  */
-static int linogram_grid(int T, int S, NFFT_R *x, NFFT_R *w)
+static NFFT_INT linogram_grid(NFFT_INT T, NFFT_INT S, NFFT_R *x, NFFT_R *w)
 {
-  int t, r;
+  NFFT_INT t, r;
   NFFT_R W = (NFFT_R) T * (((NFFT_R) S / NFFT_K(2.0)) * ((NFFT_R) S / NFFT_K(2.0)) + NFFT_K(1.0) / NFFT_K(4.0));
 
   for (t = -T / 2; t < T / 2; t++)
@@ -111,22 +111,22 @@ static int linogram_grid(int T, int S, NFFT_R *x, NFFT_R *w)
  *  on the grid given by gridfcn() with T angles and R offsets
  *  by a NFFT-based CG-type algorithm
  */
-static int inverse_radon_trafo(int (*gridfcn)(), int T, int S, NFFT_R *Rf, int NN, NFFT_R *f,
-    int max_i)
+static NFFT_INT inverse_radon_trafo(NFFT_INT (*gridfcn)(), NFFT_INT T, NFFT_INT S, NFFT_R *Rf, NFFT_INT NN, NFFT_R *f,
+    NFFT_INT max_i)
 {
-  int j, k; /**< index for nodes and freqencies   */
+  NFFT_INT j, k; /**< index for nodes and freqencies   */
   NFFT(plan) my_nfft_plan; /**< plan for the nfft-2D             */
   SOLVER(plan_complex) my_infft_plan; /**< plan for the inverse nfft        */
 
   NFFT_C *fft; /**< variable for the fftw-1Ds        */
   FFTW(plan) my_fftw_plan; /**< plan for the fftw-1Ds            */
 
-  int t, r; /**< index for directions and offsets */
+  NFFT_INT t, r; /**< index for directions and offsets */
   NFFT_R *x, *w; /**< knots and associated weights     */
-  int l; /**< index for iterations             */
+  NFFT_INT l; /**< index for iterations             */
 
-  int N[2], n[2];
-  int M = T * S;
+  NFFT_INT N[2], n[2];
+  NFFT_INT M = T * S;
 
   N[0] = NN;
   n[0] = 2 * N[0];
@@ -237,12 +237,12 @@ static int inverse_radon_trafo(int (*gridfcn)(), int T, int S, NFFT_R *Rf, int N
  */
 int main(int argc, char **argv)
 {
-  int (*gridfcn)(); /**< grid generating function        */
-  int T, S; /**< number of directions/offsets    */
+  NFFT_INT (*gridfcn)(); /**< grid generating function        */
+  NFFT_INT T, S; /**< number of directions/offsets    */
   FILE *fp;
-  int N; /**< image size                      */
+  NFFT_INT N; /**< image size                      */
   NFFT_R *Rf, *iRf;
-  int max_i; /**< number of iterations            */
+  NFFT_INT max_i; /**< number of iterations            */
 
   if (argc != 6)
   {

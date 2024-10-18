@@ -44,9 +44,9 @@ NFFT_R GLOBAL_elapsed_time;
 /** Generates the points x with weights w
  *  for the linogram grid with T slopes and R offsets.
  */
-static int linogram_grid(int T, int rr, NFFT_R *x, NFFT_R *w)
+static NFFT_INT linogram_grid(NFFT_INT T, NFFT_INT rr, NFFT_R *x, NFFT_R *w)
 {
-  int t, r;
+  NFFT_INT t, r;
   NFFT_R W = (NFFT_R) T * (((NFFT_R) rr / NFFT_K(2.0)) * ((NFFT_R) rr / NFFT_K(2.0)) + NFFT_K(1.0) / NFFT_K(4.0));
 
   for (t = -T / 2; t < T / 2; t++)
@@ -76,16 +76,16 @@ static int linogram_grid(int T, int rr, NFFT_R *x, NFFT_R *w)
 }
 
 /** discrete pseudo-polar FFT */
-static int linogram_dft(NFFT_C *f_hat, int NN, NFFT_C *f, int T, int rr, int m)
+static NFFT_INT linogram_dft(NFFT_C *f_hat, NFFT_INT NN, NFFT_C *f, NFFT_INT T, NFFT_INT rr, NFFT_INT m)
 {
   double t0, t1;
-  int j, k; /**< index for nodes and freqencies   */
+  NFFT_INT j, k; /**< index for nodes and freqencies   */
   NFFT(plan) my_nfft_plan; /**< plan for the nfft-2D             */
 
   NFFT_R *x, *w; /**< knots and associated weights     */
 
-  int N[2], n[2];
-  int M = T * rr; /**< number of knots                  */
+  NFFT_INT N[2], n[2];
+  NFFT_INT M = T * rr; /**< number of knots                  */
 
   N[0] = NN;
   n[0] = 2 * N[0]; /**< oversampling factor sigma=2      */
@@ -136,16 +136,16 @@ static int linogram_dft(NFFT_C *f_hat, int NN, NFFT_C *f, int T, int rr, int m)
 }
 
 /** NFFT-based pseudo-polar FFT */
-static int linogram_fft(NFFT_C *f_hat, int NN, NFFT_C *f, int T, int rr, int m)
+static NFFT_INT linogram_fft(NFFT_C *f_hat, NFFT_INT NN, NFFT_C *f, NFFT_INT T, NFFT_INT rr, NFFT_INT m)
 {
   double t0, t1;
-  int j, k; /**< index for nodes and freqencies   */
+  NFFT_INT j, k; /**< index for nodes and freqencies   */
   NFFT(plan) my_nfft_plan; /**< plan for the nfft-2D             */
 
   NFFT_R *x, *w; /**< knots and associated weights     */
 
-  int N[2], n[2];
-  int M = T * rr; /**< number of knots                  */
+  NFFT_INT N[2], n[2];
+  NFFT_INT M = T * rr; /**< number of knots                  */
 
   N[0] = NN;
   n[0] = 2 * N[0]; /**< oversampling factor sigma=2      */
@@ -207,19 +207,19 @@ static int linogram_fft(NFFT_C *f_hat, int NN, NFFT_C *f, int T, int rr, int m)
 }
 
 /** NFFT-based inverse pseudo-polar FFT */
-static int inverse_linogram_fft(NFFT_C *f, int T, int rr, NFFT_C *f_hat, int NN,
-    int max_i, int m)
+static NFFT_INT inverse_linogram_fft(NFFT_C *f, NFFT_INT T, NFFT_INT rr, NFFT_C *f_hat, NFFT_INT NN,
+    NFFT_INT max_i, NFFT_INT m)
 {
   double t0, t1;
-  int j, k; /**< index for nodes and freqencies   */
+  NFFT_INT j, k; /**< index for nodes and freqencies   */
   NFFT(plan) my_nfft_plan; /**< plan for the nfft-2D             */
   SOLVER(plan_complex) my_infft_plan; /**< plan for the inverse nfft        */
 
   NFFT_R *x, *w; /**< knots and associated weights     */
-  int l; /**< index for iterations             */
+  NFFT_INT l; /**< index for iterations             */
 
-  int N[2], n[2];
-  int M = T * rr; /**< number of knots                  */
+  NFFT_INT N[2], n[2];
+  NFFT_INT M = T * rr; /**< number of knots                  */
 
   N[0] = NN;
   n[0] = 2 * N[0]; /**< oversampling factor sigma=2      */
@@ -315,12 +315,12 @@ static int inverse_linogram_fft(NFFT_C *f, int T, int rr, NFFT_C *f_hat, int NN,
 }
 
 /** Comparison of the FFTW, linogram FFT, and inverse linogram FFT */
-static int comparison_fft(FILE *fp, int N, int T, int rr)
+static NFFT_INT comparison_fft(FILE *fp, NFFT_INT N, NFFT_INT T, NFFT_INT rr)
 {
   double t0, t1;
   FFTW(plan) my_fftw_plan;
   NFFT_C *f_hat, *f;
-  int m, k;
+  NFFT_INT m, k;
   NFFT_R t_fft, t_dft_linogram;
 
   f_hat = (NFFT_C *) NFFT(malloc)(sizeof(NFFT_C) * (size_t)(N * N));
@@ -383,18 +383,18 @@ static int comparison_fft(FILE *fp, int N, int T, int rr)
 /** test program for various parameters */
 int main(int argc, char **argv)
 {
-  int N; /**< linogram FFT size NxN              */
-  int T, rr; /**< number of directions/offsets     */
-  int M; /**< number of knots of linogram grid   */
+  NFFT_INT N; /**< linogram FFT size NxN              */
+  NFFT_INT T, rr; /**< number of directions/offsets     */
+  NFFT_INT M; /**< number of knots of linogram grid   */
   NFFT_R *x, *w; /**< knots and associated weights     */
   NFFT_C *f_hat, *f, *f_direct, *f_tilde;
-  int k;
-  int max_i; /**< number of iterations             */
-  int m;
+  NFFT_INT k;
+  NFFT_INT max_i; /**< number of iterations             */
+  NFFT_INT m;
   NFFT_R temp1, temp2, E_max = NFFT_K(0.0);
   FILE *fp1, *fp2;
   char filename[30];
-  int logN;
+  NFFT_INT logN;
 
   if (argc != 4)
   {
@@ -410,8 +410,8 @@ int main(int argc, char **argv)
     if (fp1 == NULL)
       return (-1);
     for (logN = 4; logN <= 8; logN++)
-      comparison_fft(fp1, (int)(1U << logN), 3 * (int)(1U << logN),
-          3 * (int)(1U << (logN - 1)));
+      comparison_fft(fp1, (NFFT_INT)(1U << logN), 3 * (NFFT_INT)(1U << logN),
+          3 * (NFFT_INT)(1U << (logN - 1)));
     fclose(fp1);
 
     return EXIT_FAILURE;

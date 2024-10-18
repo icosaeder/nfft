@@ -28,10 +28,10 @@
 #include <omp.h>
 #endif
 
-void bench_openmp_readfile(FILE *infile, int *trafo_adjoint, int *N, int *M, double **x, C **f_hat, C **f)
+void bench_openmp_readfile(FILE *infile, NFFT_INT *trafo_adjoint, NFFT_INT *N, NFFT_INT *M, double **x, C **f_hat, C **f)
 {
   double re,im;
-  int k, n, j, t;
+  NFFT_INT k, n, j, t;
   nfsft_plan plan;
 
   fscanf(infile, "%d %d %d", trafo_adjoint, N, M);
@@ -83,12 +83,12 @@ void bench_openmp_readfile(FILE *infile, int *trafo_adjoint, int *N, int *M, dou
   nfsft_finalize(&plan);
 }
 
-void bench_openmp(int trafo_adjoint, int N, int M, double *x, C *f_hat, C *f, int m, int nfsft_flags, int psi_flags)
+void bench_openmp(NFFT_INT trafo_adjoint, NFFT_INT N, NFFT_INT M, double *x, C *f_hat, C *f, NFFT_INT m, int nfsft_flags, int psi_flags)
 {
   nfsft_plan plan;
-  int k, n;
-//  int N, M, trafo_adjoint;
-  int t, j;
+  NFFT_INT k, n;
+//  NFFT_INT N, M, trafo_adjoint;
+  NFFT_INT t, j;
   ticks t0, t1;
   double tt_total, tt_pre;
 
@@ -179,9 +179,10 @@ void bench_openmp(int trafo_adjoint, int N, int M, double *x, C *f_hat, C *f, in
 
 int main(int argc, char **argv)
 {
-  int m, nfsft_flags, psi_flags;
-  int nrepeat;
-  int trafo_adjoint, N, M, r;
+  NFFT_INT m;
+  int nfsft_flags, psi_flags;
+  NFFT_INT nrepeat;
+  NFFT_INT trafo_adjoint, N, M, r;
   double *x;
   C *f_hat, *f;
 #ifdef _OPENMP
@@ -198,10 +199,10 @@ int main(int argc, char **argv)
     return 1;
 #endif
 
-  m = atoi(argv[1]);
+  m = (NFFT_INT)atoi(argv[1]);
   nfsft_flags = atoi(argv[2]);
   psi_flags = atoi(argv[3]);
-  nrepeat = atoi(argv[4]);
+  nrepeat = (NFFT_INT)atoi(argv[4]);
 
   bench_openmp_readfile(stdin, &trafo_adjoint, &N, &M, &x, &f_hat, &f);
 

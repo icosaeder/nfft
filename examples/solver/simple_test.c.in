@@ -26,9 +26,9 @@
 
 #include "nfft3mp.h"
 
-/* void simple_test_infft_1d(int N, int M, int iter) */
+/* void simple_test_infft_1d(NFFT_INT N, NFFT_INT M, NFFT_INT iter) */
 /* { */
-/*   int k,l;                            /\**< index for nodes, freqencies,iter*\/ */
+/*   NFFT_INT k,l;                            /\**< index for nodes, freqencies,iter*\/ */
 /*   nfft_plan p;                          /\**< plan for the nfft               *\/ */
 /*   infft_plan ip;                        /\**< plan for the inverse nfft       *\/ */
 
@@ -83,9 +83,9 @@
 /* } */
 
 /** Simple test routine for the inverse nfft */
-static void simple_test_solver_nfft_1d(int N, int M, int iter)
+static void simple_test_solver_nfft_1d(NFFT_INT N, NFFT_INT M, NFFT_INT iter)
 {
-  int k, l; /**< index for nodes, freqencies,iter*/
+  NFFT_INT k, l; /**< index for nodes, freqencies,iter*/
   NFFT(plan) p; /**< plan for the nfft               */
   SOLVER(plan_complex) ip; /**< plan for the inverse nfft       */
   const char *error_str;

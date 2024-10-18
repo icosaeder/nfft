@@ -35,7 +35,7 @@
  * \{
  */
 
-C gaussian(R x, int der, const R *param)    /* K(x)=EXP(-x^2/c^2) */
+C gaussian(R x, NFFT_INT der, const R *param)    /* K(x)=EXP(-x^2/c^2) */
 {
   R c = param[0];
   R value = K(0.0);
@@ -61,7 +61,7 @@ C gaussian(R x, int der, const R *param)    /* K(x)=EXP(-x^2/c^2) */
   return value;
 }
 
-C multiquadric(R x, int der, const R *param)    /* K(x)=SQRT(x^2+c^2) */
+C multiquadric(R x, NFFT_INT der, const R *param)    /* K(x)=SQRT(x^2+c^2) */
 {
   R c=param[0];
   R value=K(0.0);
@@ -87,7 +87,7 @@ C multiquadric(R x, int der, const R *param)    /* K(x)=SQRT(x^2+c^2) */
   return value;
 }
 
-C inverse_multiquadric(R x, int der, const R *param)    /* K(x)=1/SQRT(x^2+c^2) */
+C inverse_multiquadric(R x, NFFT_INT der, const R *param)    /* K(x)=1/SQRT(x^2+c^2) */
 {
   R c=param[0];
   R value=K(0.0);
@@ -113,7 +113,7 @@ C inverse_multiquadric(R x, int der, const R *param)    /* K(x)=1/SQRT(x^2+c^2) 
   return value;
 }
 
-C logarithm(R x, int der, const R *param)    /* K(x)=LOG |x| */
+C logarithm(R x, NFFT_INT der, const R *param)    /* K(x)=LOG |x| */
 {
   R value=K(0.0);
 
@@ -146,7 +146,7 @@ C logarithm(R x, int der, const R *param)    /* K(x)=LOG |x| */
   return value;
 }
 
-C thinplate_spline(R x, int der, const R *param)    /* K(x) = x^2 LOG |x| */
+C thinplate_spline(R x, NFFT_INT der, const R *param)    /* K(x) = x^2 LOG |x| */
 {
   R value=K(0.0);
 
@@ -174,7 +174,7 @@ C thinplate_spline(R x, int der, const R *param)    /* K(x) = x^2 LOG |x| */
   return value;
 }
 
-C one_over_square(R x, int der, const R *param)    /* K(x) = 1/x^2 */
+C one_over_square(R x, NFFT_INT der, const R *param)    /* K(x) = 1/x^2 */
 {
   R value=K(0.0);
 
@@ -202,7 +202,7 @@ C one_over_square(R x, int der, const R *param)    /* K(x) = 1/x^2 */
   return value;
 }
 
-C one_over_modulus(R x, int der, const R *param)    /* K(x) = 1/|x| */
+C one_over_modulus(R x, NFFT_INT der, const R *param)    /* K(x) = 1/|x| */
 {
   R value=K(0.0);
 
@@ -230,7 +230,7 @@ C one_over_modulus(R x, int der, const R *param)    /* K(x) = 1/|x| */
   return value;
 }
 
-C one_over_x(R x, int der, const R *param)    /* K(x) = 1/x */
+C one_over_x(R x, NFFT_INT der, const R *param)    /* K(x) = 1/x */
 {
   R value=K(0.0);
 
@@ -258,7 +258,7 @@ C one_over_x(R x, int der, const R *param)    /* K(x) = 1/x */
   return value;
 }
 
-C inverse_multiquadric3(R x, int der, const R *param)    /* K(x) = 1/SQRT(x^2+c^2)^3 */
+C inverse_multiquadric3(R x, NFFT_INT der, const R *param)    /* K(x) = 1/SQRT(x^2+c^2)^3 */
 {
   R c=param[0];
   R value=K(0.0);
@@ -284,7 +284,7 @@ C inverse_multiquadric3(R x, int der, const R *param)    /* K(x) = 1/SQRT(x^2+c^
   return value;
 }
 
-C sinc_kernel(R x, int der, const R *param)    /* K(x) = SIN(cx)/x */
+C sinc_kernel(R x, NFFT_INT der, const R *param)    /* K(x) = SIN(cx)/x */
 {
   R c=param[0];
   R value=K(0.0);
@@ -311,7 +311,7 @@ C sinc_kernel(R x, int der, const R *param)    /* K(x) = SIN(cx)/x */
   return value;
 }
 
-C cosc(R x, int der, const R *param)    /* K(x) = COS(cx)/x */
+C cosc(R x, NFFT_INT der, const R *param)    /* K(x) = COS(cx)/x */
 {
   R c=param[0];
   R value=K(0.0);
@@ -343,7 +343,7 @@ C cosc(R x, int der, const R *param)    /* K(x) = COS(cx)/x */
   return value;
 }
 
-C kcot(R x, int der, const R *param)   /* K(x) = cot(cx) */
+C kcot(R x, NFFT_INT der, const R *param)   /* K(x) = cot(cx) */
 {
   R c=param[0];
   R value=K(0.0);
@@ -371,7 +371,7 @@ C kcot(R x, int der, const R *param)   /* K(x) = cot(cx) */
 }
 
 
-C one_over_cube(R x, int der, const R *param)
+C one_over_cube(R x, NFFT_INT der, const R *param)
 {
   R value=K(0.0);
   UNUSED(param);
@@ -399,7 +399,7 @@ C one_over_cube(R x, int der, const R *param)
 }
 
 
-C log_sin(R x, int der, const R *param)   /* K(x) = log(|sin(cx)|) */
+C log_sin(R x, NFFT_INT der, const R *param)   /* K(x) = log(|sin(cx)|) */
 {
   R c=param[0];
   R value=K(0.0);
@@ -414,7 +414,7 @@ C log_sin(R x, int der, const R *param)   /* K(x) = log(|sin(cx)|) */
   return value;
 }
 
-C laplacian_rbf(R x, int der, const R *param)    /* K(x)=EXP(-|x|/c) */
+C laplacian_rbf(R x, NFFT_INT der, const R *param)    /* K(x)=EXP(-|x|/c) */
 {
   R c = param[0];
   R value = K(0.0);
@@ -431,7 +431,7 @@ C laplacian_rbf(R x, int der, const R *param)    /* K(x)=EXP(-|x|/c) */
   return value;
 }
 
-C der_laplacian_rbf(R x, int der, const R *param)    /* K(x)=|x|/c EXP(-|x|/c) */
+C der_laplacian_rbf(R x, NFFT_INT der, const R *param)    /* K(x)=|x|/c EXP(-|x|/c) */
 {
   R c = param[0];
   R value = K(0.0);
@@ -447,7 +447,7 @@ C der_laplacian_rbf(R x, int der, const R *param)    /* K(x)=|x|/c EXP(-|x|/c) *
   return value;
 }
 
-C xx_gaussian(R x, int der, const R *param)    /* K(x)=x^2/c^2 EXP(-x^2/c^2) */
+C xx_gaussian(R x, NFFT_INT der, const R *param)    /* K(x)=x^2/c^2 EXP(-x^2/c^2) */
 {
   R c = param[0];
   R value = K(0.0);
@@ -473,7 +473,7 @@ C xx_gaussian(R x, int der, const R *param)    /* K(x)=x^2/c^2 EXP(-x^2/c^2) */
   return value / (c*c);
 }
 
-C absx(R x, int der, const R *param)    /* K(x)=|x| */
+C absx(R x, NFFT_INT der, const R *param)    /* K(x)=|x| */
 {
   R value=K(0.0);
 

@@ -35,9 +35,9 @@
 /**
  * reconstruct
  */
-static void reconstruct(char* filename,int N,int M,int iteration, int weight)
+static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration, NFFT_INT weight)
 {
-  int j,k,l;                    /* some variables  */
+  NFFT_INT j,k,l;                    /* some variables  */
   nnfft_plan my_plan;            /* plan for the two dimensional nfft  */
   solver_plan_complex my_iplan;          /* plan for the two dimensional infft */
   FILE* fin;                    /* input file                         */
@@ -45,7 +45,7 @@ static void reconstruct(char* filename,int N,int M,int iteration, int weight)
   FILE* ftime;
   FILE* fout_real;              /* output file                        */
   FILE* fout_imag;              /* output file                        */
-  int my_N[3],my_n[3];          /* to init the nfft */
+  NFFT_INT my_N[3],my_n[3];          /* to init the nfft */
   double t0, t1;
   double t,epsilon=0.0000003;     /* epsilon is a the break criterium for
                                    the iteration */
@@ -56,8 +56,8 @@ static void reconstruct(char* filename,int N,int M,int iteration, int weight)
 
   double Ts;
   double W;
-  int N3;
-  int m=2;
+  NFFT_INT N3;
+  NFFT_INT m=2;
   double sigma = 1.25;
 
   w = (double*)nfft_malloc(N*N*sizeof(double));
@@ -131,8 +131,8 @@ static void reconstruct(char* filename,int N,int M,int iteration, int weight)
   {
     for(j=0;j<N;j++){
       for(k=0;k<N;k++) {
-        int j2= j-N/2;
-        int k2= k-N/2;
+        NFFT_INT j2= j-N/2;
+        NFFT_INT k2= k-N/2;
         double r=sqrt(j2*j2+k2*k2);
         if(r>(double) N/2)
           my_iplan.w_hat[j*N+k]=0.0;

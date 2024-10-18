@@ -21,7 +21,7 @@
 #include "infft.h"
 #include "imex.h"
 
-int nfft_mex_get_int(const mxArray *p, const char *errmsg)
+NFFT_INT nfft_mex_get_int(const mxArray *p, const char *errmsg)
 {
   DM(if (!mxIsDouble(p) || mxIsComplex(p) || mxGetM(p) != 1 || mxGetN(p) != 1)
     mexErrMsgTxt(errmsg);)
@@ -35,9 +35,9 @@ double nfft_mex_get_double(const mxArray *p, const char *errmsg)
   return mxGetScalar(p);
 }
 
-void nfft_mex_get_nm(const mxArray *prhs[], int *n, int *m)
+void nfft_mex_get_nm(const mxArray *prhs[], NFFT_INT *n, NFFT_INT *m)
 {
-  int t = nfft_mex_get_int(prhs[1],"Input argument N must be a scalar.");
+  NFFT_INT t = nfft_mex_get_int(prhs[1],"Input argument N must be a scalar.");
   DM(if ((t < 0) || (t%2!=0))
     mexErrMsgTxt("Input argument N must be non-negative and multiple of two.");)
   *n = t;
@@ -47,9 +47,9 @@ void nfft_mex_get_nm(const mxArray *prhs[], int *n, int *m)
   *m = t;
 }
 
-void nfft_mex_get_nm_odd(const mxArray *prhs[], int *n, int *m)
+void nfft_mex_get_nm_odd(const mxArray *prhs[], NFFT_INT *n, NFFT_INT *m)
 {
-  int t = nfft_mex_get_int(prhs[1],"Input argument N must be a scalar.");
+  NFFT_INT t = nfft_mex_get_int(prhs[1],"Input argument N must be a scalar.");
   DM(if (t < 0)
     mexErrMsgTxt("Input argument N must be non-negative.");)
   *n = t;
@@ -59,9 +59,9 @@ void nfft_mex_get_nm_odd(const mxArray *prhs[], int *n, int *m)
   *m = t;
 }
 
-void nfft_mex_get_n1n2m(const mxArray *prhs[], int *n1, int *n2, int *m)
+void nfft_mex_get_n1n2m(const mxArray *prhs[], NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *m)
 {
-  int t = nfft_mex_get_int(prhs[1],"Input argument N1 must be a scalar.");
+  NFFT_INT t = nfft_mex_get_int(prhs[1],"Input argument N1 must be a scalar.");
   DM(if ((t < 0) || (t%2!=0))
     mexErrMsgTxt("Input argument N1 must be non-negative and even.");)
   *n1 = t;
@@ -77,9 +77,9 @@ void nfft_mex_get_n1n2m(const mxArray *prhs[], int *n1, int *n2, int *m)
   *m = t;
 }
 
-void nfft_mex_get_n1n2m_odd(const mxArray *prhs[], int *n1, int *n2, int *m)
+void nfft_mex_get_n1n2m_odd(const mxArray *prhs[], NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *m)
 {
-  int t = nfft_mex_get_int(prhs[1],"Input argument N1 must be a scalar.");
+  NFFT_INT t = nfft_mex_get_int(prhs[1],"Input argument N1 must be a scalar.");
   DM(if (t < 0)
     mexErrMsgTxt("Input argument N1 must be non-negative.");)
   *n1 = t;
@@ -95,9 +95,9 @@ void nfft_mex_get_n1n2m_odd(const mxArray *prhs[], int *n1, int *n2, int *m)
   *m = t;
 }
 
-void nfft_mex_get_n1n2n3m(const mxArray *prhs[], int *n1, int *n2, int *n3, int *m)
+void nfft_mex_get_n1n2n3m(const mxArray *prhs[], NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *n3, NFFT_INT *m)
 {
-  int t = nfft_mex_get_int(prhs[1],"Input argument N1 must be a scalar.");
+  NFFT_INT t = nfft_mex_get_int(prhs[1],"Input argument N1 must be a scalar.");
   DM(if ((t < 0) || (t%2!=0))
     mexErrMsgTxt("Input argument N1 must be non-negative and even.");)
   *n1 = t;
@@ -118,9 +118,9 @@ void nfft_mex_get_n1n2n3m(const mxArray *prhs[], int *n1, int *n2, int *n3, int 
   *m = t;
 }
 
-void nfft_mex_get_n1n2n3m_odd(const mxArray *prhs[], int *n1, int *n2, int *n3, int *m)
+void nfft_mex_get_n1n2n3m_odd(const mxArray *prhs[], NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *n3, NFFT_INT *m)
 {
-  int t = nfft_mex_get_int(prhs[1],"Input argument N1 must be a scalar.");
+  NFFT_INT t = nfft_mex_get_int(prhs[1],"Input argument N1 must be a scalar.");
   DM(if (t < 0)
     mexErrMsgTxt("Input argument N1 must be non-negative.");)
   *n1 = t;
@@ -141,17 +141,17 @@ void nfft_mex_get_n1n2n3m_odd(const mxArray *prhs[], int *n1, int *n2, int *n3, 
   *m = t;
 }
 
-void nfft_mex_check_nargs(const int nrhs, const int n, const char* errmsg)
+void nfft_mex_check_nargs(const NFFT_INT nrhs, const NFFT_INT n, const char* errmsg)
 {
   DM(if (nrhs != n)
     mexErrMsgTxt(errmsg);)
 }
 
-int nfft_mex_set_num_threads_check(const int nrhs, const mxArray *prhs[], void **plans, const int plans_num_allocated)
+NFFT_INT nfft_mex_set_num_threads_check(const NFFT_INT nrhs, const mxArray *prhs[], void **plans, const NFFT_INT plans_num_allocated)
 {
   nfft_mex_check_nargs(nrhs,2,"Wrong number of arguments for set_num_threads.");
 
-  int nthreads_new = nfft_mex_get_int(prhs[1],"Input argument nthreads must be a scalar.");
+  NFFT_INT nthreads_new = nfft_mex_get_int(prhs[1],"Input argument nthreads must be a scalar.");
 
   if (nthreads_new < 1)
     mexErrMsgTxt("Number of threads must be at least 1.");
@@ -159,11 +159,11 @@ int nfft_mex_set_num_threads_check(const int nrhs, const mxArray *prhs[], void *
   if (nthreads_new > 1 && !X(has_threads_enabled)())
     mexErrMsgTxt("Threads are not enabled.");
 
-  int nthreads_old = X(get_num_threads)();
+  NFFT_INT nthreads_old = X(get_num_threads)();
   if (nthreads_new != nthreads_old)
   {
-    int i;
-    int is_plan_allocated = 0;
+    NFFT_INT i;
+    NFFT_INT is_plan_allocated = 0;
     for (i = 0; i < plans_num_allocated; i++)
       if (plans[i] != 0)
       {

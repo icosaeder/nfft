@@ -32,9 +32,9 @@
  */
 
 typedef struct window_funct_plan_ {
-  int d;
-	int m;
-	int n[1];
+  NFFT_INT d;
+	NFFT_INT m;
+	NFFT_INT n[1];
 	double sigma[1];
 	double *b;
 } window_funct_plan;
@@ -42,7 +42,7 @@ typedef struct window_funct_plan_ {
 /**
  * init the window_funct_plan
  */
-static void window_funct_init(window_funct_plan* ths, int m, int n, double sigma) {
+static void window_funct_init(window_funct_plan* ths, NFFT_INT m, NFFT_INT n, double sigma) {
 	ths->d=1;
 	ths->m=m;
 	ths->n[0]=n;
@@ -55,7 +55,7 @@ static void window_funct_init(window_funct_plan* ths, int m, int n, double sigma
  */
 
 void mri_inh_2d1d_trafo(mri_inh_2d1d_plan *that) {
-  int l,j;
+  NFFT_INT l,j;
   double _Complex *f = (double _Complex*) nfft_malloc(that->M_total*sizeof(double _Complex));
   double _Complex *f_hat = (double _Complex*) nfft_malloc(that->N_total*sizeof(double _Complex));
 
@@ -102,7 +102,7 @@ void mri_inh_2d1d_trafo(mri_inh_2d1d_plan *that) {
 }
 
 void mri_inh_2d1d_adjoint(mri_inh_2d1d_plan *that) {
-  int l,j;
+  NFFT_INT l,j;
   double _Complex *f = (double _Complex*) nfft_malloc(that->M_total*sizeof(double _Complex));
   double _Complex *f_hat = (double _Complex*) nfft_malloc(that->N_total*sizeof(double _Complex));
 
@@ -153,8 +153,8 @@ void mri_inh_2d1d_adjoint(mri_inh_2d1d_plan *that) {
   nfft_free(ths);
 }
 
-void mri_inh_2d1d_init_guru(mri_inh_2d1d_plan *ths, int *N, int M, int *n,
-                    int m, double sigma, unsigned nfft_flags, unsigned fftw_flags) {
+void mri_inh_2d1d_init_guru(mri_inh_2d1d_plan *ths, NFFT_INT *N, NFFT_INT M, NFFT_INT *n,
+                    NFFT_INT m, double sigma, unsigned nfft_flags, unsigned fftw_flags) {
 
   nfft_init_guru(&ths->plan,2,N,M,n,m,nfft_flags,fftw_flags);
   ths->N3=N[2];
@@ -187,7 +187,7 @@ void mri_inh_2d1d_finalize(mri_inh_2d1d_plan *ths) {
  */
 
 void mri_inh_3d_trafo(mri_inh_3d_plan *that) {
-  int l,j;
+  NFFT_INT l,j;
   window_funct_plan *ths = (window_funct_plan*) nfft_malloc(sizeof(window_funct_plan));
 	window_funct_init(ths,that->plan.m,that->N3,that->sigma3);
 
@@ -219,7 +219,7 @@ void mri_inh_3d_trafo(mri_inh_3d_plan *that) {
 }
 
 void mri_inh_3d_adjoint(mri_inh_3d_plan *that) {
-  int l,j;
+  NFFT_INT l,j;
   window_funct_plan *ths = (window_funct_plan*) nfft_malloc(sizeof(window_funct_plan));
 	window_funct_init(ths,that->plan.m,that->N3,that->sigma3);
 
@@ -248,8 +248,8 @@ void mri_inh_3d_adjoint(mri_inh_3d_plan *that) {
   nfft_free(ths);
 }
 
-void mri_inh_3d_init_guru(mri_inh_3d_plan *ths, int *N, int M, int *n,
-                    int m, double sigma, unsigned nfft_flags, unsigned fftw_flags) {
+void mri_inh_3d_init_guru(mri_inh_3d_plan *ths, NFFT_INT *N, NFFT_INT M, NFFT_INT *n,
+                    NFFT_INT m, double sigma, unsigned nfft_flags, unsigned fftw_flags) {
   ths->N3=N[2];
 	ths->sigma3=sigma;
   nfft_init_guru(&ths->plan,3,N,M,n,m,nfft_flags,fftw_flags);

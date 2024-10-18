@@ -40,9 +40,9 @@ static NFFT_R my_weight(NFFT_R z, NFFT_R a, NFFT_R b, NFFT_R c)
 }
 
 /** Reconstruction routine */
-static void glacier(int N, int M)
+static void glacier(NFFT_INT N, NFFT_INT M)
 {
-  int j, k, k0, k1, l, my_N[2], my_n[2];
+  NFFT_INT j, k, k0, k1, l, my_N[2], my_n[2];
   NFFT_R tmp_y;
   NFFT(plan) p;
   SOLVER(plan_complex) ip;
@@ -50,9 +50,9 @@ static void glacier(int N, int M)
 
   /* initialise p */
   my_N[0] = N;
-  my_n[0] = (int)NFFT(next_power_of_2)(N);
+  my_n[0] = (NFFT_INT)NFFT(next_power_of_2)(N);
   my_N[1] = N;
-  my_n[1] = (int)NFFT(next_power_of_2)(N);
+  my_n[1] = (NFFT_INT)NFFT(next_power_of_2)(N);
   NFFT(init_guru)(&p, 2, my_N, M, my_n, 6,
   PRE_PHI_HUT | PRE_FULL_PSI |
   MALLOC_X | MALLOC_F_HAT | MALLOC_F |
@@ -106,21 +106,21 @@ static void glacier(int N, int M)
 }
 
 /** Reconstruction routine with cross validation */
-static void glacier_cv(int N, int M, int M_cv, unsigned solver_flags)
+static void glacier_cv(NFFT_INT N, NFFT_INT M, NFFT_INT M_cv, unsigned solver_flags)
 {
-  int j, k, k0, k1, l, my_N[2], my_n[2];
+  NFFT_INT j, k, k0, k1, l, my_N[2], my_n[2];
   NFFT_R tmp_y, r;
   NFFT(plan) p, cp;
   SOLVER(plan_complex) ip;
   NFFT_C* cp_y;
   FILE* fp;
-  int M_re = M - M_cv;
+  NFFT_INT M_re = M - M_cv;
 
   /* initialise p for reconstruction */
   my_N[0] = N;
-  my_n[0] = (int)NFFT(next_power_of_2)(N);
+  my_n[0] = (NFFT_INT)NFFT(next_power_of_2)(N);
   my_N[1] = N;
-  my_n[1] = (int)NFFT(next_power_of_2)(N);
+  my_n[1] = (NFFT_INT)NFFT(next_power_of_2)(N);
   NFFT(init_guru)(&p, 2, my_N, M_re, my_n, 6,
   PRE_PHI_HUT | PRE_FULL_PSI |
   MALLOC_X | MALLOC_F_HAT | MALLOC_F |
@@ -207,7 +207,7 @@ static void glacier_cv(int N, int M, int M_cv, unsigned solver_flags)
 /** Main routine */
 int main(int argc, char **argv)
 {
-  int M_cv;
+  NFFT_INT M_cv;
 
   if (argc < 3)
   {

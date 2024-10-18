@@ -41,24 +41,24 @@ extern "C"
  * \{
  */
 
-C gaussian(R x, int der, const R *param);              /**< K(x)=exp(-x^2/c^2) */
-C multiquadric(R x, int der, const R *param);          /**< K(x)=sqrt(x^2+c^2) */
-C inverse_multiquadric(R x, int der, const R *param);  /**< K(x)=1/sqrt(x^2+c^2) */
-C logarithm(R x, int der, const R *param);             /**< K(x)=log |x| */
-C thinplate_spline(R x, int der, const R *param);      /**< K(x) = x^2 log |x| */
-C one_over_square(R x, int der, const R *param);       /**< K(x) = 1/x^2 */
-C one_over_modulus(R x, int der, const R *param);      /**< K(x) = 1/|x| */
-C one_over_x(R x, int der, const R *param);            /**< K(x) = 1/x */
-C inverse_multiquadric3(R x, int der, const R *param); /**< K(x) = 1/sqrt(x^2+c^2)^3 */
-C sinc_kernel(R x, int der, const R *param);           /**< K(x) = sin(cx)/x */
-C cosc(R x, int der, const R *param);                  /**< K(x) = cos(cx)/x */
-C kcot(R x, int der, const R *param);                  /**< K(x) = cot(cx) */
-C one_over_cube(R x, int der, const R *param);         /**< K(x) = 1/x^3 */
-C log_sin(R x, int der, const R *param);               /**< K(x) = log(|sin(cx)|) */
-C laplacian_rbf(R x, int der, const R *param);         /**< K(x) = exp(-|x|/c) */
-C der_laplacian_rbf(R x, int der, const R *param);     /**< K(x) = |x|/c exp(-|x|/c) */
-C xx_gaussian(R x, int der, const R *param);           /**< K(x) = x^2/c^2 exp(-x^2/c^2) */
-C absx(R x, int der, const R *param);                  /**< K(x) = |x| */
+C gaussian(R x, NFFT_INT der, const R *param);              /**< K(x)=exp(-x^2/c^2) */
+C multiquadric(R x, NFFT_INT der, const R *param);          /**< K(x)=sqrt(x^2+c^2) */
+C inverse_multiquadric(R x, NFFT_INT der, const R *param);  /**< K(x)=1/sqrt(x^2+c^2) */
+C logarithm(R x, NFFT_INT der, const R *param);             /**< K(x)=log |x| */
+C thinplate_spline(R x, NFFT_INT der, const R *param);      /**< K(x) = x^2 log |x| */
+C one_over_square(R x, NFFT_INT der, const R *param);       /**< K(x) = 1/x^2 */
+C one_over_modulus(R x, NFFT_INT der, const R *param);      /**< K(x) = 1/|x| */
+C one_over_x(R x, NFFT_INT der, const R *param);            /**< K(x) = 1/x */
+C inverse_multiquadric3(R x, NFFT_INT der, const R *param); /**< K(x) = 1/sqrt(x^2+c^2)^3 */
+C sinc_kernel(R x, NFFT_INT der, const R *param);           /**< K(x) = sin(cx)/x */
+C cosc(R x, NFFT_INT der, const R *param);                  /**< K(x) = cos(cx)/x */
+C kcot(R x, NFFT_INT der, const R *param);                  /**< K(x) = cot(cx) */
+C one_over_cube(R x, NFFT_INT der, const R *param);         /**< K(x) = 1/x^3 */
+C log_sin(R x, NFFT_INT der, const R *param);               /**< K(x) = log(|sin(cx)|) */
+C laplacian_rbf(R x, NFFT_INT der, const R *param);         /**< K(x) = exp(-|x|/c) */
+C der_laplacian_rbf(R x, NFFT_INT der, const R *param);     /**< K(x) = |x|/c exp(-|x|/c) */
+C xx_gaussian(R x, NFFT_INT der, const R *param);           /**< K(x) = x^2/c^2 exp(-x^2/c^2) */
+C absx(R x, NFFT_INT der, const R *param);                  /**< K(x) = |x| */
 /* \} */
 
 #ifdef __cplusplus

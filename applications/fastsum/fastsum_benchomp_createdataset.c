@@ -27,9 +27,9 @@
 #include "nfft3.h"
 #include "infft.h"
 
-void fastsum_benchomp_createdataset(unsigned int d, int L, int M)
+void fastsum_benchomp_createdataset(unsigned int d, NFFT_INT L, NFFT_INT M)
 {
-  int t, j, k;
+  NFFT_INT t, j, k;
   R *x;
   R *y;
   C *alpha;
@@ -104,9 +104,9 @@ void fastsum_benchomp_createdataset(unsigned int d, int L, int M)
 
 int main(int argc, char **argv)
 {
-  int d;
-  int L;
-  int M;
+  NFFT_INT d;
+  NFFT_INT L;
+  NFFT_INT M;
 
   if (argc < 4)
   {

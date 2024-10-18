@@ -36,7 +36,7 @@
  */
 NFFT_INT Y(m2K)(const NFFT_INT m)
 {
-  int j = MIN(((int)(m)), ((int)((sizeof(m2K_) / sizeof(m2K_[0])) - 1)));
+  NFFT_INT j = MIN(((NFFT_INT)(m)), ((NFFT_INT)((sizeof(m2K_) / sizeof(m2K_[0])) - 1)));
   return (NFFT_INT)((1U << m2K_[j]) * (m + 2));
 }
 

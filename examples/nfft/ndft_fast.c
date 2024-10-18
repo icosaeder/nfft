@@ -82,9 +82,9 @@ static void ndft_pre_full_init(NFFT(plan) *ths, C *A)
 
 } /* ndft_pre_full_init */
 
-static void ndft_time(int N, int M, unsigned test_ndft, unsigned test_pre_full)
+static void ndft_time(NFFT_INT N, NFFT_INT M, unsigned test_ndft, unsigned test_pre_full)
 {
-  int r;
+  NFFT_INT r;
   R t, t_ndft, t_horner, t_pre_full, t_nfft;
   C *A = NULL;
   ticks t0, t1;
@@ -190,7 +190,7 @@ static void ndft_time(int N, int M, unsigned test_ndft, unsigned test_pre_full)
 
 int main(int argc, char **argv)
 {
-  int l, trial;
+  NFFT_INT l, trial;
 
   if (argc < 4)
   {
@@ -199,9 +199,9 @@ int main(int argc, char **argv)
   }
   else
   {
-    int arg2 = (atoi(argv[2]));
-    int arg3 = (atoi(argv[3]));
-    int arg4 = (atoi(argv[4]));
+    NFFT_INT arg2 = (NFFT_INT)atoi(argv[2]);
+    NFFT_INT arg3 = (NFFT_INT)atoi(argv[3]);
+    NFFT_INT arg4 = (NFFT_INT)atoi(argv[4]);
     fprintf(stderr, "Testing ndft, Horner-like ndft, fully precomputed ndft.\n");
     fprintf(stderr, "Columns: N, M, t_ndft, t_horner, t_pre_full, t_nfft\n\n");
 
@@ -212,8 +212,8 @@ int main(int argc, char **argv)
       {
         for (trial = 0; trial < arg4; trial++)
         {
-          int N = (int)(1U << l);
-          int M = (int)(1U << l);
+          NFFT_INT N = (NFFT_INT)(1U << l);
+          NFFT_INT M = (NFFT_INT)(1U << l);
           ndft_time(N, M, l <= 15 ? 1 : 0, l <= 13 ? 1 : 0);
         }
       }

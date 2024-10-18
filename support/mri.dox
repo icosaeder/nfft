@@ -54,7 +54,7 @@
  * \author Tobias Knopp
  */
 
-/*! \fn void mri_inh_2d1d_init_guru(mri_inh_2d1d_plan *ths, int *N, int M, int *n, int m, R sigma, unsigned nfft_flags, unsigned fftw_flags); \
+/*! \fn void mri_inh_2d1d_init_guru(mri_inh_2d1d_plan *ths, NFFT_INT *N, NFFT_INT M, NFFT_INT *n, NFFT_INT m, R sigma, unsigned nfft_flags, unsigned fftw_flags); \
  * 
  * Creates a transform plan.
  *

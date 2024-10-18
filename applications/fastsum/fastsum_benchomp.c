@@ -112,12 +112,12 @@ void run_test_init_output()
 
 typedef struct
 {
-  int d;
-  int L;
-  int M;
-  int n;
-  int m;
-  int p;
+  NFFT_INT d;
+  NFFT_INT L;
+  NFFT_INT M;
+  NFFT_INT n;
+  NFFT_INT m;
+  NFFT_INT p;
   char *kernel_name;
   R c;
   R eps_I;
@@ -144,7 +144,7 @@ typedef struct
   int nresults;
 } s_testset;
 
-void run_test(s_resval *res, int nrepeat, int n, int m, int p,
+void run_test(s_resval *res, int nrepeat, NFFT_INT n, NFFT_INT m, NFFT_INT p,
     char *kernel_name, R c, R eps_I, R eps_B, int nthreads)
 {
   char cmd[1025];
@@ -669,7 +669,7 @@ void fastsum_print_output_speedup_total_minus_indep(FILE *out,
   fflush(out);
 }
 
-void run_testset(s_testset *testset, int d, int L, int M, int n, int m, int p,
+void run_testset(s_testset *testset, NFFT_INT d, NFFT_INT L, NFFT_INT M, NFFT_INT n, NFFT_INT m, NFFT_INT p,
     char *kernel_name, R c, R eps_I, R eps_B,
     int *nthreads_array, int n_threads_array_size)
 {

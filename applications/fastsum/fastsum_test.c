@@ -48,15 +48,15 @@
 
 int main(int argc, char **argv)
 {
-  int j, k; /**< indices                 */
-  int d; /**< number of dimensions    */
-  int N; /**< number of source nodes  */
-  int M; /**< number of target nodes  */
-  int n; /**< expansion degree        */
-  int m; /**< cut-off parameter       */
-  int p; /**< degree of smoothness    */
+  NFFT_INT j, k; /**< indices                 */
+  NFFT_INT d; /**< number of dimensions    */
+  NFFT_INT N; /**< number of source nodes  */
+  NFFT_INT M; /**< number of target nodes  */
+  NFFT_INT n; /**< expansion degree        */
+  NFFT_INT m; /**< cut-off parameter       */
+  NFFT_INT p; /**< degree of smoothness    */
   const char *s; /**< name of kernel          */
-  C (*kernel)(R, int, const R *); /**< kernel function         */
+  C (*kernel)(R, NFFT_INT, const R *); /**< kernel function         */
   R c; /**< parameter for kernel    */
   fastsum_plan my_fastsum_plan; /**< plan for fast summation */
   C *direct; /**< array for direct computation */

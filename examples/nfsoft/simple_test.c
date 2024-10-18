@@ -26,14 +26,14 @@
 /* Include NFFT3 library header. */
 #include "nfft3.h"
 
-static void simple_test_nfsoft(int bw, int M)
+static void simple_test_nfsoft(NFFT_INT bw, NFFT_INT M)
 {
   nfsoft_plan plan_nfsoft; /**< Plan for the NFSOFT   */
   nfsoft_plan plan_ndsoft; /**< Plan for the NDSOFT   */
 
   double t0, t1;
-  int j; /** just an index*/
-  int k, m; /** the two parameters controlling the accuracy of the NFSOFT*/
+  NFFT_INT j; /** just an index*/
+  NFFT_INT k, m; /** the two parameters controlling the accuracy of the NFSOFT*/
   double d1, d2, d3; /** indeces for initializing the Euler angles*/
   double time, error; /**...self-explainatory*/
   unsigned int flags = NFSOFT_MALLOC_X | NFSOFT_MALLOC_F | NFSOFT_MALLOC_F_HAT; /**flags for memory allocation \see nfft3.h*/
@@ -177,8 +177,8 @@ static void simple_test_nfsoft(int bw, int M)
 
 int main(int argc, char **argv)
 {
-  int N; /**< The bandwidth N  */
-  int M; /**< The number of nodes M */
+  NFFT_INT N; /**< The bandwidth N  */
+  NFFT_INT M; /**< The number of nodes M */
 
   if (argc < 2)
   {

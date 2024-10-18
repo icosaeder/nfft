@@ -157,7 +157,7 @@ typedef ptrdiff_t NFFT_INT;
     ths->b[d])/SQRT(KPI*ths->b[d]))
   #define WINDOW_HELP_INIT \
     { \
-      int WINDOW_idx; \
+      NFFT_INT WINDOW_idx; \
       ths->b = (R*) Y(malloc)(ths->d*sizeof(R)); \
       for (WINDOW_idx = 0; WINDOW_idx < ths->d; WINDOW_idx++) \
         ths->b[WINDOW_idx]=(K(2.0)*ths->sigma[WINDOW_idx]) / \
@@ -215,7 +215,7 @@ typedef ptrdiff_t NFFT_INT;
                         : ths->b[d] / KPI))
   #define WINDOW_HELP_INIT \
     { \
-      int WINDOW_idx; \
+      NFFT_INT WINDOW_idx; \
       ths->b = (R*) Y(malloc)((size_t)(ths->d) * sizeof(R)); \
       for (WINDOW_idx = 0; WINDOW_idx < ths->d; WINDOW_idx++) \
         ths->b[WINDOW_idx] = (KPI * (K(2.0) - K(1.0) / ths->sigma[WINDOW_idx])); \
@@ -280,7 +280,7 @@ extern long double fmodl(long double, long double);
 extern long double remainderl(long double, long double);
 #endif
 #if HAVE_DECL_REMQUOL == 0
-extern long double remquol(long double x, long double y, int *);
+extern long double remquol(long double x, long double y, NFFT_INT *);
 #endif
 #if HAVE_DECL_FDIML == 0
 extern long double fdiml(long double, long double);
@@ -331,19 +331,19 @@ extern long double log1pl(long double);
 extern long double logbl(long double);
 #endif
 #if HAVE_DECL_ILOGBL == 0
-extern int ilogbl(long double);
+extern NFFT_INT ilogbl(long double);
 #endif
 #if HAVE_DECL_MODFL == 0
 extern long double modfl(long double, long double *);
 #endif
 #if HAVE_DECL_FREXPL == 0
-extern long double frexpl(long double, int *);
+extern long double frexpl(long double, NFFT_INT *);
 #endif
 #if HAVE_DECL_LDEXPL == 0
-extern long double ldexpl(long double, int);
+extern long double ldexpl(long double, NFFT_INT);
 #endif
 #if HAVE_DECL_SCALBNL == 0
-extern long double scalbnl(long double, int);
+extern long double scalbnl(long double, NFFT_INT);
 #endif
 #if HAVE_DECL_SCALBLNL == 0
 extern long double scalblnl(long double, long int);
@@ -403,7 +403,7 @@ extern long double j0l(long double);
 extern long double j1l(long double);
 #endif
 #if HAVE_DECL_JNL == 0
-extern long double jnl(int, long double);
+extern long double jnl(NFFT_INT, long double);
 #endif
 #if HAVE_DECL_Y0L == 0
 extern long double y0l(long double);
@@ -412,7 +412,7 @@ extern long double y0l(long double);
 extern long double y1l(long double);
 #endif
 #if HAVE_DECL_YNL == 0
-extern long double ynl(int, long double);
+extern long double ynl(NFFT_INT, long double);
 #endif
 #if HAVE_DECL_ERFL == 0
 extern long double erfl(long double);
@@ -617,7 +617,7 @@ extern float fmodf(float, float);
 extern float remainderf(float, float);
 #endif
 #if HAVE_DECL_REMQUOF == 0
-extern float remquof(float x, float y, int *);
+extern float remquof(float x, float y, NFFT_INT *);
 #endif
 #if HAVE_DECL_FDIMF == 0
 extern float fdimf(float, float);
@@ -668,19 +668,19 @@ extern float log1pf(float);
 extern float logbf(float);
 #endif
 #if HAVE_DECL_ILOGBF == 0
-extern int ilogbf(float);
+extern NFFT_INT ilogbf(float);
 #endif
 #if HAVE_DECL_MODFF == 0
 extern float modff(float, float *);
 #endif
 #if HAVE_DECL_FREXPF == 0
-extern float frexpf(float, int *);
+extern float frexpf(float, NFFT_INT *);
 #endif
 #if HAVE_DECL_LDEXPF == 0
-extern float ldexpf(float, int);
+extern float ldexpf(float, NFFT_INT);
 #endif
 #if HAVE_DECL_SCALBNF == 0
-extern float scalbnf(float, int);
+extern float scalbnf(float, NFFT_INT);
 #endif
 #if HAVE_DECL_SCALBLNF == 0
 extern float scalblnf(float, long int);
@@ -740,7 +740,7 @@ extern float j0f(float);
 extern float j1f(float);
 #endif
 #if HAVE_DECL_JNF == 0
-extern float jnf(int, float);
+extern float jnf(NFFT_INT, float);
 #endif
 #if HAVE_DECL_Y0F == 0
 extern float y0f(float);
@@ -749,7 +749,7 @@ extern float y0f(float);
 extern float y1f(float);
 #endif
 #if HAVE_DECL_YNF == 0
-extern float ynf(int, float);
+extern float ynf(NFFT_INT, float);
 #endif
 #if HAVE_DECL_ERFF == 0
 extern float erff(float);
@@ -954,7 +954,7 @@ extern double fmod(double, double);
 extern double remainder(double, double);
 #endif
 #if HAVE_DECL_REMQUO == 0
-extern double remquo(double x, double y, int *);
+extern double remquo(double x, double y, NFFT_INT *);
 #endif
 #if HAVE_DECL_FDIM == 0
 extern double fdim(double, double);
@@ -1005,19 +1005,19 @@ extern double log1p(double);
 extern double logb(double);
 #endif
 #if HAVE_DECL_ILOGB == 0
-extern int ilogb(double);
+extern NFFT_INT ilogb(double);
 #endif
 #if HAVE_DECL_MODF == 0
 extern double modf(double, double *);
 #endif
 #if HAVE_DECL_FREXP == 0
-extern double frexp(double, int *);
+extern double frexp(double, NFFT_INT *);
 #endif
 #if HAVE_DECL_LDEXP == 0
-extern double ldexp(double, int);
+extern double ldexp(double, NFFT_INT);
 #endif
 #if HAVE_DECL_SCALBN == 0
-extern double scalbn(double, int);
+extern double scalbn(double, NFFT_INT);
 #endif
 #if HAVE_DECL_SCALBLN == 0
 extern double scalbln(double, long int);
@@ -1077,7 +1077,7 @@ extern double j0(double);
 extern double j1(double);
 #endif
 #if HAVE_DECL_JN == 0
-extern double jn(int, double);
+extern double jn(NFFT_INT, double);
 #endif
 #if HAVE_DECL_Y0 == 0
 extern double y0(double);
@@ -1086,7 +1086,7 @@ extern double y0(double);
 extern double y1(double);
 #endif
 #if HAVE_DECL_YN == 0
-extern double yn(int, double);
+extern double yn(NFFT_INT, double);
 #endif
 #if HAVE_DECL_ERF == 0
 extern double erf(double);
@@ -1374,7 +1374,7 @@ R Y(elapsed_seconds)(ticks t1, ticks t0);
  *  ffts.
  */
 #ifdef MEASURE_TIME
- int MEASURE_TIME_r;
+ NFFT_INT MEASURE_TIME_r;
  double MEASURE_TIME_tt;
  ticks MEASURE_TIME_t0, MEASURE_TIME_t1;
 
@@ -1439,7 +1439,7 @@ R Y(prod_real)(R *vec, NFFT_INT d);
 /* int.c: */
 NFFT_INT Y(log2i)(const NFFT_INT m);
 void Y(next_power_of_2_exp)(const NFFT_INT N, NFFT_INT *N2, NFFT_INT *t);
-void Y(next_power_of_2_exp_int)(const int N, int *N2, int *t);
+void Y(next_power_of_2_exp_int)(const NFFT_INT N, NFFT_INT *N2, NFFT_INT *t);
 
 /* error.c: */
 /* not used */ R Y(error_l_infty_double)(const R *x, const R *y, const NFFT_INT n);
@@ -1453,7 +1453,7 @@ void Y(sort_node_indices_radix_msdf)(NFFT_INT n, NFFT_INT *keys0, NFFT_INT *keys
 void Y(sort_node_indices_radix_lsdf)(NFFT_INT n, NFFT_INT *keys0, NFFT_INT *keys1, NFFT_INT rhigh);
 
 /* assert.c */
-void Y(assertion_failed)(const char *s, int line, const char *file);
+void Y(assertion_failed)(const char *s, NFFT_INT line, const char *file);
 
 /* vector1.c */
 /** Computes the inner/dot product \f$x^H x\f$. */

@@ -27,13 +27,13 @@
 #include "nfft3.h"
 #include "infft.h"
 
-void nfft_benchomp_createdataset(unsigned int d, unsigned int trafo_adjoint, int *N, int M, double sigma)
+void nfft_benchomp_createdataset(unsigned int d, unsigned int trafo_adjoint, NFFT_INT *N, NFFT_INT M, double sigma)
 {
-  int n[d];
-  int t, j;
+  NFFT_INT n[d];
+  NFFT_INT t, j;
   R *x;
   C *f, *f_hat;
-  int N_total = 1;
+  NFFT_INT N_total = 1;
 
   for (t = 0; t < d; t++)
     N_total *= N[t];
@@ -92,10 +92,10 @@ void nfft_benchomp_createdataset(unsigned int d, unsigned int trafo_adjoint, int
 
 int main(int argc, char **argv)
 {
-  int d;
-  int *N;
-  int M;
-  int t;
+  NFFT_INT d;
+  NFFT_INT *N;
+  NFFT_INT M;
+  NFFT_INT t;
   int trafo_adjoint;
   double sigma;
 
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  d = atoi(argv[1]);
+  d = (NFFT_INT)atoi(argv[1]);
   
   fprintf(stderr, "d=%d", d);
 
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  N = malloc(d*sizeof(int));
+  N = malloc(d*sizeof(NFFT_INT));
 
   trafo_adjoint = atoi(argv[2]);
   if (trafo_adjoint < 0 && trafo_adjoint > 1)

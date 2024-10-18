@@ -21,8 +21,8 @@
 
 #include <stdbool.h>
 
-void fpt_precompute_1(fpt_set set, const int m, int k_start);
-void fpt_precompute_2(fpt_set set, const int m, double *alpha, double *beta, double *gam, int k_start, const double threshold);
+void fpt_precompute_1(fpt_set set, const NFFT_INT m, NFFT_INT k_start);
+void fpt_precompute_2(fpt_set set, const NFFT_INT m, double *alpha, double *beta, double *gam, NFFT_INT k_start, const double threshold);
 
 /**
  * Holds data for a single multiplication step in the cascade summation.
@@ -32,8 +32,8 @@ typedef struct fpt_step_
   bool stable;                            /**< Indicates if the values
                                                contained represent a fast or
                                                a slow stabilized step.        */
-  int Ns;                                 /**< TODO Add comment here.         */
-  int ts;                                 /**< TODO Add comment here.         */
+  NFFT_INT Ns;                                 /**< TODO Add comment here.         */
+  NFFT_INT ts;                                 /**< TODO Add comment here.         */
   double *a;                              /**< The matrix components          */
 //  double *a11,*a12,*a21,*a22;         /**< The matrix components          */
   double g;                              /**<                                */
@@ -45,7 +45,7 @@ typedef struct fpt_step_
 typedef struct fpt_data_
 {
   fpt_step **steps;                       /**< The cascade summation steps    */
-  int k_start;                            /**< TODO Add comment here.         */
+  NFFT_INT k_start;                            /**< TODO Add comment here.         */
   double *alphaN;                         /**< TODO Add comment here.         */
   double *betaN;                          /**< TODO Add comment here.         */
   double *gammaN;                         /**< TODO Add comment here.         */
@@ -65,10 +65,10 @@ typedef struct fpt_data_
 typedef struct fpt_set_s_
 {
   unsigned int flags;                     /**< The flags                     */
-  int M;                                  /**< The number of DPT transforms  */
-  int N;                                  /**< The transform length. Must be
+  NFFT_INT M;                                  /**< The number of DPT transforms  */
+  NFFT_INT N;                                  /**< The transform length. Must be
                                                a power of two.               */
-  int t;                                  /**< The exponent of N             */
+  NFFT_INT t;                                  /**< The exponent of N             */
   fpt_data *dpt;                          /**< The DPT transform data        */
   double **xcvecs;                        /**< Array of pointers to arrays
                                                containing the Chebyshev

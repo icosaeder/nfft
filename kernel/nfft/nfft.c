@@ -5655,7 +5655,7 @@ void X(adjoint_3d)(X(plan) *ths)
 void X(trafo)(X(plan) *ths)
 {
   /* use direct transform if degree N is too low */
-  for (int j = 0; j < ths->d; j++)
+  for (NFFT_INT j = 0; j < ths->d; j++)
   {
     if((ths->N[j] <= ths->m) || (ths->n[j] <= 2*ths->m+2))
     {
@@ -5703,7 +5703,7 @@ void X(trafo)(X(plan) *ths)
 void X(adjoint)(X(plan) *ths)
 {
   /* use direct transform if degree N is too low */
-  for (int j = 0; j < ths->d; j++)
+  for (NFFT_INT j = 0; j < ths->d; j++)
   {
     if((ths->N[j] <= ths->m) || (ths->n[j] <= 2*ths->m+2))
     {
@@ -6022,13 +6022,13 @@ static void init_help(X(plan) *ths)
     FFTW(plan_with_nthreads)(nthreads);
 #endif
     {
-      int *_n = Y(malloc)((size_t)(ths->d) * sizeof(int));
+      NFFT_INT *_n = Y(malloc)((size_t)(ths->d) * sizeof(NFFT_INT));
 
       for (t = 0; t < ths->d; t++)
-        _n[t] = (int)(ths->n[t]);
+        _n[t] = (NFFT_INT)(ths->n[t]);
 
-      ths->my_fftw_plan1 = FFTW(plan_dft)((int)ths->d, _n, ths->g1, ths->g2, FFTW_FORWARD, ths->fftw_flags);
-      ths->my_fftw_plan2 = FFTW(plan_dft)((int)ths->d, _n, ths->g2, ths->g1, FFTW_BACKWARD, ths->fftw_flags);
+      ths->my_fftw_plan1 = FFTW(plan_dft)((NFFT_INT)ths->d, _n, ths->g1, ths->g2, FFTW_FORWARD, ths->fftw_flags);
+      ths->my_fftw_plan2 = FFTW(plan_dft)((NFFT_INT)ths->d, _n, ths->g2, ths->g1, FFTW_BACKWARD, ths->fftw_flags);
       Y(free)(_n);
     }
 #ifdef _OPENMP
@@ -6045,7 +6045,7 @@ static void init_help(X(plan) *ths)
   ths->mv_adjoint = (void (*) (void* ))X(adjoint);
 }
 
-void X(init)(X(plan) *ths, int d, int *N, int M_total)
+void X(init)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total)
 {
   NFFT_INT t; /* index over all dimensions */
 
@@ -6086,7 +6086,7 @@ void X(init)(X(plan) *ths, int d, int *N, int M_total)
   init_help(ths);
 }
 
-void X(init_guru)(X(plan) *ths, int d, int *N, int M_total, int *n, int m,
+void X(init_guru)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total, NFFT_INT *n, NFFT_INT m,
   unsigned flags, unsigned fftw_flags)
 {
   NFFT_INT t; /* index over all dimensions */
@@ -6112,7 +6112,7 @@ void X(init_guru)(X(plan) *ths, int d, int *N, int M_total, int *n, int m,
   init_help(ths);
 }
 
-void X(init_lin)(X(plan) *ths, int d, int *N, int M_total, int *n, int m, int K,
+void X(init_lin)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total, NFFT_INT *n, NFFT_INT m, NFFT_INT K,
   unsigned flags, unsigned fftw_flags)
 {
   NFFT_INT t; /* index over all dimensions */
@@ -6138,27 +6138,27 @@ void X(init_lin)(X(plan) *ths, int d, int *N, int M_total, int *n, int m, int K,
   init_help(ths);
 }
 
-void X(init_1d)(X(plan) *ths, int N1, int M_total)
+void X(init_1d)(X(plan) *ths, NFFT_INT N1, NFFT_INT M_total)
 {
-  int N[1];
+  NFFT_INT N[1];
 
   N[0] = N1;
 
   X(init)(ths, 1, N, M_total);
 }
 
-void X(init_2d)(X(plan) *ths, int N1, int N2, int M_total)
+void X(init_2d)(X(plan) *ths, NFFT_INT N1, NFFT_INT N2, NFFT_INT M_total)
 {
-  int N[2];
+  NFFT_INT N[2];
 
   N[0] = N1;
   N[1] = N2;
   X(init)(ths, 2, N, M_total);
 }
 
-void X(init_3d)(X(plan) *ths, int N1, int N2, int N3, int M_total)
+void X(init_3d)(X(plan) *ths, NFFT_INT N1, NFFT_INT N2, NFFT_INT N3, NFFT_INT M_total)
 {
-  int N[3];
+  NFFT_INT N[3];
 
   N[0] = N1;
   N[1] = N2;

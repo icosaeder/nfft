@@ -68,32 +68,32 @@ enum modes {USE_GRID = 0, RANDOM = 1};
  */
 int main (int argc, char **argv)
 {
-  int tc;                      /**< The index variable for testcases          */
-  int tc_max;                  /**< The number of testcases                   */
+  NFFT_INT tc;                      /**< The index variable for testcases          */
+  NFFT_INT tc_max;                  /**< The number of testcases                   */
 
-  int *NQ;                     /**< The array containing the cut-off degrees  *
+  NFFT_INT *NQ;                     /**< The array containing the cut-off degrees  *
                                     \f$N\f$                                   */
-  int NQ_max;                  /**< The maximum cut-off degree \f$N\f$ for the*
+  NFFT_INT NQ_max;                  /**< The maximum cut-off degree \f$N\f$ for the*
                                     current testcase                          */
-  int *SQ;                     /**< The array containing the grid size
+  NFFT_INT *SQ;                     /**< The array containing the grid size
                                     parameters                                */
-  int SQ_max;                  /**< The maximum grid size parameter           */
-  int *RQ;                     /**< The array containing the grid size
+  NFFT_INT SQ_max;                  /**< The maximum grid size parameter           */
+  NFFT_INT *RQ;                     /**< The array containing the grid size
                                     parameters                                */
-  int iNQ;                     /**< Index variable for cut-off degrees        */
-  int iNQ_max;                 /**< The maximum number of cut-off degrees     */
-  int testfunction;            /**< The testfunction                          */
-  int N;                       /**< The test function's bandwidth             */
+  NFFT_INT iNQ;                     /**< Index variable for cut-off degrees        */
+  NFFT_INT iNQ_max;                 /**< The maximum number of cut-off degrees     */
+  NFFT_INT testfunction;            /**< The testfunction                          */
+  NFFT_INT N;                       /**< The test function's bandwidth             */
 
-  int use_nfsft;               /**< Whether to use the NFSFT algorithm or not */
-  int use_nfft;                /**< Whether to use the NFFT algorithm or not  */
-  int use_fpt;                 /**< Whether to use the FPT algorithm or not   */
-  int cutoff;                  /**< The current NFFT cut-off parameter        */
+  NFFT_INT use_nfsft;               /**< Whether to use the NFSFT algorithm or not */
+  NFFT_INT use_nfft;                /**< Whether to use the NFFT algorithm or not  */
+  NFFT_INT use_fpt;                 /**< Whether to use the FPT algorithm or not   */
+  NFFT_INT cutoff;                  /**< The current NFFT cut-off parameter        */
   double threshold;            /**< The current NFSFT threshold parameter     */
 
-  int gridtype;                /**< The type of quadrature grid to be used    */
-  int repetitions;             /**< The number of repetitions to be performed */
-  int mode;                    /**< The number of repetitions to be performed */
+  NFFT_INT gridtype;                /**< The type of quadrature grid to be used    */
+  NFFT_INT repetitions;             /**< The number of repetitions to be performed */
+  NFFT_INT mode;                    /**< The number of repetitions to be performed */
 
   double *w;                   /**< The quadrature weights                    */
   double *x_grid;              /**< The quadrature nodes                      */
@@ -113,28 +113,28 @@ int main (int argc, char **argv)
   double err_infty_avg;        /**< The average error \f$E_\infty\f$          */
   double err_2_avg;            /**< The average error \f$E_2\f$               */
 
-  int i;                       /**< A loop variable                           */
-  int k;                       /**< A loop variable                           */
-  int n;                       /**< A loop variable                           */
-  int d;                       /**< A loop variable                           */
+  NFFT_INT i;                       /**< A loop variable                           */
+  NFFT_INT k;                       /**< A loop variable                           */
+  NFFT_INT n;                       /**< A loop variable                           */
+  NFFT_INT d;                       /**< A loop variable                           */
 
-  int m_theta;                 /**< The current number of different           *
+  NFFT_INT m_theta;                 /**< The current number of different           *
                                     colatitudinal angles (for grids)          */
-  int m_phi;                   /**< The current number of different           *
+  NFFT_INT m_phi;                   /**< The current number of different           *
                                     longitudinal angles (for grids).          */
-  int m_total;                 /**< The total number nodes.                   */
+  NFFT_INT m_total;                 /**< The total number nodes.                   */
   double *theta;               /**< An array for saving the angles theta of a *
                                     grid                                      */
   double *phi;                 /**< An array for saving the angles phi of a   *
                                     grid                                      */
   fftw_plan fplan;             /**< An FFTW plan for computing Clenshaw-Curtis
                                     quadrature weights                        */
-  //int nside;                   /**< The size parameter for the HEALPix grid   */
-  int d2;
-  int M;
+  //NFFT_INT nside;                   /**< The size parameter for the HEALPix grid   */
+  NFFT_INT d2;
+  NFFT_INT M;
   double theta_s;
   double x1,x2,x3,temp;
-  int m_compare;
+  NFFT_INT m_compare;
   nfsft_plan *plan_adjoint_ptr;
   nfsft_plan *plan_ptr;
   double *w_temp;
@@ -270,11 +270,11 @@ int main (int argc, char **argv)
     fprintf(stdout,"%d\n",iNQ_max);
 
     /* Allocate memory for the cut-off degrees and grid size parameters. */
-    NQ = (int*) nfft_malloc(iNQ_max*sizeof(int));
-    SQ = (int*) nfft_malloc(iNQ_max*sizeof(int));
+    NQ = (NFFT_INT*) nfft_malloc(iNQ_max*sizeof(NFFT_INT));
+    SQ = (NFFT_INT*) nfft_malloc(iNQ_max*sizeof(NFFT_INT));
     if (testmode == TIMING)
     {
-      RQ = (int*) nfft_malloc(iNQ_max*sizeof(int));
+      RQ = (NFFT_INT*) nfft_malloc(iNQ_max*sizeof(NFFT_INT));
     }
 
     /* Read the cut-off degrees and grid size parameters. */
@@ -394,7 +394,7 @@ int main (int argc, char **argv)
             //fprintf(stderr,"ed: m_theta = %d\n",m_theta);
             for (k = 1; k < SQ[iNQ]; k++)
             {
-              m_theta += (int)floor((2*KPI)/acos((cos(KPI/(double)SQ[iNQ])-
+              m_theta += (NFFT_INT)floor((2*KPI)/acos((cos(KPI/(double)SQ[iNQ])-
                 cos(k*KPI/(double)SQ[iNQ])*cos(k*KPI/(double)SQ[iNQ]))/
                 (sin(k*KPI/(double)SQ[iNQ])*sin(k*KPI/(double)SQ[iNQ]))));
               //fprintf(stderr,"ed: m_theta = %d\n",m_theta);
@@ -622,7 +622,7 @@ int main (int argc, char **argv)
             for (k = 1; k < SQ[iNQ]; k++)
             {
               theta_s = (double)k*KPI/(double)SQ[iNQ];
-              M = (int)floor((2.0*KPI)/acos((cos(KPI/(double)SQ[iNQ])-
+              M = (NFFT_INT)floor((2.0*KPI)/acos((cos(KPI/(double)SQ[iNQ])-
                 cos(theta_s)*cos(theta_s))/(sin(theta_s)*sin(theta_s))));
 
               for (n = 0; n < M; n++)

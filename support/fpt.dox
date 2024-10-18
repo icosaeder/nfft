@@ -47,7 +47,7 @@
  \f]
  */
 
-/*! \fn fpt_set fpt_init(const int M, const int t, const unsigned int flags)
+/*! \fn fpt_set fpt_init(const NFFT_INT M, const NFFT_INT t, const unsigned int flags)
  * Initializes a set of precomputed data for DPT transforms of equal length.
  *
  * \arg M The maximum DPT transform index \f$M \in \mathbb{N}_0\f$. The
@@ -61,7 +61,7 @@
  * \author Jens Keiner
  */
 
-/*! \fn void fpt_precompute(fpt_set set, const int m, R *alpha, R *beta, R *gam, int k_start, const R threshold)
+/*! \fn void fpt_precompute(fpt_set set, const NFFT_INT m, R *alpha, R *beta, R *gam, NFFT_INT k_start, const R threshold)
  * Computes the data required for a single DPT transform.
  *
  * \arg set The set of DPT transform data where the computed data will be stored.
@@ -82,7 +82,7 @@
  * \author Jens Keiner
  */
 
-/*! \fn void fpt_direct_trafo(fpt_set set, const int m, const C *x, C *y, const int k_end, const unsigned int flags)
+/*! \fn void fpt_direct_trafo(fpt_set set, const NFFT_INT m, const C *x, C *y, const NFFT_INT k_end, const unsigned int flags)
  * Computes a single DPT transform.
  *
  * \arg set
@@ -93,7 +93,7 @@
  * \arg flags
  */
 
-/*! \fn void X(trafo)(X(set) set, const int m, const C *x, C *y, const int k_end, const unsigned int flags)
+/*! \fn void X(trafo)(X(set) set, const NFFT_INT m, const C *x, C *y, const NFFT_INT k_end, const unsigned int flags)
  * Computes a single DPT transform.
  *
  * \arg set
@@ -104,7 +104,7 @@
  * \arg flags
  */
 
-/*! \fn void fpt_direct_transposed(fpt_set set, const int m, C *x, C *y, const int k_end, const unsigned int flags)
+/*! \fn void fpt_direct_transposed(fpt_set set, const NFFT_INT m, C *x, C *y, const NFFT_INT k_end, const unsigned int flags)
  * Computes a single DPT transform.
  *
  * \arg set
@@ -115,7 +115,7 @@
  * \arg flags
  */
 
-/*! \fn void fpt_transposed(fpt_set set, const int m, C *x, C *y, const int k_end, const unsigned int flags)
+/*! \fn void fpt_transposed(fpt_set set, const NFFT_INT m, C *x, C *y, const NFFT_INT k_end, const unsigned int flags)
  * Computes a single DPT transform.
  *
  * \arg set

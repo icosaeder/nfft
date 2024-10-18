@@ -107,7 +107,7 @@
  * \author Stefan Kunis, Daniel Potts
  */
 
-/*! \fn void nfft_init_1d(nfft_plan *ths, int N1, int M)
+/*! \fn void nfft_init_1d(nfft_plan *ths, NFFT_INT N1, NFFT_INT M)
  * Initialisation of a transform plan, wrapper d=1.
  *
  * \arg ths The pointer to a nfft plan
@@ -117,7 +117,7 @@
  * \author Stefan Kunis, Daniel Potts
  */
 
-/*! \fn void nfft_init_2d(nfft_plan *ths, int N1, int N2, int M)
+/*! \fn void nfft_init_2d(nfft_plan *ths, NFFT_INT N1, NFFT_INT N2, NFFT_INT M)
  * Initialisation of a transform plan, wrapper d=2.
  *
  * \arg ths The pointer to a nfft plan
@@ -128,7 +128,7 @@
  * \author Stefan Kunis, Daniel Potts
  */
 
-/*! \fn void nfft_init_3d(nfft_plan *ths, int N1, int N2, int N3, int M)
+/*! \fn void nfft_init_3d(nfft_plan *ths, NFFT_INT N1, NFFT_INT N2, NFFT_INT N3, NFFT_INT M)
  * Initialisation of a transform plan, wrapper d=3.
  *
  * \arg ths The pointer to a nfft plan
@@ -140,7 +140,7 @@
  * \author Stefan Kunis, Daniel Potts
  */
 
-/*! \fn void nfft_init(nfft_plan *ths, int d, int *N, int M)
+/*! \fn void nfft_init(nfft_plan *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M)
  * Initialisation of a transform plan, simple.
  *
  * \arg ths The pointer to a nfft plan
@@ -151,7 +151,7 @@
  * \author Stefan Kunis, Daniel Potts
  */
 
-/*! \fn void nfft_init_advanced(nfft_plan *ths, int d, int *N, int M, unsigned flags_on, unsigned flags_off)
+/*! \fn void nfft_init_advanced(nfft_plan *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M, unsigned flags_on, unsigned flags_off)
  * Initialisation of a transform plan, advanced.
  * NOT YET IMPLEMENTED!!
  *
@@ -165,7 +165,7 @@
  * \author Stefan Kunis, Daniel Potts
  */
 
-/*! \fn void X(init_guru)(X(plan) *ths, int d, int *N, int M, int *n, int m, unsigned flags, unsigned fftw_flags)
+/*! \fn void X(init_guru)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M, NFFT_INT *n, NFFT_INT m, unsigned flags, unsigned fftw_flags)
  * Initialisation of a transform plan, guru.
  *
  * \arg ths The pointer to a nfft plan

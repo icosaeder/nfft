@@ -144,12 +144,12 @@ void Y(fftshift_complex)(C *x, NFFT_INT d, NFFT_INT* N)
 }
 
 /** Swaps each half over N[d]/2. */
-void Y(fftshift_complex_int)(C *x, int d, int* N)
+void Y(fftshift_complex_int)(C *x, NFFT_INT d, NFFT_INT* N)
 {
-  int d_pre, d_act, d_post;
-  int N_pre, N_act, N_post;
-  int k_pre, k_act, k_post;
-  int k, k_swap;
+  NFFT_INT d_pre, d_act, d_post;
+  NFFT_INT N_pre, N_act, N_post;
+  NFFT_INT k_pre, k_act, k_post;
+  NFFT_INT k, k_swap;
 
   C x_swap;
 

@@ -25,7 +25,7 @@
 /* One over sqrt(pi) */
 DK(KSQRTPII,0.56418958354775628694807945156077258584405062932900);
 
-static inline R alpha_al(const int k, const int n)
+static inline R alpha_al(const NFFT_INT k, const NFFT_INT n)
 {
   if (k > 0)
   {
@@ -44,7 +44,7 @@ static inline R alpha_al(const int k, const int n)
   return K(0.0);
 }
 
-static inline R beta_al(const int k, const int n)
+static inline R beta_al(const NFFT_INT k, const NFFT_INT n)
 {
   if (0 <= k && k < n)
     return K(1.0);
@@ -52,7 +52,7 @@ static inline R beta_al(const int k, const int n)
     return K(0.0);
 }
 
-static inline R gamma_al(const int k, const int n)
+static inline R gamma_al(const NFFT_INT k, const NFFT_INT n)
 {
   if (k == -1)
     return SQRT(KSQRTPII*nfft_lambda((R)(n),K(0.5)));
@@ -62,64 +62,64 @@ static inline R gamma_al(const int k, const int n)
     return -SQRT(((R)(k-n))/((R)(k-n+1))*((R)(k+n))/((R)(k+n+1)));
 }
 
-void alpha_al_row(R *alpha, const int N, const int n)
+void alpha_al_row(R *alpha, const NFFT_INT N, const NFFT_INT n)
 {
-  int j;
+  NFFT_INT j;
   R *p = alpha;
   for (j = -1; j <= N; j++)
     *p++ = alpha_al(j,n);
 }
 
-void beta_al_row(R *beta, const int N, const int n)
+void beta_al_row(R *beta, const NFFT_INT N, const NFFT_INT n)
 {
-  int j;
+  NFFT_INT j;
   R *p = beta;
   for (j = -1; j <= N; j++)
     *p++ = beta_al(j,n);
 }
 
-void gamma_al_row(R *gamma, const int N, const int n)
+void gamma_al_row(R *gamma, const NFFT_INT N, const NFFT_INT n)
 {
-  int j;
+  NFFT_INT j;
   R *p = gamma;
   for (j = -1; j <= N; j++)
     *p++ = gamma_al(j,n);
 }
 
-inline void alpha_al_all(R *alpha, const int N)
+inline void alpha_al_all(R *alpha, const NFFT_INT N)
 {
-  int i,j;
+  NFFT_INT i,j;
   R *p = alpha;
   for (i = 0; i <= N; i++)
     for (j = -1; j <= N; j++)
       *p++ = alpha_al(j,i);
 }
 
-inline void beta_al_all(R *alpha, const int N)
+inline void beta_al_all(R *alpha, const NFFT_INT N)
 {
-  int i,j;
+  NFFT_INT i,j;
   R *p = alpha;
   for (i = 0; i <= N; i++)
     for (j = -1; j <= N; j++)
       *p++ = beta_al(j,i);
 }
 
-inline void gamma_al_all(R *alpha, const int N)
+inline void gamma_al_all(R *alpha, const NFFT_INT N)
 {
-  int i,j;
+  NFFT_INT i,j;
   R *p = alpha;
   for (i = 0; i <= N; i++)
     for (j = -1; j <= N; j++)
       *p++ = gamma_al(j,i);
 }
 
-void eval_al(R *x, R *y, const int size, const int k, R *alpha,
+void eval_al(R *x, R *y, const NFFT_INT size, const NFFT_INT k, R *alpha,
   R *beta, R *gamma)
 {
   /* Evaluate the associated Legendre polynomial P_{k,nleg} (l,x) for the vector
    * of knots  x[0], ..., x[size-1] by the Clenshaw algorithm
    */
-  int i,j;
+  NFFT_INT i,j;
   R a,b,x_val_act,a_old;
   R *x_act, *y_act;
   R *alpha_act, *beta_act, *gamma_act;
@@ -158,13 +158,13 @@ void eval_al(R *x, R *y, const int size, const int k, R *alpha,
   }
 }
 
-int eval_al_thresh(R *x, R *y, const int size, const int k, R *alpha,
+NFFT_INT eval_al_thresh(R *x, R *y, const NFFT_INT size, const NFFT_INT k, R *alpha,
   R *beta, R *gamma, R threshold)
 {
   /* Evaluate the associated Legendre polynomial P_{k,nleg} (l,x) for the vector
    * of knots  x[0], ..., x[size-1] by the Clenshaw algorithm
    */
-  int i,j;
+  NFFT_INT i,j;
   R a,b,x_val_act,a_old;
   R *x_act, *y_act;
   R *alpha_act, *beta_act, *gamma_act;

@@ -45,29 +45,29 @@ static void voronoi_weights_S2(R *w, R *xi, NFFT_INT M)
   R *x;
   R *y;
   R *z;
-  int j;
-  int k;
-  int el;
-  int Mlocal = M;
-  int lnew;
-  int ier;
-  int *list;
-  int *lptr;
-  int *lend;
-  int *near;
-  int *next;
+  NFFT_INT j;
+  NFFT_INT k;
+  NFFT_INT el;
+  NFFT_INT Mlocal = M;
+  NFFT_INT lnew;
+  NFFT_INT ier;
+  NFFT_INT *list;
+  NFFT_INT *lptr;
+  NFFT_INT *lend;
+  NFFT_INT *near;
+  NFFT_INT *next;
   R  *dist;
-  int *ltri;
-  int *listc;
-  int nb;
+  NFFT_INT *ltri;
+  NFFT_INT *listc;
+  NFFT_INT nb;
   R *xc;
   R *yc;
   R *zc;
   R *rc;
   R *vr;
-  int lp;
-  int lpl;
-  int kv;
+  NFFT_INT lp;
+  NFFT_INT lpl;
+  NFFT_INT kv;
   R a;
 
   /* Allocate memory for auxilliary arrays. */
@@ -75,14 +75,14 @@ static void voronoi_weights_S2(R *w, R *xi, NFFT_INT M)
   y = (R*)X(malloc)(M * sizeof(R));
   z = (R*)X(malloc)(M * sizeof(R));
 
-  list = (int*)X(malloc)((6*M-12+1)*sizeof(int));
-  lptr = (int*)X(malloc)((6*M-12+1)*sizeof(int));
-  lend = (int*)X(malloc)((M+1)*sizeof(int));
-  near = (int*)X(malloc)((M+1)*sizeof(int));
-  next = (int*)X(malloc)((M+1)*sizeof(int));
+  list = (NFFT_INT*)X(malloc)((6*M-12+1)*sizeof(NFFT_INT));
+  lptr = (NFFT_INT*)X(malloc)((6*M-12+1)*sizeof(NFFT_INT));
+  lend = (NFFT_INT*)X(malloc)((M+1)*sizeof(NFFT_INT));
+  near = (NFFT_INT*)X(malloc)((M+1)*sizeof(NFFT_INT));
+  next = (NFFT_INT*)X(malloc)((M+1)*sizeof(NFFT_INT));
   dist = (R*)X(malloc)((M+1)*sizeof(R));
-  ltri = (int*)X(malloc)((6*M+1)*sizeof(int));
-  listc = (int*)X(malloc)((6*M-12+1)*sizeof(int));
+  ltri = (NFFT_INT*)X(malloc)((6*M+1)*sizeof(NFFT_INT));
+  listc = (NFFT_INT*)X(malloc)((6*M-12+1)*sizeof(NFFT_INT));
   xc = (R*)X(malloc)((2*M-4+1)*sizeof(R));
   yc = (R*)X(malloc)((2*M-4+1)*sizeof(R));
   zc = (R*)X(malloc)((2*M-4+1)*sizeof(R));
@@ -180,22 +180,22 @@ enum boolean {NO = 0, YES = 1};
  */
 int main (int argc, char **argv)
 {
-  int T;
-  int N;
-  int M;
-  int M2;
+  NFFT_INT T;
+  NFFT_INT N;
+  NFFT_INT M;
+  NFFT_INT M2;
 
-  int t;                       /* Index variable for testcases                */
+  NFFT_INT t;                       /* Index variable for testcases                */
   nfsft_plan plan;             /* NFSFT plan                                  */
   nfsft_plan plan2;            /* NFSFT plan                                  */
   solver_plan_complex iplan;           /* NFSFT plan                                  */
-  int j;                       /*                                             */
-  int k;                       /*                                             */
-  int m;                       /*                                             */
-  int use_nfsft;               /*                                             */
-  int use_nfft;                /*                                             */
-  int use_fpt;                 /*                                             */
-  int cutoff;                  /**< The current NFFT cut-off parameter        */
+  NFFT_INT j;                       /*                                             */
+  NFFT_INT k;                       /*                                             */
+  NFFT_INT m;                       /*                                             */
+  NFFT_INT use_nfsft;               /*                                             */
+  NFFT_INT use_nfft;                /*                                             */
+  NFFT_INT use_fpt;                 /*                                             */
+  NFFT_INT cutoff;                  /**< The current NFFT cut-off parameter        */
   double threshold;            /**< The current NFSFT threshold parameter     */
   double re;
   double im;
@@ -204,12 +204,12 @@ int main (int argc, char **argv)
   double *ys;
   double *temp;
   double _Complex *temp2;
-  int qlength;
+  NFFT_INT qlength;
   double *qweights;
   fftw_plan fplan;
   fpt_set set;
-  int npt;
-  int npt_exp;
+  NFFT_INT npt;
+  NFFT_INT npt_exp;
   double *alpha, *beta, *gamma;
 
   /* Read the number of testcases. */

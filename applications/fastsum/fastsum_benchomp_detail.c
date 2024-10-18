@@ -30,12 +30,12 @@
 #include <omp.h>
 #endif
 
-int bench_openmp(FILE *infile, int n, int m, int p,
-    C (*kernel)(R, int, const R *), R c, R eps_I, R eps_B)
+NFFT_INT bench_openmp(FILE *infile, NFFT_INT n, NFFT_INT m, NFFT_INT p,
+    C (*kernel)(R, NFFT_INT, const R *), R c, R eps_I, R eps_B)
 {
   fastsum_plan my_fastsum_plan;
-  int d, L, M;
-  int t, j;
+  NFFT_INT d, L, M;
+  NFFT_INT t, j;
   R re, im;
   R r_max = K(0.25) - my_fastsum_plan.eps_B / K(2.0);
   ticks t0, t1;
@@ -140,11 +140,11 @@ int bench_openmp(FILE *infile, int n, int m, int p,
 
 int main(int argc, char **argv)
 {
-  int n; /**< expansion degree        */
-  int m; /**< cut-off parameter       */
-  int p; /**< degree of smoothness    */
+  NFFT_INT n; /**< expansion degree        */
+  NFFT_INT m; /**< cut-off parameter       */
+  NFFT_INT p; /**< degree of smoothness    */
   char *s; /**< name of kernel          */
-  C (*kernel)(R, int, const R *); /**< kernel function         */
+  C (*kernel)(R, NFFT_INT, const R *); /**< kernel function         */
   R c; /**< parameter for kernel    */
   R eps_I; /**< inner boundary          */
   R eps_B; /**< outer boundary          */

@@ -34,7 +34,7 @@
 */
 static void short_nfft_trafo_2d(nfft_plan* ths, nfft_plan* plan_1d)
 {
-  int j,k0;
+  NFFT_INT j,k0;
   double omega;
 
   for(j=0;j<ths->M_total;j++)
@@ -59,7 +59,7 @@ static void short_nfft_trafo_2d(nfft_plan* ths, nfft_plan* plan_1d)
 
 static void short_nfft_adjoint_2d(nfft_plan* ths, nfft_plan* plan_1d)
 {
-  int j,k0;
+  NFFT_INT j,k0;
   double omega;
 
   for(j=0;j<ths->M_total;j++)
@@ -84,7 +84,7 @@ static void short_nfft_adjoint_2d(nfft_plan* ths, nfft_plan* plan_1d)
 */
 static void short_nfft_trafo_3d_1(nfft_plan* ths, nfft_plan* plan_1d)
 {
-  int j,k0,k1;
+  NFFT_INT j,k0,k1;
   double omega;
 
   for(j=0;j<ths->M_total;j++)
@@ -111,7 +111,7 @@ static void short_nfft_trafo_3d_1(nfft_plan* ths, nfft_plan* plan_1d)
 
 static void short_nfft_adjoint_3d_1(nfft_plan* ths, nfft_plan* plan_1d)
 {
-  int j,k0,k1;
+  NFFT_INT j,k0,k1;
   double omega;
 
   for(j=0;j<ths->M_total;j++)
@@ -138,7 +138,7 @@ static void short_nfft_adjoint_3d_1(nfft_plan* ths, nfft_plan* plan_1d)
 */
 static void short_nfft_trafo_3d_2(nfft_plan* ths, nfft_plan* plan_2d)
 {
-  int j,k0;
+  NFFT_INT j,k0;
   double omega;
 
   for(j=0;j<ths->M_total;j++)
@@ -164,7 +164,7 @@ static void short_nfft_trafo_3d_2(nfft_plan* ths, nfft_plan* plan_2d)
 
 static void short_nfft_adjoint_3d_2(nfft_plan* ths, nfft_plan* plan_2d)
 {
-  int j,k0;
+  NFFT_INT j,k0;
   double omega;
 
   for(j=0;j<ths->M_total;j++)
@@ -190,16 +190,16 @@ static void short_nfft_adjoint_3d_2(nfft_plan* ths, nfft_plan* plan_2d)
 /*---------------------------------------------------------------------------*/
 
 #ifdef GAUSSIAN
-static int index_sparse_to_full_direct_2d(int J, int k)
+static NFFT_INT index_sparse_to_full_direct_2d(NFFT_INT J, NFFT_INT k)
 {
-    int N=X(exp2i)(J+2);               /* number of full coeffs             */
-    int N_B=X(exp2i)(J);               /* number in each sparse block       */
+    NFFT_INT N=X(exp2i)(J+2);               /* number of full coeffs             */
+    NFFT_INT N_B=X(exp2i)(J);               /* number in each sparse block       */
 
-    int j=k/N_B;                        /* consecutive number of Block       */
-    int r=j/4;                          /* level of block                    */
+    NFFT_INT j=k/N_B;                        /* consecutive number of Block       */
+    NFFT_INT r=j/4;                          /* level of block                    */
 
-    int i, o, a, b,s,l,m1,m2;
-    int k1,k2;
+    NFFT_INT i, o, a, b,s,l,m1,m2;
+    NFFT_INT k1,k2;
 
     if (k>=(J+4)*X(exp2i)(J+1))
       {
@@ -311,7 +311,7 @@ static int index_sparse_to_full_direct_2d(int J, int k)
 }
 #endif
 
-static inline int index_sparse_to_full_2d(nsfft_plan *ths, int k)
+static inline NFFT_INT index_sparse_to_full_2d(nsfft_plan *ths, NFFT_INT k)
 {
   /* only by lookup table */
   if( k < ths->N_total)
@@ -321,15 +321,15 @@ static inline int index_sparse_to_full_2d(nsfft_plan *ths, int k)
 }
 
 #ifndef NSFTT_DISABLE_TEST
-static int index_full_to_sparse_2d(int J, int k)
+static NFFT_INT index_full_to_sparse_2d(NFFT_INT J, NFFT_INT k)
 {
-    int N=X(exp2i)(J+2);               /* number of full coeffs       */
-    int N_B=X(exp2i)(J);               /* number in each sparse block */
+    NFFT_INT N=X(exp2i)(J+2);               /* number of full coeffs       */
+    NFFT_INT N_B=X(exp2i)(J);               /* number in each sparse block */
 
-    int k1=k/N-N/2;                     /* coordinates in the full grid */
-    int k2=k%N-N/2;                     /* k1: row, k2: column          */
+    NFFT_INT k1=k/N-N/2;                     /* coordinates in the full grid */
+    NFFT_INT k2=k%N-N/2;                     /* k1: row, k2: column          */
 
-    int r,a,b;
+    NFFT_INT r,a,b;
 
     a=X(exp2i)(J/2+1);
 
@@ -379,7 +379,7 @@ static int index_full_to_sparse_2d(int J, int k)
 #ifdef GAUSSIAN
 static void init_index_sparse_to_full_2d(nsfft_plan *ths)
 {
-  int k_S;
+  NFFT_INT k_S;
 
   for (k_S=0; k_S<ths->N_total; k_S++)
     ths->index_sparse_to_full[k_S]=index_sparse_to_full_direct_2d(ths->J, k_S);
@@ -387,7 +387,7 @@ static void init_index_sparse_to_full_2d(nsfft_plan *ths)
 #endif
 
 #ifdef GAUSSIAN
-static inline int index_sparse_to_full_3d(nsfft_plan *ths, int k)
+static inline NFFT_INT index_sparse_to_full_3d(nsfft_plan *ths, NFFT_INT k)
 {
   /* only by lookup table */
   if( k < ths->N_total)
@@ -398,17 +398,17 @@ static inline int index_sparse_to_full_3d(nsfft_plan *ths, int k)
 #endif
 
 #ifndef NSFTT_DISABLE_TEST
-static int index_full_to_sparse_3d(int J, int k)
+static NFFT_INT index_full_to_sparse_3d(NFFT_INT J, NFFT_INT k)
 {
-  int N=X(exp2i)(J+2);                 /* length of the full grid           */
-  int N_B_r;                            /* size of a sparse block in level r */
-  int sum_N_B_less_r;                   /* sum N_B_r                         */
+  NFFT_INT N=X(exp2i)(J+2);                 /* length of the full grid           */
+  NFFT_INT N_B_r;                            /* size of a sparse block in level r */
+  NFFT_INT sum_N_B_less_r;                   /* sum N_B_r                         */
 
-  int r,a,b;
+  NFFT_INT r,a,b;
 
-  int k3=(k%N)-N/2;                     /* coordinates in the full grid      */
-  int k2=((k/N)%N)-N/2;
-  int k1=k/(N*N)-N/2;
+  NFFT_INT k3=(k%N)-N/2;                     /* coordinates in the full grid      */
+  NFFT_INT k2=((k/N)%N)-N/2;
+  NFFT_INT k1=k/(N*N)-N/2;
 
   a=X(exp2i)(J/2+1);                   /* length of center block            */
 
@@ -492,10 +492,10 @@ static int index_full_to_sparse_3d(int J, int k)
 #ifdef GAUSSIAN
 static void init_index_sparse_to_full_3d(nsfft_plan *ths)
 {
-  int k1,k2,k3,k_s,r;
-  int a,b;
-  int N=X(exp2i)(ths->J+2);            /* length of the full grid           */
-  int Nc=ths->center_nfft_plan->N[0];   /* length of the center block        */
+  NFFT_INT k1,k2,k3,k_s,r;
+  NFFT_INT a,b;
+  NFFT_INT N=X(exp2i)(ths->J+2);            /* length of the full grid           */
+  NFFT_INT Nc=ths->center_nfft_plan->N[0];   /* length of the center block        */
 
   for (k_s=0, r=0; r<=(ths->J+1)/2; r++)
     {
@@ -598,7 +598,7 @@ static void init_index_sparse_to_full_3d(nsfft_plan *ths)
 /* copies ths->f_hat to ths_plan->f_hat */
 void nsfft_cp(nsfft_plan *ths, nfft_plan *ths_full_plan)
 {
-  int k;
+  NFFT_INT k;
 
   /* initialize f_hat with zero values */
   memset(ths_full_plan->f_hat, 0, ths_full_plan->N_total*sizeof(double _Complex));
@@ -615,12 +615,12 @@ void nsfft_cp(nsfft_plan *ths, nfft_plan *ths_full_plan)
 /* test copy_sparse_to_full */
 static void test_copy_sparse_to_full_2d(nsfft_plan *ths, nfft_plan *ths_full_plan)
 {
-  int r;
-  int k1, k2;
-  int a,b;
-  const int J=ths->J;   /* N=2^J                  */
-  const int N=ths_full_plan->N[0];  /* size of full NFFT      */
-  const int N_B=X(exp2i)(J);        /* size of small blocks   */
+  NFFT_INT r;
+  NFFT_INT k1, k2;
+  NFFT_INT a,b;
+  const NFFT_INT J=ths->J;   /* N=2^J                  */
+  const NFFT_INT N=ths_full_plan->N[0];  /* size of full NFFT      */
+  const NFFT_INT N_B=X(exp2i)(J);        /* size of small blocks   */
 
   /* copy sparse plan to full plan */
   nsfft_cp(ths, ths_full_plan);
@@ -683,8 +683,8 @@ static void test_copy_sparse_to_full_2d(nsfft_plan *ths, nfft_plan *ths_full_pla
 #ifndef NSFTT_DISABLE_TEST
 static void test_sparse_to_full_2d(nsfft_plan* ths)
 {
-  int k_S,k1,k2;
-  int N=X(exp2i)(ths->J+2);
+  NFFT_INT k_S,k1,k2;
+  NFFT_INT N=X(exp2i)(ths->J+2);
 
   printf("N=%d\n\n",N);
 
@@ -702,8 +702,8 @@ static void test_sparse_to_full_2d(nsfft_plan* ths)
 #ifndef NSFTT_DISABLE_TEST
 static void test_sparse_to_full_3d(nsfft_plan* ths)
 {
-  int k_S,k1,k2,k3;
-  int N=X(exp2i)(ths->J+2);
+  NFFT_INT k_S,k1,k2,k3;
+  NFFT_INT N=X(exp2i)(ths->J+2);
 
   printf("N=%d\n\n",N);
 
@@ -722,7 +722,7 @@ static void test_sparse_to_full_3d(nsfft_plan* ths)
 
 void nsfft_init_random_nodes_coeffs(nsfft_plan *ths)
 {
-  int j;
+  NFFT_INT j;
 
   /* init frequencies */
   nfft_vrand_unit_complex(ths->f_hat, ths->N_total);
@@ -759,9 +759,9 @@ void nsfft_init_random_nodes_coeffs(nsfft_plan *ths)
 
 static void nsdft_trafo_2d(nsfft_plan *ths)
 {
-  int j,k_S,k_L,k0,k1;
+  NFFT_INT j,k_S,k_L,k0,k1;
   double omega;
-  int N=X(exp2i)(ths->J+2);
+  NFFT_INT N=X(exp2i)(ths->J+2);
 
   memset(ths->f,0,ths->M_total*sizeof(double _Complex));
 
@@ -783,10 +783,10 @@ static void nsdft_trafo_2d(nsfft_plan *ths)
 
 static void nsdft_trafo_3d(nsfft_plan *ths)
 {
-  int j,k_S,k0,k1,k2;
+  NFFT_INT j,k_S,k0,k1,k2;
   double omega;
-  int N=X(exp2i)(ths->J+2);
-  int k_L;
+  NFFT_INT N=X(exp2i)(ths->J+2);
+  NFFT_INT k_L;
 
   memset(ths->f,0,ths->M_total*sizeof(double _Complex));
 
@@ -819,9 +819,9 @@ void nsfft_trafo_direct(nsfft_plan *ths)
 
 static void nsdft_adjoint_2d(nsfft_plan *ths)
 {
-  int j,k_S,k_L,k0,k1;
+  NFFT_INT j,k_S,k_L,k0,k1;
   double omega;
-  int N=X(exp2i)(ths->J+2);
+  NFFT_INT N=X(exp2i)(ths->J+2);
 
   memset(ths->f_hat,0,ths->N_total*sizeof(double _Complex));
 
@@ -843,10 +843,10 @@ static void nsdft_adjoint_2d(nsfft_plan *ths)
 
 static void nsdft_adjoint_3d(nsfft_plan *ths)
 {
-  int j,k_S,k0,k1,k2;
+  NFFT_INT j,k_S,k0,k1,k2;
   double omega;
-  int N=X(exp2i)(ths->J+2);
-  int k_L;
+  NFFT_INT N=X(exp2i)(ths->J+2);
+  NFFT_INT k_L;
 
   memset(ths->f_hat,0,ths->N_total*sizeof(double _Complex));
 
@@ -879,11 +879,11 @@ void nsfft_adjoint_direct(nsfft_plan *ths)
 
 static void nsfft_trafo_2d(nsfft_plan *ths)
 {
-  int r,rr,j;
+  NFFT_INT r,rr,j;
   double temp;
 
-  int M=ths->M_total;
-  int J=ths->J;
+  NFFT_INT M=ths->M_total;
+  NFFT_INT J=ths->J;
 
   /* center */
   ths->center_nfft_plan->f_hat=ths->f_hat+4*((J+1)/2+1)*X(exp2i)(J);
@@ -995,11 +995,11 @@ static void nsfft_trafo_2d(nsfft_plan *ths)
 
 static void nsfft_adjoint_2d(nsfft_plan *ths)
 {
-  int r,rr,j;
+  NFFT_INT r,rr,j;
   double temp;
 
-  int M=ths->M_total;
-  int J=ths->J;
+  NFFT_INT M=ths->M_total;
+  NFFT_INT J=ths->J;
 
   /* center */
   for (j=0; j<M; j++)
@@ -1111,12 +1111,12 @@ static void nsfft_adjoint_2d(nsfft_plan *ths)
 
 static void nsfft_trafo_3d(nsfft_plan *ths)
 {
-  int r,rr,j;
+  NFFT_INT r,rr,j;
   double temp;
-  int sum_N_B_less_r,N_B_r,a,b;
+  NFFT_INT sum_N_B_less_r,N_B_r,a,b;
 
-  int M=ths->M_total;
-  int J=ths->J;
+  NFFT_INT M=ths->M_total;
+  NFFT_INT J=ths->J;
 
   /* center */
   ths->center_nfft_plan->f_hat=ths->f_hat+6*X(exp2i)(J)*(X(exp2i)((J+1)/2+1)-1);
@@ -1325,12 +1325,12 @@ static void nsfft_trafo_3d(nsfft_plan *ths)
 
 static void nsfft_adjoint_3d(nsfft_plan *ths)
 {
-  int r,rr,j;
+  NFFT_INT r,rr,j;
   double temp;
-  int sum_N_B_less_r,N_B_r,a,b;
+  NFFT_INT sum_N_B_less_r,N_B_r,a,b;
 
-  int M=ths->M_total;
-  int J=ths->J;
+  NFFT_INT M=ths->M_total;
+  NFFT_INT J=ths->J;
 
   /* center */
   for (j=0; j<M; j++)
@@ -1558,11 +1558,11 @@ void nsfft_adjoint(nsfft_plan *ths)
 /*========================================================*/
 /* J >1, no precomputation at all!! */
 #ifdef GAUSSIAN
-static void nsfft_init_2d(nsfft_plan *ths, int J, int M, int m, unsigned snfft_flags)
+static void nsfft_init_2d(nsfft_plan *ths, NFFT_INT J, NFFT_INT M, NFFT_INT m, unsigned snfft_flags)
 {
-  int r;
-  int N[2];
-  int n[2];
+  NFFT_INT r;
+  NFFT_INT N[2];
+  NFFT_INT n[2];
 
   ths->flags=snfft_flags;
   ths->sigma=2;
@@ -1634,7 +1634,7 @@ static void nsfft_init_2d(nsfft_plan *ths, int J, int M, int m, unsigned snfft_f
 
   if(ths->flags & NSDFT)
     {
-      ths->index_sparse_to_full=(int*)nfft_malloc(ths->N_total*sizeof(int));
+      ths->index_sparse_to_full=(NFFT_INT*)nfft_malloc(ths->N_total*sizeof(NFFT_INT));
       init_index_sparse_to_full_2d(ths);
     }
 }
@@ -1643,11 +1643,11 @@ static void nsfft_init_2d(nsfft_plan *ths, int J, int M, int m, unsigned snfft_f
 /*========================================================*/
 /* J >1, no precomputation at all!! */
 #ifdef GAUSSIAN
-static void nsfft_init_3d(nsfft_plan *ths, int J, int M, int m, unsigned snfft_flags)
+static void nsfft_init_3d(nsfft_plan *ths, NFFT_INT J, NFFT_INT M, NFFT_INT m, unsigned snfft_flags)
 {
-  int r,rr,a,b;
-  int N[3];
-  int n[3];
+  NFFT_INT r,rr,a,b;
+  NFFT_INT N[3];
+  NFFT_INT n[3];
 
   ths->flags=snfft_flags;
   ths->sigma=2;
@@ -1754,14 +1754,14 @@ static void nsfft_init_3d(nsfft_plan *ths, int J, int M, int m, unsigned snfft_f
 
   if(ths->flags & NSDFT)
     {
-      ths->index_sparse_to_full=(int*)nfft_malloc(ths->N_total*sizeof(int));
+      ths->index_sparse_to_full=(NFFT_INT*)nfft_malloc(ths->N_total*sizeof(NFFT_INT));
       init_index_sparse_to_full_3d(ths);
     }
 }
 #endif
 
 #ifdef GAUSSIAN
-void nsfft_init(nsfft_plan *ths, int d, int J, int M, int m, unsigned flags)
+void nsfft_init(nsfft_plan *ths, NFFT_INT d, NFFT_INT J, NFFT_INT M, NFFT_INT m, unsigned flags)
 {
   ths->d=d;
 
@@ -1775,7 +1775,7 @@ void nsfft_init(nsfft_plan *ths, int d, int J, int M, int m, unsigned flags)
   ths->mv_adjoint = (void (*) (void* ))nsfft_adjoint;
 }
 #else
-void nsfft_init(nsfft_plan *ths, int d, int J, int M, int m, unsigned flags)
+void nsfft_init(nsfft_plan *ths, NFFT_INT d, NFFT_INT J, NFFT_INT M, NFFT_INT m, unsigned flags)
 {
   UNUSED(ths);
   UNUSED(d);
@@ -1790,7 +1790,7 @@ void nsfft_init(nsfft_plan *ths, int d, int J, int M, int m, unsigned flags)
 
 static void nsfft_finalize_2d(nsfft_plan *ths)
 {
-  int r;
+  NFFT_INT r;
 
   if(ths->flags & NSDFT)
     nfft_free(ths->index_sparse_to_full);
@@ -1833,7 +1833,7 @@ static void nsfft_finalize_2d(nsfft_plan *ths)
 
 static void nsfft_finalize_3d(nsfft_plan *ths)
 {
-  int r;
+  NFFT_INT r;
 
   if(ths->flags & NSDFT)
     nfft_free(ths->index_sparse_to_full);

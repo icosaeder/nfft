@@ -35,9 +35,9 @@
 /**
  * construct makes an 2d-nfft
  */
-static void construct(char * file, int N, int M)
+static void construct(char * file, NFFT_INT N, NFFT_INT M)
 {
-  int j,k;            /* some variables */
+  NFFT_INT j,k;            /* some variables */
   double real;
   nfft_plan my_plan;  /* plan for the two dimensional nfft  */
   FILE* fp;

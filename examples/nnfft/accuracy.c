@@ -26,14 +26,14 @@
 #define CSWAP(x,y) {double _Complex * NFFT_SWAP_temp__; \
   NFFT_SWAP_temp__=(x); (x)=(y); (y)=NFFT_SWAP_temp__;}
 
-void accuracy(int d)
+void accuracy(NFFT_INT d)
 {
-  int m,t;
+  NFFT_INT m,t;
   nnfft_plan my_plan;
   double _Complex *slow;
 
-  int N[d],n[d];
-  int M_total,N_total;
+  NFFT_INT N[d],n[d];
+  NFFT_INT M_total,N_total;
   M_total=10000;N_total=1;
 
   slow=(double _Complex*)nfft_malloc(M_total*sizeof(double _Complex));
@@ -94,7 +94,7 @@ void accuracy(int d)
 
 int main(void)
 {
-  int d;
+  NFFT_INT d;
   for(d=1; d<4; d++)
     accuracy(d);
 

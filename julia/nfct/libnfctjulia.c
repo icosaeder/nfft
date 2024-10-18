@@ -18,14 +18,14 @@ nfct_plan* jnfct_alloc(void){
 	return p;
 }
 
-void jnfct_init(nfct_plan* p, int d, int* N, int M, int* n, int m, unsigned int f1, unsigned int f2){
+void jnfct_init(nfct_plan* p, NFFT_INT d, NFFT_INT* N, NFFT_INT M, NFFT_INT* n, NFFT_INT m, unsigned int f1, unsigned int f2){
     nfct_init_guru(p,d,N,M,n,m,f1,f2);
 }
 
 double* jnfct_set_x(nfct_plan* p, double* X){
-	int M = p->M_total;
-	int d = p->d;
-	int r,c;
+	NFFT_INT M = p->M_total;
+	NFFT_INT d = p->d;
+	NFFT_INT r,c;
 	for (r = 0; r < M; r++)
 		for (c = 0; c < d; c++)
 			p->x[d*r+c] = X[d*r+c];
@@ -35,8 +35,8 @@ double* jnfct_set_x(nfct_plan* p, double* X){
 
 // setting Fourier coefficients and returning pointer for access by Julia
 double* jnfct_set_fhat(nfct_plan* p,double* f_hat){
-	int n = p->N_total;
-	int k;
+	NFFT_INT n = p->N_total;
+	NFFT_INT k;
 	for (k=0;k<n;k++)
 		p->f_hat[k] = f_hat[k];
 	return p->f_hat;
@@ -44,8 +44,8 @@ double* jnfct_set_fhat(nfct_plan* p,double* f_hat){
 
 // setting values and returning pointer for access by Julia
 double* jnfct_set_f(nfct_plan* p,double* f){
-	int M = p->M_total;
-	int j;
+	NFFT_INT M = p->M_total;
+	NFFT_INT j;
 	for (j=0;j<M;j++)
 		p->f[j] = f[j];
 	return p->f;

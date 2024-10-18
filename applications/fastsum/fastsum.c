@@ -43,13 +43,13 @@
  */
 
 /** max */
-static int max_i(int a, int b)
+static NFFT_INT max_i(NFFT_INT a, NFFT_INT b)
 {
   return a >= b ? a : b;
 }
 
 /** factorial */
-static R fak(int n)
+static R fak(NFFT_INT n)
 {
   if (n <= 1)
     return K(1.0);
@@ -58,15 +58,15 @@ static R fak(int n)
 }
 
 /** binomial coefficient */
-static R binom(int n, int m)
+static R binom(NFFT_INT n, NFFT_INT m)
 {
   return fak(n) / fak(m) / fak(n - m);
 }
 
 /** basis polynomial for regularized kernel */
-static R BasisPoly(int m, int r, R xx)
+static R BasisPoly(NFFT_INT m, NFFT_INT r, R xx)
 {
-  int k;
+  NFFT_INT k;
   R sum = K(0.0);
 
   for (k = 0; k <= m - r; k++)
@@ -78,9 +78,9 @@ static R BasisPoly(int m, int r, R xx)
 }
 
 /** regularized kernel with K_I arbitrary and K_B smooth to zero */
-C regkern(kernel k, R xx, int p, const R *param, R a, R b)
+C regkern(kernel k, R xx, NFFT_INT p, const R *param, R a, R b)
 {
-  int r;
+  NFFT_INT r;
   C sum = K(0.0);
 
   if (xx < -K(0.5))
@@ -131,9 +131,9 @@ C regkern(kernel k, R xx, int p, const R *param, R a, R b)
 /** regularized kernel with K_I arbitrary and K_B periodized
  *  (used in 1D)
  */
-static C regkern1(kernel k, R xx, int p, const R *param, R a, R b)
+static C regkern1(kernel k, R xx, NFFT_INT p, const R *param, R a, R b)
 {
-  int r;
+  NFFT_INT r;
   C sum = K(0.0);
 
   if (xx < -K(0.5))
@@ -182,9 +182,9 @@ static C regkern1(kernel k, R xx, int p, const R *param, R a, R b)
 }
 
 /** regularized kernel for even kernels with K_I even and K_B mirrored */
-//static C regkern2(kernel k, R xx, int p, const R *param, R a, R b)
+//static C regkern2(kernel k, R xx, NFFT_INT p, const R *param, R a, R b)
 //{
-//  int r;
+//  NFFT_INT r;
 //  C sum = K(0.0);
 //
 //  xx = FABS(xx);
@@ -227,9 +227,9 @@ static C regkern1(kernel k, R xx, int p, const R *param, R a, R b)
 /** regularized kernel for even kernels with K_I even
  *  and K_B mirrored smooth to K(1/2) (used in dD, d>1)
  */
-static C regkern3(kernel k, R xx, int p, const R *param, R a, R b)
+static C regkern3(kernel k, R xx, NFFT_INT p, const R *param, R a, R b)
 {
-  int r;
+  NFFT_INT r;
   C sum = K(0.0);
 
   xx = FABS(xx);
@@ -269,14 +269,14 @@ static C regkern3(kernel k, R xx, int p, const R *param, R a, R b)
 }
 
 /** linear spline interpolation in near field with even kernels */
-//static C linintkern(const R x, const C *Add, const int Ad, const R a)
+//static C linintkern(const R x, const C *Add, const NFFT_INT Ad, const R a)
 //{
 //  R c, c1, c3;
-//  int r;
+//  NFFT_INT r;
 //  C f1, f2;
 //
 //  c = x * Ad / a;
-//  r = (int)(LRINT(c));
+//  r = (NFFT_INT)(LRINT(c));
 //  r = abs(r);
 //  f1 = Add[r];
 //  f2 = Add[r + 1];
@@ -286,14 +286,14 @@ static C regkern3(kernel k, R xx, int p, const R *param, R a, R b)
 //  return (-f1 * c3 + f2 * c1);
 //}
 //
-//static C quadrintkern(const R x, const C *Add, const int Ad, const R a)
+//static C quadrintkern(const R x, const C *Add, const NFFT_INT Ad, const R a)
 //{
 //  R c, c1, c2, c3;
-//  int r;
+//  NFFT_INT r;
 //  C f0, f1, f2;
 //
 //  c = x * Ad / a;
-//  r = (int)(LRINT(c));
+//  r = (NFFT_INT)(LRINT(c));
 //  r = abs(r);
 //  if (r == 0)
 //  {
@@ -315,13 +315,13 @@ static C regkern3(kernel k, R xx, int p, const R *param, R a, R b)
 //}
 
 /** cubic spline interpolation in near field with even kernels */
-C kubintkern(const R x, const C *Add, const int Ad, const R a)
+C kubintkern(const R x, const C *Add, const NFFT_INT Ad, const R a)
 {
   R c, c1, c2, c3, c4;
-  int r;
+  NFFT_INT r;
   C f0, f1, f2, f3;
   c = x * (R)(Ad) / a;
-  r = (int)(LRINT(c));
+  r = (NFFT_INT)(LRINT(c));
   r = abs(r);
   if (r == 0)
   {
@@ -349,14 +349,14 @@ C kubintkern(const R x, const C *Add, const int Ad, const R a)
 }
 
 /** cubic spline interpolation in near field with arbitrary kernels */
-static C kubintkern1(const R x, const C *Add, const int Ad, const R a)
+static C kubintkern1(const R x, const C *Add, const NFFT_INT Ad, const R a)
 {
   R c, c1, c2, c3, c4;
-  int r;
+  NFFT_INT r;
   C f0, f1, f2, f3;
   Add += 2;
   c = (x + a) * (R)(Ad) / K(2.0) / a;
-  r = (int)(LRINT(c));
+  r = (NFFT_INT)(LRINT(c));
   r = abs(r);
   /*if (r==0) {f0=Add[r];f1=Add[r];f2=Add[r+1];f3=Add[r+2];}
    else */
@@ -378,17 +378,17 @@ static C kubintkern1(const R x, const C *Add, const int Ad, const R a)
 }
 
 /** quicksort algorithm for source knots and associated coefficients */
-static void quicksort(int d, int t, R *x, C *alpha, int *permutation_x_alpha, int N)
+static void quicksort(NFFT_INT d, NFFT_INT t, R *x, C *alpha, NFFT_INT *permutation_x_alpha, NFFT_INT N)
 {
-  int lpos = 0;
-  int rpos = N - 1;
+  NFFT_INT lpos = 0;
+  NFFT_INT rpos = N - 1;
   /*R pivot=x[((N-1)/2)*d+t];*/
   R pivot = x[(N / 2) * d + t];
 
-  int k;
+  NFFT_INT k;
   R temp1;
   C temp2;
-  int temp_int;
+  NFFT_INT temp_int;
 
   while (lpos <= rpos)
   {
@@ -428,22 +428,22 @@ static void quicksort(int d, int t, R *x, C *alpha, int *permutation_x_alpha, in
 /** initialize box-based search data structures */
 static void BuildBox(fastsum_plan *ths)
 {
-  int t, l;
-  int *box_index;
+  NFFT_INT t, l;
+  NFFT_INT *box_index;
   R val[ths->d];
 
-  box_index = (int *) NFFT(malloc)((size_t)(ths->box_count) * sizeof(int));
+  box_index = (NFFT_INT *) NFFT(malloc)((size_t)(ths->box_count) * sizeof(NFFT_INT));
   for (t = 0; t < ths->box_count; t++)
     box_index[t] = 0;
 
   for (l = 0; l < ths->N_total; l++)
   {
-    int ind = 0;
+    NFFT_INT ind = 0;
     for (t = 0; t < ths->d; t++)
     {
       val[t] = ths->x[ths->d * l + t] + K(0.25) - ths->eps_B / K(2.0);
       ind *= ths->box_count_per_dim;
-      ind += (int) (val[t] / ths->eps_I);
+      ind += (NFFT_INT) (val[t] / ths->eps_I);
     }
     box_index[ind]++;
   }
@@ -457,12 +457,12 @@ static void BuildBox(fastsum_plan *ths)
 
   for (l = 0; l < ths->N_total; l++)
   {
-    int ind = 0;
+    NFFT_INT ind = 0;
     for (t = 0; t < ths->d; t++)
     {
       val[t] = ths->x[ths->d * l + t] + K(0.25) - ths->eps_B / K(2.0);
       ind *= ths->box_count_per_dim;
-      ind += (int) (val[t] / ths->eps_I);
+      ind += (NFFT_INT) (val[t] / ths->eps_I);
     }
 
     ths->box_alpha[box_index[ind]] = ths->alpha[l];
@@ -477,13 +477,13 @@ static void BuildBox(fastsum_plan *ths)
 }
 
 /** inner computation function for box-based near field correction */
-static inline C calc_SearchBox(int d, R *y, R *x, C *alpha, int start,
-    int end_lt, const C *Add, const int Ad, int p, R a, const kernel k,
+static inline C calc_SearchBox(NFFT_INT d, R *y, R *x, C *alpha, NFFT_INT start,
+    NFFT_INT end_lt, const C *Add, const NFFT_INT Ad, NFFT_INT p, R a, const kernel k,
     const R *param, const unsigned flags)
 {
   C result = K(0.0);
 
-  int m, l;
+  NFFT_INT m, l;
   R r;
 
   for (m = start; m < end_lt; m++)
@@ -533,14 +533,14 @@ static inline C calc_SearchBox(int d, R *y, R *x, C *alpha, int start,
 static C SearchBox(R *y, fastsum_plan *ths)
 {
   C val = K(0.0);
-  int t;
-  int y_multiind[ths->d];
-  int multiindex[ths->d];
-  int y_ind;
+  NFFT_INT t;
+  NFFT_INT y_multiind[ths->d];
+  NFFT_INT multiindex[ths->d];
+  NFFT_INT y_ind;
 
   for (t = 0; t < ths->d; t++)
   {
-    y_multiind[t] = (int)(LRINT((y[t] + K(0.25) - ths->eps_B / K(2.0)) / ths->eps_I));
+    y_multiind[t] = (NFFT_INT)(LRINT((y[t] + K(0.25) - ths->eps_B / K(2.0)) / ths->eps_I));
   }
 
   if (ths->d == 1)
@@ -596,11 +596,11 @@ static C SearchBox(R *y, fastsum_plan *ths)
 }
 
 /** recursive sort of source knots dimension by dimension to get tree structure */
-static void BuildTree(int d, int t, R *x, C *alpha, int *permutation_x_alpha, int N)
+static void BuildTree(NFFT_INT d, NFFT_INT t, R *x, C *alpha, NFFT_INT *permutation_x_alpha, NFFT_INT N)
 {
   if (N > 1)
   {
-    int m = N / 2;
+    NFFT_INT m = N / 2;
 
     quicksort(d, t, x, alpha, permutation_x_alpha, N);
 
@@ -610,9 +610,9 @@ static void BuildTree(int d, int t, R *x, C *alpha, int *permutation_x_alpha, in
 }
 
 /** fast search in tree of source knots for near field computation*/
-static C SearchTree(const int d, const int t, const R *x, const C *alpha,
-    const R *xmin, const R *xmax, const int N, const kernel k, const R *param,
-    const int Ad, const C *Add, const int p, const unsigned flags)
+static C SearchTree(const NFFT_INT d, const NFFT_INT t, const R *x, const C *alpha,
+    const R *xmin, const R *xmax, const NFFT_INT N, const kernel k, const R *param,
+    const NFFT_INT Ad, const C *Add, const NFFT_INT p, const unsigned flags)
 {
   if (N == 0)
   {
@@ -620,13 +620,13 @@ static C SearchTree(const int d, const int t, const R *x, const C *alpha,
   }
   else
   {
-      int m = N / 2;
+      NFFT_INT m = N / 2;
       R Min = xmin[t];
       R Max = xmax[t];
       R Median = x[m * d + t];
       R a = FABS(Max - Min) / 2;
-      int l;
-      int E = 0;
+      NFFT_INT l;
+      NFFT_INT E = 0;
       R r;
 
       if (Min > Median)
@@ -697,9 +697,9 @@ static C SearchTree(const int d, const int t, const R *x, const C *alpha,
 
 static void fastsum_precompute_kernel(fastsum_plan *ths)
 {
-  int j, k, t;
+  NFFT_INT j, k, t;
   NFFT_INT N[ths->d];
-  int n_total;
+  NFFT_INT n_total;
 #ifdef MEASURE_TIME
   ticks t0, t1;
 #endif
@@ -767,21 +767,21 @@ static void fastsum_precompute_kernel(fastsum_plan *ths)
   for (t = 0; t < ths->d; t++)
     N[t] = ths->n;
 
-  NFFT(fftshift_complex)(ths->b, (int)(ths->d), N);
+  NFFT(fftshift_complex)(ths->b, (NFFT_INT)(ths->d), N);
   FFTW(execute)(ths->fft_plan);
-  NFFT(fftshift_complex)(ths->b, (int)(ths->d), N);
+  NFFT(fftshift_complex)(ths->b, (NFFT_INT)(ths->d), N);
 #ifdef MEASURE_TIME
   t1 = getticks();
   ths->MEASURE_TIME_t[0] += nfft_elapsed_seconds(t1,t0);
 #endif
 }
 
-void fastsum_init_guru_kernel(fastsum_plan *ths, int d, kernel k, R *param,
-    unsigned flags, int nn, int p, R eps_I, R eps_B)
+void fastsum_init_guru_kernel(fastsum_plan *ths, NFFT_INT d, kernel k, R *param,
+    unsigned flags, NFFT_INT nn, NFFT_INT p, R eps_I, R eps_B)
 {
-  int t;
-  int N[d];
-  int n_total;
+  NFFT_INT t;
+  NFFT_INT N[d];
+  NFFT_INT n_total;
 #ifdef _OPENMP
   int nthreads = NFFT(get_num_threads)();
 #endif
@@ -835,13 +835,13 @@ void fastsum_init_guru_kernel(fastsum_plan *ths, int d, kernel k, R *param,
         }
 
 #if defined(NF_KUB)
-        ths->Ad = max_i(10, (int)(LRINT(CEIL(K(1.4) / POW(delta, K(1.0) / K(4.0))))));
+        ths->Ad = max_i(10, (NFFT_INT)(LRINT(CEIL(K(1.4) / POW(delta, K(1.0) / K(4.0))))));
         ths->Add = (C *) NFFT(malloc)((size_t)(ths->Ad + 3) * (sizeof(C)));
 #elif defined(NF_QUADR)
-        ths->Ad = (int)(LRINT(CEIL(K(2.2)/POW(delta,K(1.0)/K(3.0)))));
+        ths->Ad = (NFFT_INT)(LRINT(CEIL(K(2.2)/POW(delta,K(1.0)/K(3.0)))));
         ths->Add = (C *)NFFT(malloc)((size_t)(ths->Ad+3)*(sizeof(C)));
 #elif defined(NF_LIN)
-        ths->Ad = (int)(LRINT(CEIL(K(1.7)/pow(delta,K(1.0)/K(2.0)))));
+        ths->Ad = (NFFT_INT)(LRINT(CEIL(K(1.7)/pow(delta,K(1.0)/K(2.0)))));
         ths->Add = (C *)NFFT(malloc)((size_t)(ths->Ad+3)*(sizeof(C)));
 #else
 #error define NF_LIN or NF_QUADR or NF_KUB
@@ -884,10 +884,10 @@ void fastsum_init_guru_kernel(fastsum_plan *ths, int d, kernel k, R *param,
   fastsum_precompute_kernel(ths);
 }
 
-void fastsum_init_guru_source_nodes(fastsum_plan *ths, int N_total, int nn_oversampled, int m)
+void fastsum_init_guru_source_nodes(fastsum_plan *ths, NFFT_INT N_total, NFFT_INT nn_oversampled, NFFT_INT m)
 {
-  int t;
-  int N[ths->d], n[ths->d];
+  NFFT_INT t;
+  NFFT_INT N[ths->d], n[ths->d];
   unsigned sort_flags_adjoint = 0U;
 
   if (ths->d > 1)
@@ -929,12 +929,12 @@ void fastsum_init_guru_source_nodes(fastsum_plan *ths, int N_total, int nn_overs
   {
     if (ths->eps_I > 0.0)
     {
-      ths->box_count_per_dim = (int)(LRINT(FLOOR((K(0.5) - ths->eps_B) / ths->eps_I))) + 1;
+      ths->box_count_per_dim = (NFFT_INT)(LRINT(FLOOR((K(0.5) - ths->eps_B) / ths->eps_I))) + 1;
       ths->box_count = 1;
       for (t = 0; t < ths->d; t++)
         ths->box_count *= ths->box_count_per_dim;
 
-      ths->box_offset = (int *) NFFT(malloc)((size_t)(ths->box_count + 1) * sizeof(int));
+      ths->box_offset = (NFFT_INT *) NFFT(malloc)((size_t)(ths->box_count + 1) * sizeof(NFFT_INT));
 
       ths->box_alpha = (C *) NFFT(malloc)((size_t)(ths->N_total) * (sizeof(C)));
 
@@ -945,17 +945,17 @@ void fastsum_init_guru_source_nodes(fastsum_plan *ths, int N_total, int nn_overs
   {
     if ((ths->flags & STORE_PERMUTATION_X_ALPHA) && (ths->eps_I > 0.0))
     {
-      ths->permutation_x_alpha = (int *) NFFT(malloc)((size_t)(ths->N_total) * (sizeof(int)));
-      for (int i=0; i<ths->N_total; i++)
+      ths->permutation_x_alpha = (NFFT_INT *) NFFT(malloc)((size_t)(ths->N_total) * (sizeof(NFFT_INT)));
+      for (NFFT_INT i=0; i<ths->N_total; i++)
         ths->permutation_x_alpha[i] = i;
     }
   } /* search tree */
 }
 
-void fastsum_init_guru_target_nodes(fastsum_plan *ths, int M_total, int nn_oversampled, int m)
+void fastsum_init_guru_target_nodes(fastsum_plan *ths, NFFT_INT M_total, NFFT_INT nn_oversampled, NFFT_INT m)
 {
-  int t;
-  int N[ths->d], n[ths->d];
+  NFFT_INT t;
+  NFFT_INT N[ths->d], n[ths->d];
   unsigned sort_flags_trafo = 0U;
 
   if (ths->d > 1)
@@ -984,8 +984,8 @@ void fastsum_init_guru_target_nodes(fastsum_plan *ths, int M_total, int nn_overs
 }
 
 /** initialization of fastsum plan */
-void fastsum_init_guru(fastsum_plan *ths, int d, int N_total, int M_total,
-    kernel k, R *param, unsigned flags, int nn, int m, int p, R eps_I, R eps_B)
+void fastsum_init_guru(fastsum_plan *ths, NFFT_INT d, NFFT_INT N_total, NFFT_INT M_total,
+    kernel k, R *param, unsigned flags, NFFT_INT nn, NFFT_INT m, NFFT_INT p, R eps_I, R eps_B)
 {
   fastsum_init_guru_kernel(ths, d, k, param, flags, nn, p, eps_I, eps_B);
   fastsum_init_guru_source_nodes(ths, N_total, 2*nn, m);
@@ -1055,8 +1055,8 @@ void fastsum_finalize(fastsum_plan *ths)
 /** direct computation of sums */
 void fastsum_exact(fastsum_plan *ths)
 {
-  int j, k;
-  int t;
+  NFFT_INT j, k;
+  NFFT_INT t;
   R r;
 
 #ifdef _OPENMP
@@ -1179,7 +1179,7 @@ void fastsum_precompute(fastsum_plan *ths)
 /** fast NFFT-based summation */
 void fastsum_trafo(fastsum_plan *ths)
 {
-  int j, k, t;
+  NFFT_INT j, k, t;
 #ifdef MEASURE_TIME
   ticks t0, t1;
 #endif

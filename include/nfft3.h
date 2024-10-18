@@ -170,14 +170,14 @@ NFFT_EXTERN void X(adjoint)(X(plan) *ths);\
 NFFT_EXTERN void X(adjoint_1d)(X(plan) *ths);\
 NFFT_EXTERN void X(adjoint_2d)(X(plan) *ths);\
 NFFT_EXTERN void X(adjoint_3d)(X(plan) *ths);\
-NFFT_EXTERN void X(init_1d)(X(plan) *ths, int N1, int M);\
-NFFT_EXTERN void X(init_2d)(X(plan) *ths, int N1, int N2, int M);\
-NFFT_EXTERN void X(init_3d)(X(plan) *ths, int N1, int N2, int N3, int M);\
-NFFT_EXTERN void X(init)(X(plan) *ths, int d, int *N, int M);\
-NFFT_EXTERN void X(init_guru)(X(plan) *ths, int d, int *N, int M, int *n, \
-  int m, unsigned flags, unsigned fftw_flags);\
-NFFT_EXTERN void X(init_lin)(X(plan) *ths, int d, int *N, int M, int *n, \
-  int m, int K, unsigned flags, unsigned fftw_flags); \
+NFFT_EXTERN void X(init_1d)(X(plan) *ths, NFFT_INT N1, NFFT_INT M);\
+NFFT_EXTERN void X(init_2d)(X(plan) *ths, NFFT_INT N1, NFFT_INT N2, NFFT_INT M);\
+NFFT_EXTERN void X(init_3d)(X(plan) *ths, NFFT_INT N1, NFFT_INT N2, NFFT_INT N3, NFFT_INT M);\
+NFFT_EXTERN void X(init)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M);\
+NFFT_EXTERN void X(init_guru)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M, NFFT_INT *n, \
+  NFFT_INT m, unsigned flags, unsigned fftw_flags);\
+NFFT_EXTERN void X(init_lin)(X(plan) *ths, NFFT_INT d, NFFT_INT *N, NFFT_INT M, NFFT_INT *n, \
+  NFFT_INT m, NFFT_INT K, unsigned flags, unsigned fftw_flags); \
 NFFT_EXTERN void X(precompute_one_psi)(X(plan) *ths);\
 NFFT_EXTERN void X(precompute_psi)(X(plan) *ths);\
 NFFT_EXTERN void X(precompute_full_psi)(X(plan) *ths);\
@@ -264,12 +264,12 @@ typedef struct\
   R *spline_coeffs; /**< input for de Boor algorithm, if B_SPLINE or SINC_2m is defined   */\
 } X(plan);\
 \
-NFFT_EXTERN void X(init_1d)(X(plan) *ths_plan, int N0, int M_total); \
-NFFT_EXTERN void X(init_2d)(X(plan) *ths_plan, int N0, int N1, int M_total); \
-NFFT_EXTERN void X(init_3d)(X(plan) *ths_plan, int N0, int N1, int N2, int M_total); \
-NFFT_EXTERN void X(init)(X(plan) *ths_plan, int d, int *N, int M_total); \
-NFFT_EXTERN void X(init_guru)(X(plan) *ths_plan, int d, int *N, int M_total, int *n, \
-  int m, unsigned flags, unsigned fftw_flags); \
+NFFT_EXTERN void X(init_1d)(X(plan) *ths_plan, NFFT_INT N0, NFFT_INT M_total); \
+NFFT_EXTERN void X(init_2d)(X(plan) *ths_plan, NFFT_INT N0, NFFT_INT N1, NFFT_INT M_total); \
+NFFT_EXTERN void X(init_3d)(X(plan) *ths_plan, NFFT_INT N0, NFFT_INT N1, NFFT_INT N2, NFFT_INT M_total); \
+NFFT_EXTERN void X(init)(X(plan) *ths_plan, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total); \
+NFFT_EXTERN void X(init_guru)(X(plan) *ths_plan, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total, NFFT_INT *n, \
+  NFFT_INT m, unsigned flags, unsigned fftw_flags); \
 NFFT_EXTERN void X(precompute_one_psi)(X(plan) *ths);\
 NFFT_EXTERN void X(precompute_psi)(X(plan) *ths);\
 NFFT_EXTERN void X(precompute_full_psi)(X(plan) *ths);\
@@ -346,12 +346,12 @@ typedef struct\
   R X(full_psi_eps);\
 } X(plan);\
 \
-NFFT_EXTERN void X(init_1d)(X(plan) *ths_plan, int N0, int M_total); \
-NFFT_EXTERN void X(init_2d)(X(plan) *ths_plan, int N0, int N1, int M_total); \
-NFFT_EXTERN void X(init_3d)(X(plan) *ths_plan, int N0, int N1, int N2, int M_total); \
-NFFT_EXTERN void X(init)(X(plan) *ths_plan, int d, int *N, int M_total); \
-NFFT_EXTERN void X(init_guru)(X(plan) *ths_plan, int d, int *N, int M_total, int *n, \
-  int m, unsigned flags, unsigned fftw_flags); \
+NFFT_EXTERN void X(init_1d)(X(plan) *ths_plan, NFFT_INT N0, NFFT_INT M_total); \
+NFFT_EXTERN void X(init_2d)(X(plan) *ths_plan, NFFT_INT N0, NFFT_INT N1, NFFT_INT M_total); \
+NFFT_EXTERN void X(init_3d)(X(plan) *ths_plan, NFFT_INT N0, NFFT_INT N1, NFFT_INT N2, NFFT_INT M_total); \
+NFFT_EXTERN void X(init)(X(plan) *ths_plan, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total); \
+NFFT_EXTERN void X(init_guru)(X(plan) *ths_plan, NFFT_INT d, NFFT_INT *N, NFFT_INT M_total, NFFT_INT *n, \
+  NFFT_INT m, unsigned flags, unsigned fftw_flags); \
 NFFT_EXTERN void X(precompute_one_psi)(X(plan) *ths);\
 NFFT_EXTERN void X(precompute_psi)(X(plan) *ths);\
 NFFT_EXTERN void X(precompute_full_psi)(X(plan) *ths);\
@@ -391,34 +391,34 @@ typedef struct\
   /* api */\
   MACRO_MV_PLAN(C)\
 \
-  int d; /**< dimension, rank */\
+  NFFT_INT d; /**< dimension, rank */\
   R *sigma; /**< oversampling-factor */\
   R *a; /**< 1 + 2*m/N1 */\
-  int *N; /**< cut-off-frequencies */\
-  int *N1; /**< sigma*N */\
-  int *aN1; /**< sigma*a*N */\
-  int m; /**< cut-off parameter in time-domain*/\
+  NFFT_INT *N; /**< cut-off-frequencies */\
+  NFFT_INT *N1; /**< sigma*N */\
+  NFFT_INT *aN1; /**< sigma*a*N */\
+  NFFT_INT m; /**< cut-off parameter in time-domain*/\
   R *b; /**< shape parameters */\
-  int K; /**< number of precomp. uniform psi */\
-  int aN1_total; /**< aN1_total=aN1[0]* ... *aN1[d-1] */\
+  NFFT_INT K; /**< number of precomp. uniform psi */\
+  NFFT_INT aN1_total; /**< aN1_total=aN1[0]* ... *aN1[d-1] */\
   Z(plan) *direct_plan; /**< plan for the nfft */\
   unsigned nnfft_flags; /**< flags for precomputation, malloc*/\
-  int *n; /**< n=N1, for the window function */\
+  NFFT_INT *n; /**< n=N1, for the window function */\
   R *x; /**< nodes (in time/spatial domain) */\
   R *v; /**< nodes (in fourier domain) */\
   R *c_phi_inv; /**< precomputed data, matrix D */\
   R *psi; /**< precomputed data, matrix B */\
-  int size_psi; /**< only for thin B */\
-  int *psi_index_g; /**< only for thin B */\
-  int *psi_index_f; /**< only for thin B */\
+  NFFT_INT size_psi; /**< only for thin B */\
+  NFFT_INT *psi_index_g; /**< only for thin B */\
+  NFFT_INT *psi_index_f; /**< only for thin B */\
   C *F;\
   R *spline_coeffs; /**< input for de Boor algorithm, if B_SPLINE or SINC_2m is defined */\
 } X(plan);\
 \
-NFFT_EXTERN void X(init)(X(plan) *ths_plan, int d, int N_total, int M_total, int *N); \
-NFFT_EXTERN void X(init_1d)(X(plan) *ths_plan, int N, int M_total); \
-NFFT_EXTERN void X(init_guru)(X(plan) *ths_plan, int d, int N_total, int M_total, \
-  int *N, int *N1, int m, unsigned nnfft_flags); \
+NFFT_EXTERN void X(init)(X(plan) *ths_plan, NFFT_INT d, NFFT_INT N_total, NFFT_INT M_total, NFFT_INT *N); \
+NFFT_EXTERN void X(init_1d)(X(plan) *ths_plan, NFFT_INT N, NFFT_INT M_total); \
+NFFT_EXTERN void X(init_guru)(X(plan) *ths_plan, NFFT_INT d, NFFT_INT N_total, NFFT_INT M_total, \
+  NFFT_INT *N, NFFT_INT *N1, NFFT_INT m, unsigned nnfft_flags); \
 NFFT_EXTERN void X(trafo_direct)(X(plan) *ths_plan); \
 NFFT_EXTERN void X(adjoint_direct)(X(plan) *ths_plan); \
 NFFT_EXTERN void X(trafo)(X(plan) *ths_plan); \
@@ -458,14 +458,14 @@ typedef struct\
 {\
   MACRO_MV_PLAN(C)\
 \
-  int d; /**< dimension, rank; d = 2, 3 */\
-  int J; /**< problem size, i.e.,
+  NFFT_INT d; /**< dimension, rank; d = 2, 3 */\
+  NFFT_INT J; /**< problem size, i.e.,
                 d=2: N_total=(J+4) 2^(J+1)
                 d=3: N_total=2^J 6(2^((J+1)/2+1)-1)+2^(3(J/2+1)) */\
-  int sigma; /**< oversampling-factor */\
+  NFFT_INT sigma; /**< oversampling-factor */\
   unsigned flags; /**< flags for precomputation, malloc*/\
-  int *index_sparse_to_full; /**< index conversation, overflow for d=3, J=9! */\
-  int r_act_nfft_plan; /**< index of current nfft block */\
+  NFFT_INT *index_sparse_to_full; /**< index conversation, overflow for d=3, J=9! */\
+  NFFT_INT r_act_nfft_plan; /**< index of current nfft block */\
   Z(plan) *act_nfft_plan; /**< current nfft block */\
   Z(plan) *center_nfft_plan; /**< central nfft block */\
   Y(plan) *set_fftw_plan1; /**< fftw plan for the nfft blocks */\
@@ -482,7 +482,7 @@ NFFT_EXTERN void X(trafo)(X(plan) *ths); \
 NFFT_EXTERN void X(adjoint)(X(plan) *ths); \
 NFFT_EXTERN void X(cp)(X(plan) *ths, Z(plan) *ths_nfft); \
 NFFT_EXTERN void X(init_random_nodes_coeffs)(X(plan) *ths); \
-NFFT_EXTERN void X(init)(X(plan) *ths, int d, int J, int M, int m, unsigned flags); \
+NFFT_EXTERN void X(init)(X(plan) *ths, NFFT_INT d, NFFT_INT J, NFFT_INT M, NFFT_INT m, unsigned flags); \
 NFFT_EXTERN void X(finalize)(X(plan) *ths);
 
 /* nsfft api */
@@ -512,7 +512,7 @@ typedef struct\
 {\
   MACRO_MV_PLAN(C)\
   Z(plan) plan;\
-  int N3;\
+  NFFT_INT N3;\
   R sigma3;\
   R *t;\
   R *w;\
@@ -522,7 +522,7 @@ typedef struct\
 {\
   MACRO_MV_PLAN(C)\
   Z(plan) plan;\
-  int N3;\
+  NFFT_INT N3;\
   R sigma3;\
   R *t;\
   R *w;\
@@ -530,13 +530,13 @@ typedef struct\
 \
 void X(inh_2d1d_trafo)(X(inh_2d1d_plan) *ths); \
 void X(inh_2d1d_adjoint)(X(inh_2d1d_plan) *ths); \
-void X(inh_2d1d_init_guru)(X(inh_2d1d_plan) *ths, int *N, int M, int *n, \
-  int m, R sigma, unsigned nfft_flags, unsigned fftw_flags); \
+void X(inh_2d1d_init_guru)(X(inh_2d1d_plan) *ths, NFFT_INT *N, NFFT_INT M, NFFT_INT *n, \
+  NFFT_INT m, R sigma, unsigned nfft_flags, unsigned fftw_flags); \
 void X(inh_2d1d_finalize)(X(inh_2d1d_plan) *ths); \
 void X(inh_3d_trafo)(X(inh_3d_plan) *ths); \
 void X(inh_3d_adjoint)(X(inh_3d_plan) *ths); \
-void X(inh_3d_init_guru)(X(inh_3d_plan) *ths, int *N, int M, int *n, \
-  int m, R sigma, unsigned nfft_flags, unsigned fftw_flags); \
+void X(inh_3d_init_guru)(X(inh_3d_plan) *ths, NFFT_INT *N, NFFT_INT M, NFFT_INT *n, \
+  NFFT_INT m, R sigma, unsigned nfft_flags, unsigned fftw_flags); \
 void X(inh_3d_finalize)(X(inh_3d_plan) *ths);
 
   /* mri api */
@@ -563,12 +563,12 @@ MRI_DEFINE_API(MRI_MANGLE_LONG_DOUBLE,NFFT_MANGLE_LONG_DOUBLE,long double,fftwl_
 typedef struct\
 {\
   MACRO_MV_PLAN(C)\
-  int N; /**< the bandwidth \f$N\f$ */\
+  NFFT_INT N; /**< the bandwidth \f$N\f$ */\
   R *x; /**< the nodes \f$\mathbf{x}(m) = \left(x_1,x_2\right) \in
     [-\frac{1}{2},\frac{1}{2}) \times [0,\frac{1}{2}]\f$ for \f$m=0,\ldots,
     M-1\f$,\f$M \in \mathbb{N},\f$ */\
   /* internal use only */\
-  int t; /**< the logarithm of NPT with respect to the basis 2 */\
+  NFFT_INT t; /**< the logarithm of NPT with respect to the basis 2 */\
   unsigned int flags; /**< the planner flags */\
   Z(plan) plan_nfft; /**< the internal NFFT plan */\
   C *f_hat_intern; /**< Internally used pointer to spherical Fourier
@@ -577,12 +577,12 @@ typedef struct\
     set */\
 } X(plan);\
 \
-NFFT_EXTERN void X(init)(X(plan) *plan, int N, int M); \
-NFFT_EXTERN void X(init_advanced)(X(plan)* plan, int N, int M, unsigned int \
+NFFT_EXTERN void X(init)(X(plan) *plan, NFFT_INT N, NFFT_INT M); \
+NFFT_EXTERN void X(init_advanced)(X(plan)* plan, NFFT_INT N, NFFT_INT M, unsigned int \
   nfsft_flags); \
-NFFT_EXTERN void X(init_guru)(X(plan) *plan, int N, int M, \
-  unsigned int nfsft_flags, unsigned int nfft_flags, int nfft_cutoff); \
-NFFT_EXTERN void X(precompute)(int N, R kappa, unsigned int nfsft_flags, \
+NFFT_EXTERN void X(init_guru)(X(plan) *plan, NFFT_INT N, NFFT_INT M, \
+  unsigned int nfsft_flags, unsigned int nfft_flags, NFFT_INT nfft_cutoff); \
+NFFT_EXTERN void X(precompute)(NFFT_INT N, R kappa, unsigned int nfsft_flags, \
   unsigned int fpt_flags); \
 NFFT_EXTERN void X(forget)(void); \
 NFFT_EXTERN void X(trafo_direct)(X(plan)* plan); \
@@ -638,17 +638,17 @@ NFSFT_DEFINE_API(NFSFT_MANGLE_LONG_DOUBLE,NFFT_MANGLE_LONG_DOUBLE,long double,ff
 typedef struct X(set_s_) *X(set); /**< A set of precomputed data for a set of
   DPT transforms of equal maximum length. */\
 \
-NFFT_EXTERN X(set) X(init)(const int M, const int t, const unsigned int flags); \
-NFFT_EXTERN void X(precompute)(X(set) set, const int m, R *alpha, R *beta, \
-  R *gam, int k_start, const R threshold); \
-NFFT_EXTERN void X(trafo_direct)(X(set) set, const int m, const C *x, C *y, \
-  const int k_end, const unsigned int flags); \
-NFFT_EXTERN void X(trafo)(X(set) set, const int m, const C *x, C *y, \
-  const int k_end, const unsigned int flags); \
-NFFT_EXTERN void X(transposed_direct)(X(set) set, const int m, C *x, \
-  C *y, const int k_end, const unsigned int flags); \
-NFFT_EXTERN void X(transposed)(X(set) set, const int m, C *x, \
-  C *y, const int k_end, const unsigned int flags); \
+NFFT_EXTERN X(set) X(init)(const NFFT_INT M, const NFFT_INT t, const unsigned int flags); \
+NFFT_EXTERN void X(precompute)(X(set) set, const NFFT_INT m, R *alpha, R *beta, \
+  R *gam, NFFT_INT k_start, const R threshold); \
+NFFT_EXTERN void X(trafo_direct)(X(set) set, const NFFT_INT m, const C *x, C *y, \
+  const NFFT_INT k_end, const unsigned int flags); \
+NFFT_EXTERN void X(trafo)(X(set) set, const NFFT_INT m, const C *x, C *y, \
+  const NFFT_INT k_end, const unsigned int flags); \
+NFFT_EXTERN void X(transposed_direct)(X(set) set, const NFFT_INT m, C *x, \
+  C *y, const NFFT_INT k_end, const unsigned int flags); \
+NFFT_EXTERN void X(transposed)(X(set) set, const NFFT_INT m, C *x, \
+  C *y, const NFFT_INT k_end, const unsigned int flags); \
 NFFT_EXTERN void X(finalize)(X(set) set);
 
 /* fpt api */
@@ -691,7 +691,7 @@ typedef struct X(plan_)\
   C *wig_coeffs; /**< deprecated variable */\
   C *cheby; /**< deprecated variable */\
   C *aux; /**< deprecated variable */\
-  int t; /**< the logarithm of NPT with respect to the basis 2 */\
+  NFFT_INT t; /**< the logarithm of NPT with respect to the basis 2 */\
   unsigned int flags; /**< the planner flags  */\
   Y(plan) p_nfft; /**< the internal NFFT plan */\
   Z(set) *internal_fpt_set; /**< the internal FPT plan */\
@@ -699,17 +699,17 @@ typedef struct X(plan_)\
 } X(plan);\
 \
 NFFT_EXTERN void X(precompute)(X(plan) *plan); \
-NFFT_EXTERN Z(set) X(SO3_single_fpt_init)(int l, int k, int m, unsigned int flags, int kappa); \
-NFFT_EXTERN void X(SO3_fpt)(C *coeffs, Z(set) set, int l, int k, int m, unsigned int nfsoft_flags); \
-NFFT_EXTERN void X(SO3_fpt_transposed)(C *coeffs, Z(set) set,int l, int k, int m,unsigned int nfsoft_flags); \
-NFFT_EXTERN void X(init)(X(plan) *plan, int N, int M); \
-NFFT_EXTERN void X(init_advanced)(X(plan) *plan, int N, int M,unsigned int nfsoft_flags); \
-NFFT_EXTERN void X(init_guru)(X(plan) *plan, int N, int M,unsigned int nfsoft_flags,unsigned int nfft_flags,int nfft_cutoff,int fpt_kappa); \
-NFFT_EXTERN void X(init_guru_advanced)(X(plan) *plan, int N, int M,unsigned int nfsoft_flags,unsigned int nfft_flags,int nfft_cutoff,int fpt_kappa, int nn_oversampled); \
+NFFT_EXTERN Z(set) X(SO3_single_fpt_init)(NFFT_INT l, NFFT_INT k, NFFT_INT m, unsigned int flags, NFFT_INT kappa); \
+NFFT_EXTERN void X(SO3_fpt)(C *coeffs, Z(set) set, NFFT_INT l, NFFT_INT k, NFFT_INT m, unsigned int nfsoft_flags); \
+NFFT_EXTERN void X(SO3_fpt_transposed)(C *coeffs, Z(set) set,NFFT_INT l, NFFT_INT k, NFFT_INT m,unsigned int nfsoft_flags); \
+NFFT_EXTERN void X(init)(X(plan) *plan, NFFT_INT N, NFFT_INT M); \
+NFFT_EXTERN void X(init_advanced)(X(plan) *plan, NFFT_INT N, NFFT_INT M,unsigned int nfsoft_flags); \
+NFFT_EXTERN void X(init_guru)(X(plan) *plan, NFFT_INT N, NFFT_INT M,unsigned int nfsoft_flags,unsigned int nfft_flags,NFFT_INT nfft_cutoff,NFFT_INT fpt_kappa); \
+NFFT_EXTERN void X(init_guru_advanced)(X(plan) *plan, NFFT_INT N, NFFT_INT M,unsigned int nfsoft_flags,unsigned int nfft_flags,NFFT_INT nfft_cutoff,NFFT_INT fpt_kappa, NFFT_INT nn_oversampled); \
 NFFT_EXTERN void X(trafo)(X(plan) *plan_nfsoft); \
 NFFT_EXTERN void X(adjoint)(X(plan) *plan_nfsoft); \
 NFFT_EXTERN void X(finalize)(X(plan) *plan); \
-NFFT_EXTERN int X(posN)(int n,int m, int B);
+NFFT_EXTERN NFFT_INT X(posN)(NFFT_INT n,NFFT_INT m, NFFT_INT B);
 
 /* nfsoft api */
 NFSOFT_DEFINE_API(NFSOFT_MANGLE_FLOAT,NFFT_MANGLE_FLOAT,FPT_MANGLE_FLOAT,float,fftwf_complex)
@@ -867,7 +867,7 @@ R Y(clock_gettime_seconds)(void); \
 R Y(error_l_infty_complex)(const C *x, const C *y, const NFFT_INT n); \
 R Y(error_l_infty_1_complex)(const C *x, const C *y, const NFFT_INT n, \
   const C *z, const NFFT_INT m); \
-/* int.c: */ \
+/* NFFT_INT.c: */ \
 NFFT_INT Y(exp2i)(const NFFT_INT a); \
 NFFT_INT Y(next_power_of_2)(const NFFT_INT N); \
 /* vector1.c */ \
@@ -878,7 +878,7 @@ R Y(dot_complex)(C *x, NFFT_INT n); \
 void Y(upd_axpy_complex)(C *x, R a, C *y, NFFT_INT n); \
 /** Swaps each half over N[d]/2. */ \
 void Y(fftshift_complex)(C *x, NFFT_INT d, NFFT_INT* N); \
-void Y(fftshift_complex_int)(C *x, int d, int* N); \
+void Y(fftshift_complex_int)(C *x, NFFT_INT d, NFFT_INT* N); \
 /** Return library version. */ \
 void Y(get_version)(unsigned *major, unsigned *minor, unsigned *patch); \
 /** \

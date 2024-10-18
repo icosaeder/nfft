@@ -32,9 +32,9 @@
  * \{
  */
 
-static void reconstruct(char* filename,int N,int M,int iteration , int weight)
+static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration , NFFT_INT weight)
 {
-  int j,k,l;
+  NFFT_INT j,k,l;
   double t0, t1;
   double time,min_time,max_time,min_inh,max_inh;
   double t,real,imag;
@@ -43,15 +43,15 @@ static void reconstruct(char* filename,int N,int M,int iteration , int weight)
   mri_inh_3d_plan my_plan;
   solver_plan_complex my_iplan;
   FILE* fp,*fw,*fout_real,*fout_imag,*finh,*ftime;
-  int my_N[3],my_n[3];
+  NFFT_INT my_N[3],my_n[3];
   int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
                       MALLOC_F| FFTW_INIT;
   unsigned infft_flags = CGNR | PRECOMPUTE_DAMP;
 
   double Ts;
   double W;
-  int N3;
-  int m=2;
+  NFFT_INT N3;
+  NFFT_INT m=2;
   double sigma = 1.25;
 
   ftime=fopen("readout_time.dat","r");
@@ -120,8 +120,8 @@ static void reconstruct(char* filename,int N,int M,int iteration , int weight)
   {
     for(j=0;j<N;j++){
       for(k=0;k<N;k++) {
-        int j2= j-N/2;
-        int k2= k-N/2;
+        NFFT_INT j2= j-N/2;
+        NFFT_INT k2= k-N/2;
         double r=sqrt(j2*j2+k2*k2);
         if(r>(double) N/2)
           my_iplan.w_hat[j*N+k]=0.0;

@@ -33,9 +33,9 @@
  * \{
  */
 
-void alpha_al_row(R *alpha, const int N, const int n);
-void beta_al_row(R *beta, const int N, const int n);
-void gamma_al_row(R *gamma, const int N, const int n);
+void alpha_al_row(R *alpha, const NFFT_INT N, const NFFT_INT n);
+void beta_al_row(R *beta, const NFFT_INT N, const NFFT_INT n);
+void gamma_al_row(R *gamma, const NFFT_INT N, const NFFT_INT n);
 
 /**
  * Compute three-term-recurrence coefficients \f$\alpha_{k-1}^n\f$ of associated
@@ -46,7 +46,7 @@ void gamma_al_row(R *gamma, const int N, const int n);
  *   \f$\alpha_{k-1}^n\f$.
  * \arg N The upper bound \f$N\f$.
  */
-void alpha_al_all(R *alpha, const int N);
+void alpha_al_all(R *alpha, const NFFT_INT N);
 
 /**
  * Compute three-term-recurrence coefficients \f$\beta_{k-1}^n\f$ of associated
@@ -57,7 +57,7 @@ void alpha_al_all(R *alpha, const int N);
  *   \f$\beta_{k-1}^n\f$.
  * \arg N The upper bound \f$N\f$.
  */
-void beta_al_all(R *beta, const int N);
+void beta_al_all(R *beta, const NFFT_INT N);
 
 /**
  * Compute three-term-recurrence coefficients \f$\gamma_{k-1}^n\f$ of associated
@@ -68,7 +68,7 @@ void beta_al_all(R *beta, const int N);
  *   \f$\gamma_{k-1}^n\f$.
  * \arg N The upper bound \f$N\f$.
  */
-void gamma_al_all(R *gamma, const int N);
+void gamma_al_all(R *gamma, const NFFT_INT N);
 
 /**
  * Evaluates an associated Legendre polynomials \f$P_k^n(x,c)\f$ using the
@@ -85,7 +85,7 @@ void gamma_al_all(R *gamma, const int N);
  * \arg gamma A pointer to an array containing the recurrence coefficients
  *   \f$\gamma_c^n,\ldots,\gamma_{c+k}^n\f$
  */
-void eval_al(R *x, R *y, const int size, const int k, R *alpha,
+void eval_al(R *x, R *y, const NFFT_INT size, const NFFT_INT k, R *alpha,
   R *beta, R *gamma);
 
 /**
@@ -104,7 +104,7 @@ void eval_al(R *x, R *y, const int size, const int k, R *alpha,
  *   \f$\gamma_c^n,\ldots,\gamma_{c+k}^n\f$
  * \arg threshold The threshold
  */
-int eval_al_thresh(R *x, R *y, const int size, const int k, R *alpha,
+NFFT_INT eval_al_thresh(R *x, R *y, const NFFT_INT size, const NFFT_INT k, R *alpha,
   R *beta, R *gamma, R threshold);
 /* \} */
 #endif

@@ -32,7 +32,7 @@
  * \arg plan a pointer to a \ref nfsoft_plan structure
  */
 
-/*! \fn void nfsoft_init(nfsoft_plan *plan, int N, int M)
+/*! \fn void nfsoft_init(nfsoft_plan *plan, NFFT_INT N, NFFT_INT M)
  * Creates a NFSOFT transform plan.
  *
  * \arg plan a pointer to a \ref nfsoft_plan structure
@@ -42,7 +42,7 @@
  * \author Antje Vollrath
  */
 
-/*! \fn void nfsoft_init_advanced(nfsoft_plan *plan, int N, int M,unsigned int nfsoft_flags)
+/*! \fn void nfsoft_init_advanced(nfsoft_plan *plan, NFFT_INT N, NFFT_INT M,unsigned int nfsoft_flags)
  * Creates a NFSOFT transform plan.
  *
  * \arg plan a pointer to a \ref nfsoft_plan structure
@@ -53,7 +53,7 @@
  * \author Antje Vollrath
  */
 
-/*! \fn void nfsoft_init_guru(nfsoft_plan *plan, int N, int M,unsigned int nfsoft_flags,unsigned int nfft_flags,int nfft_cutoff,int fpt_kappa)
+/*! \fn void nfsoft_init_guru(nfsoft_plan *plan, NFFT_INT N, NFFT_INT M,unsigned int nfsoft_flags,unsigned int nfft_flags,NFFT_INT nfft_cutoff,NFFT_INT fpt_kappa)
  * Creates a  NFSOFT transform plan.
  *
  * \arg plan a pointer to a \ref nfsoft_plan structure
@@ -67,7 +67,7 @@
  * \author Antje Vollrath
  */
 
-/*! \fn void nfsoft_init_guru_advanced(nfsoft_plan *plan, int N, int M,unsigned int nfsoft_flags,unsigned int nfft_flags,int nfft_cutoff,int fpt_kappa, int fftw_size)
+/*! \fn void nfsoft_init_guru_advanced(nfsoft_plan *plan, NFFT_INT N, NFFT_INT M,unsigned int nfsoft_flags,unsigned int nfft_flags,NFFT_INT nfft_cutoff,NFFT_INT fpt_kappa, NFFT_INT fftw_size)
  * Creates a  NFSOFT transform plan.
  *
  * \arg plan a pointer to a \ref nfsoft_plan structure

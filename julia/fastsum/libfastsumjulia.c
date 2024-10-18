@@ -22,8 +22,8 @@ fastsum_plan* jfastsum_alloc(){
 }
 // c wird von Julia als Float64-Pointer übergeben
 
-int jfastsum_init( fastsum_plan* p, int d, char* s, double* c, unsigned int f, int n, int ps, double eps_I, double eps_B, int N, int M, int nn_x, int nn_y, int m_x, int m_y ){
-	C (*kernel)(R, int, const R *);
+NFFT_INT jfastsum_init( fastsum_plan* p, NFFT_INT d, char* s, double* c, unsigned int f, NFFT_INT n, NFFT_INT ps, double eps_I, double eps_B, NFFT_INT N, NFFT_INT M, NFFT_INT nn_x, NFFT_INT nn_y, NFFT_INT m_x, NFFT_INT m_y ){
+	C (*kernel)(R, NFFT_INT, const R *);
 	
 	if ( strcmp(s, "gaussian") == 0 )
 		kernel = gaussian;
@@ -76,19 +76,19 @@ int jfastsum_init( fastsum_plan* p, int d, char* s, double* c, unsigned int f, i
 }
 
 double* jfastsum_set_x( fastsum_plan* p, double* x ){	
-	int d = p -> d;
-	int N = p -> N_total;
+	NFFT_INT d = p -> d;
+	NFFT_INT N = p -> N_total;
 	
 	if ( p -> permutation_x_alpha == NULL ) {
 	
-		for ( int k = 0; k < N; k++ )
-			for ( int t = 0; t < d; t++)
+		for ( NFFT_INT k = 0; k < N; k++ )
+			for ( NFFT_INT t = 0; t < d; t++)
 				p -> x[k*d+t] = x[k+t*N];
 			
 	} else {
 		
-		for ( int k = 0; k < N; k++ )
-			for ( int t = 0; t < d; t++)
+		for ( NFFT_INT k = 0; k < N; k++ )
+			for ( NFFT_INT t = 0; t < d; t++)
 				p -> x[k*d+t] = x[p->permutation_x_alpha[k]+t*N];
 		
 	}
@@ -99,11 +99,11 @@ double* jfastsum_set_x( fastsum_plan* p, double* x ){
 }
 
 double* jfastsum_set_y( fastsum_plan* p, double* y ){
-	int d = p -> d;
-	int M = p -> M_total;
+	NFFT_INT d = p -> d;
+	NFFT_INT M = p -> M_total;
 	
-	for ( int j = 0; j < M; j++ )
-		for ( int t = 0; t < d; t++ )
+	for ( NFFT_INT j = 0; j < M; j++ )
+		for ( NFFT_INT t = 0; t < d; t++ )
 			p -> y[j*d+t] = y[j+t*M];
 		
 	fastsum_precompute_target_nodes( p );
@@ -112,9 +112,9 @@ double* jfastsum_set_y( fastsum_plan* p, double* y ){
 }
 
 double _Complex* jfastsum_set_alpha( fastsum_plan* p, double _Complex* alpha ){
-	int N = p -> N_total;
+	NFFT_INT N = p -> N_total;
 	
-	for ( int k = 0; k < N; k++ )
+	for ( NFFT_INT k = 0; k < N; k++ )
 		if ( p -> permutation_x_alpha == NULL )
 			p -> alpha[k] = alpha[k];
 		else

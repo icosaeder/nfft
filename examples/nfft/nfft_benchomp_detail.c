@@ -28,27 +28,36 @@
 #include <omp.h>
 #endif
 
-void bench_openmp(FILE *infile, int m, int psi_flag)
+void bench_openmp(FILE *infile, NFFT_INT m, int psi_flag)
 {
   NFFT(plan) p;
-  int *N;
-  int *n;
-  int M, d, trafo_adjoint;
-  int t, j;
+  NFFT_INT *N;
+  NFFT_INT *n;
+  NFFT_INT M;
+  int d, trafo_adjoint;
+  NFFT_INT t, j;
   double re,im;
   ticks t0, t1;
   double tt_total, tt_preonepsi;
 
   fscanf(infile, "%d %d", &d, &trafo_adjoint);
 
-  N = malloc(d*sizeof(int));
-  n = malloc(d*sizeof(int));
+  N = malloc((NFFT_INT)d*sizeof(NFFT_INT));
+  n = malloc((NFFT_INT)d*sizeof(NFFT_INT));
 
   for (t=0; t<d; t++)
-    fscanf(infile, "%d", N+t);
+  {
+    int val;
+    fscanf(infile, "%d", &val);
+    N[t] = (NFFT_INT)val;
+  }
 
   for (t=0; t<d; t++)
-    fscanf(infile, "%d", n+t);
+  {
+    int val;
+    fscanf(infile, "%d", &val);
+    n[t] = (NFFT_INT)val;
+  }
 
   fscanf(infile, "%d", &M);
 

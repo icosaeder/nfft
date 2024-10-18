@@ -39,16 +39,16 @@
 
 #define NFSOFT_INDEX_TWO(m,n,l,B) ((B+1)*(B+1)+(B+1)*(B+1)*(m+B)-((m-1)*m*(2*m-1)+(B+1)*(B+2)*(2*B+3))/6)+(posN(n,m,B))+(l-MAX(ABS(m),ABS(n)))
 
-static fpt_set* SO3_fpt_init(int l, unsigned int flags, int kappa, int nthreads);
-static int posN(int n, int m, int B);
+static fpt_set* SO3_fpt_init(NFFT_INT l, unsigned int flags, NFFT_INT kappa, NFFT_INT nthreads);
+static NFFT_INT posN(NFFT_INT n, NFFT_INT m, NFFT_INT B);
 
-void nfsoft_init(nfsoft_plan *plan, int N, int M)
+void nfsoft_init(nfsoft_plan *plan, NFFT_INT N, NFFT_INT M)
 {
   nfsoft_init_advanced(plan, N, M, NFSOFT_MALLOC_X | NFSOFT_MALLOC_F
       | NFSOFT_MALLOC_F_HAT);
 }
 
-void nfsoft_init_advanced(nfsoft_plan *plan, int N, int M,
+void nfsoft_init_advanced(nfsoft_plan *plan, NFFT_INT N, NFFT_INT M,
     unsigned int nfsoft_flags)
 {
   nfsoft_init_guru(plan, N, M, nfsoft_flags, PRE_PHI_HUT | PRE_PSI | MALLOC_X | NFFT_OMP_BLOCKWISE_ADJOINT
@@ -56,19 +56,19 @@ void nfsoft_init_advanced(nfsoft_plan *plan, int N, int M,
       DEFAULT_NFFT_CUTOFF, FPT_THRESHOLD);
 }
 
-void nfsoft_init_guru(nfsoft_plan *plan, int B, int M,
-    unsigned int nfsoft_flags, unsigned int nfft_flags, int nfft_cutoff,
-    int fpt_kappa)
+void nfsoft_init_guru(nfsoft_plan *plan, NFFT_INT B, NFFT_INT M,
+    unsigned int nfsoft_flags, unsigned int nfft_flags, NFFT_INT nfft_cutoff,
+    NFFT_INT fpt_kappa)
 {
 	nfsoft_init_guru_advanced(plan, B, M, nfsoft_flags, nfft_flags, nfft_cutoff, fpt_kappa, 8* B);
 }
 
-void nfsoft_init_guru_advanced(nfsoft_plan *plan, int B, int M,
-    unsigned int nfsoft_flags, unsigned int nfft_flags, int nfft_cutoff,
-    int fpt_kappa, int nn_oversampled)
+void nfsoft_init_guru_advanced(nfsoft_plan *plan, NFFT_INT B, NFFT_INT M,
+    unsigned int nfsoft_flags, unsigned int nfft_flags, NFFT_INT nfft_cutoff,
+    NFFT_INT fpt_kappa, NFFT_INT nn_oversampled)
 {
-  int N[3];
-  int n[3];
+  NFFT_INT N[3];
+  NFFT_INT n[3];
 
   N[0] = 2* B + 2;
   N[1] = 2* B + 2;
@@ -120,9 +120,9 @@ void nfsoft_init_guru_advanced(nfsoft_plan *plan, int B, int M,
 
 }
 
-static void c2e(nfsoft_plan *my_plan, int even, C* wig_coeffs, int k, int m)
+static void c2e(nfsoft_plan *my_plan, NFFT_INT even, C* wig_coeffs, NFFT_INT k, NFFT_INT m)
 {
-  int j, N;
+  NFFT_INT j, N;
 
   /**initialize the bigger plan*/
   N = 2* (my_plan ->N_total+1);
@@ -156,7 +156,7 @@ static void c2e(nfsoft_plan *my_plan, int even, C* wig_coeffs, int k, int m)
 
   }
 
-  for (int i = 1; i <= 2* my_plan ->N_total + 2; i++)
+  for (NFFT_INT i = 1; i <= 2* my_plan ->N_total + 2; i++)
   {
     my_plan->p_nfft.f_hat[NFSOFT_INDEX(k, m, i - my_plan->N_total - 1, my_plan->N_total) - 1]
       = cheby[i - 1];
@@ -165,10 +165,10 @@ static void c2e(nfsoft_plan *my_plan, int even, C* wig_coeffs, int k, int m)
 }
 
 
-static fpt_set* SO3_fpt_init(int l, unsigned int flags, int kappa, int nthreads)
+static fpt_set* SO3_fpt_init(NFFT_INT l, unsigned int flags, NFFT_INT kappa, NFFT_INT nthreads)
 {
   fpt_set *set = (fpt_set*)nfft_malloc(nthreads * sizeof(fpt_set));
-  int N, t, k_start, k, m;
+  NFFT_INT N, t, k_start, k, m;
 
   /** Read in transform length. */
   if (flags & NFSOFT_USE_DPT)
@@ -178,7 +178,7 @@ static fpt_set* SO3_fpt_init(int l, unsigned int flags, int kappa, int nthreads)
     else
       N = l;
 
-    t = (int) log2(X(next_power_of_2)(N));
+    t = (NFFT_INT) log2(X(next_power_of_2)(N));
 
   }
   else
@@ -189,7 +189,7 @@ static fpt_set* SO3_fpt_init(int l, unsigned int flags, int kappa, int nthreads)
     else
       N = X(next_power_of_2)(l);
 
-    t = (int) log2(N);
+    t = (NFFT_INT) log2(N);
   }
 
   /** Initialize DPT. */
@@ -214,7 +214,7 @@ static fpt_set* SO3_fpt_init(int l, unsigned int flags, int kappa, int nthreads)
 
 #else*/
   set[0] = fpt_init((2* N + 1) * (2* N + 1), t, fptflags);
-  for (int i=1; i<nthreads; i++)
+  for (NFFT_INT i=1; i<nthreads; i++)
     {
       set[i] = fpt_init((2* N + 1) * (2* N + 1), t, fptflags | FPT_NO_INIT_FPT_DATA);
       set[i]->dpt = set[0]->dpt;
@@ -254,12 +254,12 @@ static fpt_set* SO3_fpt_init(int l, unsigned int flags, int kappa, int nthreads)
   return set;
 }
 
-static void SO3_fpt(C *coeffs, fpt_set set, int l, int k, int m, unsigned int flags)
+static void SO3_fpt(C *coeffs, fpt_set set, NFFT_INT l, NFFT_INT k, NFFT_INT m, unsigned int flags)
 {
-  int N;
-  int trafo_nr; /**gives the index of the trafo in the FPT_set*/
-  int k_start, k_end, j;
-  int function_values = 0;
+  NFFT_INT N;
+  NFFT_INT trafo_nr; /**gives the index of the trafo in the FPT_set*/
+  NFFT_INT k_start, k_end, j;
+  NFFT_INT function_values = 0;
 
   /** Read in transfrom length. */
   if (flags & NFSOFT_USE_DPT)
@@ -319,12 +319,12 @@ static void SO3_fpt(C *coeffs, fpt_set set, int l, int k, int m, unsigned int fl
 
 }
 
-static void SO3_fpt_transposed(C *coeffs, fpt_set set, int l, int k, int m,
+static void SO3_fpt_transposed(C *coeffs, fpt_set set, NFFT_INT l, NFFT_INT k, NFFT_INT m,
     unsigned int flags)
 {
-  int N, k_start, k_end, j;
-  int trafo_nr; /**gives the index of the trafo in the FPT_set*/
-  int function_values = 0;
+  NFFT_INT N, k_start, k_end, j;
+  NFFT_INT trafo_nr; /**gives the index of the trafo in the FPT_set*/
+  NFFT_INT function_values = 0;
 
   /** Read in transfrom length. */
 
@@ -381,8 +381,8 @@ static void SO3_fpt_transposed(C *coeffs, fpt_set set, int l, int k, int m,
 
 void nfsoft_precompute(nfsoft_plan *plan3D)
 {
-  int j;
-  int M = plan3D->M_total;
+  NFFT_INT j;
+  NFFT_INT M = plan3D->M_total;
 
   /** Node-dependent part*/
 
@@ -417,24 +417,24 @@ void nfsoft_trafo(nfsoft_plan *plan3D)
 {
   // glo1 = 0;
 
-  int N = plan3D->N_total;
-  int M = plan3D->M_total;
+  NFFT_INT N = plan3D->N_total;
+  NFFT_INT M = plan3D->M_total;
 
   /**almost nothing to be done for polynomial degree 0*/
   if (N == 0)
   {
-    for (int j = 0; j < M; j++)
+    for (NFFT_INT j = 0; j < M; j++)
       plan3D->f[j] = plan3D->f_hat[0];
     return;
   }
 
-  for (int j = 0; j < plan3D->p_nfft.N_total; j++)
+  for (NFFT_INT j = 0; j < plan3D->p_nfft.N_total; j++)
     plan3D->p_nfft.f_hat[j] = 0.0;
 
 #ifdef _OPENMP
   #pragma omp parallel for default(shared) num_threads(plan3D->nthreads)
 #endif
-  for (int k = -N; k <= N; k++)
+  for (NFFT_INT k = -N; k <= N; k++)
   {
     C wig_coeffs[(X(next_power_of_2)(N)+1)];
 #ifdef _OPENMP
@@ -443,14 +443,14 @@ void nfsoft_trafo(nfsoft_plan *plan3D)
     int threadid = 0;
 #endif
 
-    for (int m = -N; m <= N; m++)
+    for (NFFT_INT m = -N; m <= N; m++)
     {
 
-      int max = (ABS(m) > ABS(k) ? ABS(m) : ABS(k));
+      NFFT_INT max = (ABS(m) > ABS(k) ? ABS(m) : ABS(k));
 
-      int glo0 = NFSOFT_INDEX_TWO(k,m,max,N);
+      NFFT_INT glo0 = NFSOFT_INDEX_TWO(k,m,max,N);
 
-      for (int j = 0; j <= N - max; j++)
+      for (NFFT_INT j = 0; j <= N - max; j++)
       {
         wig_coeffs[j] = plan3D->f_hat[glo0 + j];
 
@@ -477,7 +477,7 @@ void nfsoft_trafo(nfsoft_plan *plan3D)
         // glo1++;
       }
 
-      for (int j = N - max + 1; j < X(next_power_of_2)(N) + 1; j++)
+      for (NFFT_INT j = N - max + 1; j < X(next_power_of_2)(N) + 1; j++)
         wig_coeffs[j] = 0.0;
       //fprintf(stdout,"\n k= %d, m= %d \n",k,m);
       SO3_fpt(wig_coeffs, plan3D->internal_fpt_set[threadid], N, k, m, plan3D->flags);
@@ -497,15 +497,15 @@ void nfsoft_trafo(nfsoft_plan *plan3D)
   }
 
   if (plan3D->f != plan3D->p_nfft.f)
-    for (int j = 0; j < plan3D->M_total; j++)
+    for (NFFT_INT j = 0; j < plan3D->M_total; j++)
       plan3D->f[j] = plan3D->p_nfft.f[j];
 
 }
 
-static void e2c(nfsoft_plan *my_plan, int even, C* wig_coeffs, C* cheby)
+static void e2c(nfsoft_plan *my_plan, NFFT_INT even, C* wig_coeffs, C* cheby)
 {
-  int N;
-  int j;
+  NFFT_INT N;
+  NFFT_INT j;
 
   /**initialize the bigger plan*/
   N = 2* (my_plan ->N_total+1);
@@ -544,22 +544,22 @@ static void e2c(nfsoft_plan *my_plan, int even, C* wig_coeffs, C* cheby)
 
 void nfsoft_adjoint(nfsoft_plan *plan3D)
 {
-  //int glo1 = 0;
+  //NFFT_INT glo1 = 0;
 
-  int N = plan3D->N_total;
-  int M = plan3D->M_total;
+  NFFT_INT N = plan3D->N_total;
+  NFFT_INT M = plan3D->M_total;
 
   //nothing much to be done for polynomial degree 0
   if (N == 0)
   {
     plan3D->f_hat[0]=0;
-    for (int j = 0; j < M; j++)
+    for (NFFT_INT j = 0; j < M; j++)
       plan3D->f_hat[0] += plan3D->f[j];
     return;
   }
 
   if (plan3D->p_nfft.f != plan3D->f)
-    for (int j = 0; j < M; j++)
+    for (NFFT_INT j = 0; j < M; j++)
     {
       plan3D->p_nfft.f[j] = plan3D->f[j];
     }
@@ -578,21 +578,21 @@ void nfsoft_adjoint(nfsoft_plan *plan3D)
 #ifdef _OPENMP
   #pragma omp parallel for default(shared) num_threads(plan3D->nthreads)
 #endif
-  for (int k = -N; k <= N; k++)
+  for (NFFT_INT k = -N; k <= N; k++)
   {
 #ifdef _OPENMP
     int threadid = omp_get_thread_num();
 #else
     int threadid = 0;
 #endif
-    for (int m = -N; m <= N; m++)
+    for (NFFT_INT m = -N; m <= N; m++)
     {
       C wig_coeffs[(X(next_power_of_2)(N)+1)];
       C cheby[2*plan3D->N_total + 2];
 
-      int max = (ABS(m) > ABS(k) ? ABS(m) : ABS(k));
+      NFFT_INT max = (ABS(m) > ABS(k) ? ABS(m) : ABS(k));
 
-      for (int i = 1; i < 2* plan3D ->N_total + 3; i++)
+      for (NFFT_INT i = 1; i < 2* plan3D ->N_total + 3; i++)
       {
         cheby[i - 1] = plan3D->p_nfft.f_hat[NFSOFT_INDEX(k, m, i - N
             - 1, N) - 1];
@@ -609,9 +609,9 @@ void nfsoft_adjoint(nfsoft_plan *plan3D)
       //nfft_vpr_complex(plan3D->wig_coeffs,plan3D->N_total+1,"wigners");
       //  SO3_fpt_transposed(plan3D->wig_coeffs,N,k,m,plan3D->flags,plan3D->fpt_kappa);
 
-      int glo0 = NFSOFT_INDEX_TWO(k,m,0,N);
+      NFFT_INT glo0 = NFSOFT_INDEX_TWO(k,m,0,N);
 
-      for (int j = max; j <= N; j++)
+      for (NFFT_INT j = max; j <= N; j++)
       {
         if ((plan3D->flags & NFSOFT_REPRESENT))
         {
@@ -647,7 +647,7 @@ void nfsoft_finalize(nfsoft_plan *plan)
   /* Finalise the nfft plan. */
   nfft_finalize(&plan->p_nfft);
 
-  for (int i=0; i<plan->nthreads; i++)
+  for (NFFT_INT i=0; i<plan->nthreads; i++)
     fpt_finalize(plan->internal_fpt_set[i]);
   nfft_free(plan->internal_fpt_set);
   plan->internal_fpt_set = NULL;
@@ -673,9 +673,9 @@ void nfsoft_finalize(nfsoft_plan *plan)
   }
 }
 
-static int posN(int n, int m, int B)
+static NFFT_INT posN(NFFT_INT n, NFFT_INT m, NFFT_INT B)
 {
-  int pos;
+  NFFT_INT pos;
 
   if (n > -B)
     pos = posN(n - 1, m, B) + B + 1 - MAX(ABS(m), ABS(n - 1));

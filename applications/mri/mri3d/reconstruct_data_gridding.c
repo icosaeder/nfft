@@ -34,14 +34,14 @@
 /**
  * reconstruct makes an 2d-adjoint-nfft for every slice
  */
-static void reconstruct(char* filename,int N,int M,int Z, int weight ,fftw_complex *mem)
+static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT Z, NFFT_INT weight ,fftw_complex *mem)
 {
-  int j,k,z;               /* some variables  */
+  NFFT_INT j,k,z;               /* some variables  */
   double weights;          /* store one weight temporary */
   double tmp;              /* tmp to read the obsolent z from the input file */
   double real,imag;        /* to read the real and imag part of a complex number */
   nfft_plan my_plan;       /* plan for the two dimensional nfft  */
-  int my_N[2],my_n[2];     /* to init the nfft */
+  NFFT_INT my_N[2],my_n[2];     /* to init the nfft */
   FILE* fin;               /* input file  */
   FILE* fweight;           /* input file for the weights */
 
@@ -98,9 +98,9 @@ static void reconstruct(char* filename,int N,int M,int Z, int weight ,fftw_compl
  * print writes the memory back in a file
  * output_real.dat for the real part and output_imag.dat for the imaginary part
  */
-static void print(int N,int M,int Z, fftw_complex *mem)
+static void print(NFFT_INT N,NFFT_INT M,NFFT_INT Z, fftw_complex *mem)
 {
-  int i,j;
+  NFFT_INT i,j;
   FILE* fout_real;
   FILE* fout_imag;
   fout_real=fopen("output_real.dat","w");
@@ -124,7 +124,7 @@ int main(int argc, char **argv)
 {
   fftw_complex *mem;
   fftw_plan plan;
-  int N,M,Z;
+  NFFT_INT N,M,Z;
 
   if (argc <= 6) {
     printf("usage: ./reconstruct_data_gridding FILENAME N M Z ITER WEIGHTS\n");

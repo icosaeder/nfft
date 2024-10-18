@@ -56,7 +56,7 @@ typedef struct
  *
  * \author Stefan Kunis
  */
-static void taylor_init(taylor_plan *ths, int N, int M, int n, int m)
+static void taylor_init(taylor_plan *ths, NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_INT m)
 {
   /* Note: no nfft precomputation! */
   NFFT(init_guru)((NFFT(plan)*) ths, 1, &N, M, &n, m,
@@ -171,10 +171,10 @@ static void taylor_trafo(taylor_plan *ths)
  *
  * \author Stefan Kunis
  */
-static void taylor_time_accuracy(int N, int M, int n, int m, int n_taylor,
-    int m_taylor, unsigned test_accuracy)
+static void taylor_time_accuracy(NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_INT m, NFFT_INT n_taylor,
+    NFFT_INT m_taylor, unsigned test_accuracy)
 {
-  int r;
+  NFFT_INT r;
   R t_ndft, t_nfft, t_taylor, t;
   C *swapndft = NULL;
   ticks t0, t1;
@@ -290,7 +290,7 @@ static void taylor_time_accuracy(int N, int M, int n, int m, int n_taylor,
 
 int main(int argc, char **argv)
 {
-  int l, m, trial;
+  NFFT_INT l, m, trial;
 
   if (argc <= 2)
   {
@@ -307,15 +307,15 @@ int main(int argc, char **argv)
   if (atoi(argv[1]) == 0)
   {
     fprintf(stderr, "Fixed target accuracy, timings.\n\n");
-    int arg2 = atoi(argv[2]);
-    int arg3 = atoi(argv[3]);
-    int arg4 = atoi(argv[4]);
+    NFFT_INT arg2 = (NFFT_INT)atoi(argv[2]);
+    NFFT_INT arg3 = (NFFT_INT)atoi(argv[3]);
+    NFFT_INT arg4 = (NFFT_INT)atoi(argv[4]);
     for (l = arg2; l <= arg3; l++)
     {
-      int N = (int)(1U << l);
-      int M = (int)(1U << l);
-      int arg5 = (int)(atof(argv[5]) * N);
-      int arg6 = (int)(atof(argv[6]) * N);
+      NFFT_INT N = (NFFT_INT)(1U << l);
+      NFFT_INT M = (NFFT_INT)(1U << l);
+      NFFT_INT arg5 = (NFFT_INT)(atof(argv[5]) * N);
+      NFFT_INT arg6 = (NFFT_INT)(atof(argv[6]) * N);
       for (trial = 0; trial < arg4; trial++)
       {
         taylor_time_accuracy(N, M, arg5, 6, arg6, 6, l <= 10 ? 1 : 0);
@@ -326,12 +326,12 @@ int main(int argc, char **argv)
   /* error vs. m */
   if (atoi(argv[1]) == 1)
   {
-    int arg2 = atoi(argv[2]);
-    int arg3 = atoi(argv[3]);
-    int arg4 = atoi(argv[4]);
-    int N = atoi(argv[7]);
-    int arg5 = (int) (atof(argv[5]) * N);
-    int arg6 = (int) (atof(argv[6]) * N);
+    NFFT_INT arg2 = (NFFT_INT)atoi(argv[2]);
+    NFFT_INT arg3 = (NFFT_INT)atoi(argv[3]);
+    NFFT_INT arg4 = (NFFT_INT)atoi(argv[4]);
+    NFFT_INT N = (NFFT_INT)atoi(argv[7]);
+    NFFT_INT arg5 = (NFFT_INT) (atof(argv[5]) * N);
+    NFFT_INT arg6 = (NFFT_INT) (atof(argv[6]) * N);
     fprintf(stderr, "Fixed N=M=%d, error vs. m.\n\n", N);
     for (m = arg2; m <= arg3; m++)
     {

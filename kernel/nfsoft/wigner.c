@@ -22,9 +22,9 @@
 #include "wigner.h"
 #include "infft.h"
 
-double SO3_alpha(const int m1, const int m2, const int j)
+double SO3_alpha(const NFFT_INT m1, const NFFT_INT m2, const NFFT_INT j)
 {
-  const int M = MAX(ABS(m1),ABS(m2)), mini = MIN(ABS(m1),ABS(m2));
+  const NFFT_INT M = MAX(ABS(m1),ABS(m2)), mini = MIN(ABS(m1),ABS(m2));
 
   if (j < 0)
     return K(0.0);
@@ -49,7 +49,7 @@ double SO3_alpha(const int m1, const int m2, const int j)
       * SQRT(((R)(2*j+1))/((R)(j+1+m2)));
 }
 
-double SO3_beta(const int m1, const int m2, const int j)
+double SO3_beta(const NFFT_INT m1, const NFFT_INT m2, const NFFT_INT j)
 {
   if (j < 0)
     return K(0.0);
@@ -70,7 +70,7 @@ double SO3_beta(const int m1, const int m2, const int j)
   }
 }
 
-double SO3_gamma(const int m1, const int m2, const int j)
+double SO3_gamma(const NFFT_INT m1, const NFFT_INT m2, const NFFT_INT j)
 {
   if (MAX(ABS(m1),ABS(m2)) < j)
     return -(((R)(j+1))/((R)j)) * SQRT((((R)(j-m1))/((R)(j+1-m1)))
@@ -85,25 +85,25 @@ double SO3_gamma(const int m1, const int m2, const int j)
 
 /*compute the coefficients for all degrees*/
 
-inline void SO3_alpha_row(double *alpha, int N, int k, int m)
+inline void SO3_alpha_row(double *alpha, NFFT_INT N, NFFT_INT k, NFFT_INT m)
 {
-  int j;
+  NFFT_INT j;
   double *alpha_act = alpha;
   for (j = -1; j <= N; j++)
     *alpha_act++ = SO3_alpha(k, m, j);
 }
 
-inline void SO3_beta_row(double *beta, int N, int k, int m)
+inline void SO3_beta_row(double *beta, NFFT_INT N, NFFT_INT k, NFFT_INT m)
 {
-  int j;
+  NFFT_INT j;
   double *beta_act = beta;
   for (j = -1; j <= N; j++)
     *beta_act++ = SO3_beta(k, m, j);
 }
 
-inline void SO3_gamma_row(double *gamma, int N, int k, int m)
+inline void SO3_gamma_row(double *gamma, NFFT_INT N, NFFT_INT k, NFFT_INT m)
 {
-  int j;
+  NFFT_INT j;
   double *gamma_act = gamma;
   for (j = -1; j <= N; j++)
     *gamma_act++ = SO3_gamma(k, m, j);
@@ -111,9 +111,9 @@ inline void SO3_gamma_row(double *gamma, int N, int k, int m)
 
 /*compute for all degrees l and orders k*/
 
-inline void SO3_alpha_matrix(double *alpha, int N, int m)
+inline void SO3_alpha_matrix(double *alpha, NFFT_INT N, NFFT_INT m)
 {
-  int i, j;
+  NFFT_INT i, j;
   double *alpha_act = alpha;
   for (i = -N; i <= N; i++)
   {
@@ -125,9 +125,9 @@ inline void SO3_alpha_matrix(double *alpha, int N, int m)
   }
 }
 
-inline void SO3_beta_matrix(double *alpha, int N, int m)
+inline void SO3_beta_matrix(double *alpha, NFFT_INT N, NFFT_INT m)
 {
-  int i, j;
+  NFFT_INT i, j;
   double *alpha_act = alpha;
   for (i = -N; i <= N; i++)
   {
@@ -139,9 +139,9 @@ inline void SO3_beta_matrix(double *alpha, int N, int m)
   }
 }
 
-inline void SO3_gamma_matrix(double *alpha, int N, int m)
+inline void SO3_gamma_matrix(double *alpha, NFFT_INT N, NFFT_INT m)
 {
-  int i, j;
+  NFFT_INT i, j;
   double *alpha_act = alpha;
   for (i = -N; i <= N; i++)
   {
@@ -155,10 +155,10 @@ inline void SO3_gamma_matrix(double *alpha, int N, int m)
 
 /*compute all 3termrecurrence coeffs*/
 
-inline void SO3_alpha_all(double *alpha, int N)
+inline void SO3_alpha_all(double *alpha, NFFT_INT N)
 {
-  int q;
-  int i, j, m;
+  NFFT_INT q;
+  NFFT_INT i, j, m;
   double *alpha_act = alpha;
   q = 0;
   for (m = -N; m <= N; m++)
@@ -178,9 +178,9 @@ inline void SO3_alpha_all(double *alpha, int N)
   }
 }
 
-inline void SO3_beta_all(double *alpha, int N)
+inline void SO3_beta_all(double *alpha, NFFT_INT N)
 {
-  int i, j, m;
+  NFFT_INT i, j, m;
   double *alpha_act = alpha;
   for (m = -N; m <= N; m++)
   {
@@ -195,9 +195,9 @@ inline void SO3_beta_all(double *alpha, int N)
   }
 }
 
-inline void SO3_gamma_all(double *alpha, int N)
+inline void SO3_gamma_all(double *alpha, NFFT_INT N)
 {
-  int i, j, m;
+  NFFT_INT i, j, m;
   double *alpha_act = alpha;
   for (m = -N; m <= N; m++)
   {
@@ -212,13 +212,13 @@ inline void SO3_gamma_all(double *alpha, int N)
   }
 }
 
-inline void eval_wigner(double *x, double *y, int size, int k, double *alpha,
+inline void eval_wigner(double *x, double *y, NFFT_INT size, NFFT_INT k, double *alpha,
     double *beta, double *gamma)
 {
   /* Evaluate the wigner function d_{k,nleg} (l,x) for the vector
    * of knots  x[0], ..., x[size-1] by the Clenshaw algorithm
    */
-  int i, j;
+  NFFT_INT i, j;
   double a, b, x_val_act, a_old;
   double *x_act, *y_act;
   double *alpha_act, *beta_act, *gamma_act;
@@ -257,11 +257,11 @@ inline void eval_wigner(double *x, double *y, int size, int k, double *alpha,
   }
 }
 
-inline int eval_wigner_thresh(double *x, double *y, int size, int k,
+inline NFFT_INT eval_wigner_thresh(double *x, double *y, NFFT_INT size, NFFT_INT k,
     double *alpha, double *beta, double *gamma, double threshold)
 {
 
-  int i, j;
+  NFFT_INT i, j;
   double a, b, x_val_act, a_old;
   double *x_act, *y_act;
   double *alpha_act, *beta_act, *gamma_act;
@@ -314,12 +314,12 @@ inline int eval_wigner_thresh(double *x, double *y, int size, int k,
  function, that the degree j of the function is equal to max(abs(m1), abs(m2) ).
  */
 
-double wigner_start(int m1, int m2, double theta)
+double wigner_start(NFFT_INT m1, NFFT_INT m2, double theta)
 {
 
-  int i, l, delta;
-  int cosPower, sinPower;
-  int absM1, absM2;
+  NFFT_INT i, l, delta;
+  NFFT_INT cosPower, sinPower;
+  NFFT_INT absM1, absM2;
   double dl, dm1, dm2, normFactor, sinSign;
   double dCP, dSP;
   double max;

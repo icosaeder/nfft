@@ -41,18 +41,18 @@ static struct {
     double y;
 } stcom;
 
-/* Subroutine */ int addnod_(int *nst, int *k, double *x,
-	double *y, double *z__, int *list, int *lptr, int
-	*lend, int *lnew, int *ier)
+/* Subroutine */ NFFT_INT addnod_(NFFT_INT *nst, NFFT_INT *k, double *x,
+	double *y, double *z__, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT
+	*lend, NFFT_INT *lnew, NFFT_INT *ier)
 {
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
 
     /* Local variables */
-    static int l;
+    static NFFT_INT l;
     static double p[3], b1, b2, b3;
-    static int i1, i2, i3, kk, lp, in1, io1, io2, km1, lpf, ist, lpo1;
-    static int lpo1s;
+    static NFFT_INT i1, i2, i3, kk, lp, in1, io1, io2, km1, lpf, ist, lpo1;
+    static NFFT_INT lpo1s;
 
 /* *********************************************************** */
 
@@ -286,7 +286,7 @@ double areas_(double *v1, double *v2, double *v3)
     double ret_val;
 
     /* Local variables */
-    static int i__;
+    static NFFT_INT i__;
     static double a1, a2, a3, s12, s31, s23, u12[3], u23[3], u31[3], ca1,
 	    ca2, ca3, dv1[3], dv2[3], dv3[3];
 
@@ -436,10 +436,10 @@ double areas_(double *v1, double *v2, double *v3)
     return ret_val;
 } /* areas_ */
 
-/* Subroutine */ int bdyadd_(int *kk, int *i1, int *i2, int *
-	list, int *lptr, int *lend, int *lnew)
+/* Subroutine */ NFFT_INT bdyadd_(NFFT_INT *kk, NFFT_INT *i1, NFFT_INT *i2, NFFT_INT *
+	list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew)
 {
-    static int k, n1, n2, lp, lsav, nsav, next;
+    static NFFT_INT k, n1, n2, lp, lsav, nsav, next;
 
 
 /* *********************************************************** */
@@ -568,14 +568,14 @@ L4:
     return 0;
 } /* bdyadd_ */
 
-/* Subroutine */ int bnodes_(int *n, int *list, int *lptr,
-	int *lend, int *nodes, int *nb, int *na, int *nt)
+/* Subroutine */ NFFT_INT bnodes_(NFFT_INT *n, NFFT_INT *list, NFFT_INT *lptr,
+	NFFT_INT *lend, NFFT_INT *nodes, NFFT_INT *nb, NFFT_INT *na, NFFT_INT *nt)
 {
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
 
     /* Local variables */
-    static int k, n0, lp, nn, nst;
+    static NFFT_INT k, n0, lp, nn, nst;
 
 
 /* *********************************************************** */
@@ -607,7 +607,7 @@ L4:
 
 /* The above parameters are not altered by this routine. */
 
-/*       NODES = int array of length at least NB */
+/*       NODES = NFFT_INT array of length at least NB */
 /*               (NB .LE. N). */
 
 /* On output: */
@@ -692,11 +692,11 @@ L4:
     return 0;
 } /* bnodes_ */
 
-/* Subroutine */ int circum_(double *v1, double *v2, double *v3,
-	double *c__, int *ier)
+/* Subroutine */ NFFT_INT circum_(double *v1, double *v2, double *v3,
+	double *c__, NFFT_INT *ier)
 {
     /* Local variables */
-    static int i__;
+    static NFFT_INT i__;
     static double e1[3], e2[3], cu[3], cnorm;
 
 
@@ -795,10 +795,10 @@ L4:
     return 0;
 } /* circum_ */
 
-/* Subroutine */ int covsph_(int *kk, int *n0, int *list, int
-	*lptr, int *lend, int *lnew)
+/* Subroutine */ NFFT_INT covsph_(NFFT_INT *kk, NFFT_INT *n0, NFFT_INT *list, NFFT_INT
+	*lptr, NFFT_INT *lend, NFFT_INT *lnew)
 {
-    static int k, lp, nst, lsav, next;
+    static NFFT_INT k, lp, nst, lsav, next;
 
 /* *********************************************************** */
 
@@ -896,23 +896,23 @@ L2:
     return 0;
 } /* covsph_ */
 
-/* Subroutine */ int crlist_(int *n, int *ncol, double *x,
-	double *y, double *z__, int *list, int *lend, int
-	*lptr, int *lnew, int *ltri, int *listc, int *nb,
+/* Subroutine */ NFFT_INT crlist_(NFFT_INT *n, NFFT_INT *ncol, double *x,
+	double *y, double *z__, NFFT_INT *list, NFFT_INT *lend, NFFT_INT
+	*lptr, NFFT_INT *lnew, NFFT_INT *ltri, NFFT_INT *listc, NFFT_INT *nb,
 	double *xc, double *yc, double *zc, double *rc,
-	int *ier)
+	NFFT_INT *ier)
 {
     /* System generated locals */
-    int i__1, i__2;
+    NFFT_INT i__1, i__2;
 
     /* Local variables */
     static double c__[3], t;
-    static int i1, i2, i3, i4, n0, n1, n2, n3, n4;
+    static NFFT_INT i1, i2, i3, i4, n0, n1, n2, n3, n4;
     static double v1[3], v2[3], v3[3];
-    static int lp, kt, nn, nt, nm2, kt1, kt2, kt11, kt12, kt21, kt22, lpl,
+    static NFFT_INT lp, kt, nn, nt, nm2, kt1, kt2, kt11, kt12, kt21, kt22, lpl,
 	     lpn;
-    static int swp;
-    static int ierr;
+    static NFFT_INT swp;
+    static NFFT_INT ierr;
 
 /* *********************************************************** */
 
@@ -971,7 +971,7 @@ L2:
 /*       X,Y,Z = Arrays of length N containing the Cartesian */
 /*               coordinates of the nodes (unit vectors). */
 
-/*       LIST = int array containing the set of adjacency */
+/*       LIST = NFFT_INT array containing the set of adjacency */
 /*              lists.  Refer to Subroutine TRMESH. */
 
 /*       LEND = Set of pointers to ends of adjacency lists. */
@@ -985,10 +985,10 @@ L2:
 /*       LNEW = Pointer to the first empty location in LIST */
 /*              and LPTR (list length plus one). */
 
-/*       LTRI = int work space array dimensioned 6 by */
+/*       LTRI = NFFT_INT work space array dimensioned 6 by */
 /*              NCOL, or unused dummy parameter if NB = 0. */
 
-/*       LISTC = int array of length at least 3*NT, where */
+/*       LISTC = NFFT_INT array of length at least 3*NT, where */
 /*               NT = 2*N-4 is the number of triangles in the */
 /*               triangulation (after extending it to cover */
 /*               the entire surface if necessary). */
@@ -1517,14 +1517,14 @@ L23:
     return 0;
 } /* crlist_ */
 
-/* Subroutine */ int delarc_(int *n, int *io1, int *io2, int *
-	list, int *lptr, int *lend, int *lnew, int *ier)
+/* Subroutine */ NFFT_INT delarc_(NFFT_INT *n, NFFT_INT *io1, NFFT_INT *io2, NFFT_INT *
+	list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew, NFFT_INT *ier)
 {
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
 
     /* Local variables */
-    static int n1, n2, n3, lp, lph, lpl;
+    static NFFT_INT n1, n2, n3, lp, lph, lpl;
 
 /* *********************************************************** */
 
@@ -1668,14 +1668,14 @@ L23:
     return 0;
 } /* delarc_ */
 
-/* Subroutine */ int delnb_(int *n0, int *nb, int *n, int *
-	list, int *lptr, int *lend, int *lnew, int *lph)
+/* Subroutine */ NFFT_INT delnb_(NFFT_INT *n0, NFFT_INT *nb, NFFT_INT *n, NFFT_INT *
+	list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew, NFFT_INT *lph)
 {
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
 
     /* Local variables */
-    static int i__, lp, nn, lpb, lpl, lpp, lnw;
+    static NFFT_INT i__, lp, nn, lpb, lpl, lpp, lnw;
 
 
 /* *********************************************************** */
@@ -1841,22 +1841,22 @@ L5:
     return 0;
 } /* delnb_ */
 
-/* Subroutine */ int delnod_(int *k, int *n, double *x,
-	double *y, double *z__, int *list, int *lptr, int
-	*lend, int *lnew, int *lwk, int *iwk, int *ier)
+/* Subroutine */ NFFT_INT delnod_(NFFT_INT *k, NFFT_INT *n, double *x,
+	double *y, double *z__, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT
+	*lend, NFFT_INT *lnew, NFFT_INT *lwk, NFFT_INT *iwk, NFFT_INT *ier)
 {
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
 
     /* Local variables */
-    static int i__, j, n1, n2;
+    static NFFT_INT i__, j, n1, n2;
     static double x1, x2, y11, y2, z1, z2;
-    static int nl, lp, nn, nr;
+    static NFFT_INT nl, lp, nn, nr;
     static double xl, yl, zl, xr, yr, zr;
-    static int nnb, lp21, lpf, lph, lpl, lpn, iwl, nit, lnw, lpl2;
-    static int bdry;
-    static int ierr, lwkl;
-    static int nfrst;
+    static NFFT_INT nnb, lp21, lpf, lph, lpl, lpn, iwl, nit, lnw, lpl2;
+    static NFFT_INT bdry;
+    static NFFT_INT ierr, lwkl;
+    static NFFT_INT nfrst;
 
 /* *********************************************************** */
 
@@ -1900,7 +1900,7 @@ L5:
 /*             neighbors of node K, including an extra */
 /*             pseudo-node if K is a boundary node. */
 
-/*       IWK = int work array dimensioned 2 by LWK (or */
+/*       IWK = NFFT_INT work array dimensioned 2 by LWK (or */
 /*             array of length .GE. 2*LWK). */
 
 /* On output: */
@@ -2365,23 +2365,23 @@ L26:
     return 0;
 } /* delnod_ */
 
-/* Subroutine */ int edge_(int *in1, int *in2, double *x,
-	double *y, double *z__, int *lwk, int *iwk, int *
-	list, int *lptr, int *lend, int *ier)
+/* Subroutine */ NFFT_INT edge_(NFFT_INT *in1, NFFT_INT *in2, double *x,
+	double *y, double *z__, NFFT_INT *lwk, NFFT_INT *iwk, NFFT_INT *
+	list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *ier)
 {
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
 
     /* Local variables */
-    static int i__, n0, n1, n2;
+    static NFFT_INT i__, n0, n1, n2;
     static double x0, x1, x2, y00, y11, y2, z0, z1, z2;
-    static int nl, lp, nr;
+    static NFFT_INT nl, lp, nr;
     static double dp12;
-    static int lp21, iwc, iwf, lft, lpl, iwl, nit;
+    static NFFT_INT lp21, iwc, iwf, lft, lpl, iwl, nit;
     static double dp1l, dp2l, dp1r, dp2r;
-    static int ierr;
-    static int next, iwcp1, n1lst, iwend;
-    static int n1frst;
+    static NFFT_INT ierr;
+    static NFFT_INT next, iwcp1, n1lst, iwend;
+    static NFFT_INT n1frst;
 
 /* *********************************************************** */
 
@@ -2425,7 +2425,7 @@ L26:
 /*             be at least NI -- the number of arcs that */
 /*             intersect IN1-IN2.  (NI is bounded by N-3.) */
 
-/*       IWK = int work array of length at least 2*LWK. */
+/*       IWK = NFFT_INT work array of length at least 2*LWK. */
 
 /*       LIST,LPTR,LEND = Data structure defining the trian- */
 /*                        gulation.  Refer to Subroutine */
@@ -2999,19 +2999,19 @@ L35:
     return 0;
 } /* edge_ */
 
-/* Subroutine */ int getnp_(double *x, double *y, double *z__,
-	int *list, int *lptr, int *lend, int *l, int *
-	npts, double *df, int *ier)
+/* Subroutine */ NFFT_INT getnp_(double *x, double *y, double *z__,
+	NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *l, NFFT_INT *
+	npts, double *df, NFFT_INT *ier)
 {
     /* System generated locals */
-    int i__1, i__2;
+    NFFT_INT i__1, i__2;
 
     /* Local variables */
-    static int i__, n1;
+    static NFFT_INT i__, n1;
     static double x1, y11, z1;
-    static int nb, ni, lp, np, lm1;
+    static NFFT_INT nb, ni, lp, np, lm1;
     static double dnb, dnp;
-    static int lpl;
+    static NFFT_INT lpl;
 
 
 /* *********************************************************** */
@@ -3177,10 +3177,10 @@ L6:
     return 0;
 } /* getnp_ */
 
-/* Subroutine */ int insert_(int *k, int *lp, int *list, int *
-	lptr, int *lnew)
+/* Subroutine */ NFFT_INT insert_(NFFT_INT *k, NFFT_INT *lp, NFFT_INT *list, NFFT_INT *
+	lptr, NFFT_INT *lnew)
 {
-    static int lsav;
+    static NFFT_INT lsav;
 
 
 /* *********************************************************** */
@@ -3236,29 +3236,29 @@ L6:
     return 0;
 } /* insert_ */
 
-int inside_(double *p, int *lv, double *xv, double *yv,
-	double *zv, int *nv, int *listv, int *ier)
+NFFT_INT inside_(double *p, NFFT_INT *lv, double *xv, double *yv,
+	double *zv, NFFT_INT *nv, NFFT_INT *listv, NFFT_INT *ier)
 {
     /* Initialized data */
 
     static double eps = .001;
 
     /* System generated locals */
-    int i__1;
-    int ret_val = 0;
+    NFFT_INT i__1;
+    NFFT_INT ret_val = 0;
 
     /* Local variables */
     static double b[3], d__;
-    static int k, n;
+    static NFFT_INT k, n;
     static double q[3];
-    static int i1, i2, k0;
+    static NFFT_INT i1, i2, k0;
     static double v1[3], v2[3], cn[3], bp, bq;
-    static int ni;
+    static NFFT_INT ni;
     static double pn[3], qn[3], vn[3];
-    static int imx;
-    static int lft1, lft2, even;
-    static int ierr;
-    static int pinr, qinr;
+    static NFFT_INT imx;
+    static NFFT_INT lft1, lft2, even;
+    static NFFT_INT ierr;
+    static NFFT_INT pinr, qinr;
     static double qnrm, vnrm;
 
 
@@ -3592,10 +3592,10 @@ L14:
     return ret_val;
 } /* inside_ */
 
-/* Subroutine */ int intadd_(int *kk, int *i1, int *i2, int *
-	i3, int *list, int *lptr, int *lend, int *lnew)
+/* Subroutine */ NFFT_INT intadd_(NFFT_INT *kk, NFFT_INT *i1, NFFT_INT *i2, NFFT_INT *
+	i3, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lnew)
 {
-    static int k, n1, n2, n3, lp;
+    static NFFT_INT k, n1, n2, n3, lp;
 
 /* *********************************************************** */
 
@@ -3687,11 +3687,11 @@ L14:
     return 0;
 } /* intadd_ */
 
-/* Subroutine */ int intrsc_(double *p1, double *p2, double *cn,
-	double *p, int *ier)
+/* Subroutine */ NFFT_INT intrsc_(double *p1, double *p2, double *cn,
+	double *p, NFFT_INT *ier)
 {
     /* Local variables */
-    static int i__;
+    static NFFT_INT i__;
     static double t, d1, d2, pp[3], ppn;
 
 
@@ -3804,10 +3804,10 @@ L14:
     return 0;
 } /* intrsc_ */
 
-int jrand_(int *n, int *ix, int *iy, int *iz)
+NFFT_INT jrand_(NFFT_INT *n, NFFT_INT *ix, NFFT_INT *iy, NFFT_INT *iz)
 {
     /* System generated locals */
-    int ret_val;
+    NFFT_INT ret_val;
 
     /* Local variables */
     static double u, x;
@@ -3823,7 +3823,7 @@ int jrand_(int *n, int *ix, int *iy, int *iz)
 /*                                                   07/28/98 */
 
 /*   This function returns a uniformly distributed pseudo- */
-/* random int in the range 1 to N. */
+/* random NFFT_INT in the range 1 to N. */
 
 
 /* On input: */
@@ -3832,7 +3832,7 @@ int jrand_(int *n, int *ix, int *iy, int *iz)
 
 /* N is not altered by this function. */
 
-/*       IX,IY,IZ = int seeds initialized to values in */
+/*       IX,IY,IZ = NFFT_INT seeds initialized to values in */
 /*                  the range 1 to 30,000 before the first */
 /*                  call to JRAND, and not altered between */
 /*                  subsequent calls (unless a sequence of */
@@ -3841,9 +3841,9 @@ int jrand_(int *n, int *ix, int *iy, int *iz)
 
 /* On output: */
 
-/*       IX,IY,IZ = Updated int seeds. */
+/*       IX,IY,IZ = Updated NFFT_INT seeds. */
 
-/*       JRAND = Random int in the range 1 to N. */
+/*       JRAND = Random NFFT_INT in the range 1 to N. */
 
 /* Reference:  B. A. Wichmann and I. D. Hill, "An Efficient */
 /*             and Portable Pseudo-random Number Generator", */
@@ -3869,17 +3869,17 @@ int jrand_(int *n, int *ix, int *iy, int *iz)
     *iz = *iz * 170 % 30323;
     x = (double) (*ix) / 30269. + (double) (*iy) / 30307. + (
 	    double) (*iz) / 30323.;
-    u = x - (int) x;
-    ret_val = (int) ((double) (*n) * u + 1.);
+    u = x - (NFFT_INT) x;
+    ret_val = (NFFT_INT) ((double) (*n) * u + 1.);
     return ret_val;
 } /* jrand_ */
 
-int left_(double *x1, double *y11, double *z1, double *x2,
+NFFT_INT left_(double *x1, double *y11, double *z1, double *x2,
 	double *y2, double *z2, double *x0, double *y00,
 	double *z0)
 {
     /* System generated locals */
-    int ret_val;
+    NFFT_INT ret_val;
 
 
 /* *********************************************************** */
@@ -3923,13 +3923,13 @@ int left_(double *x1, double *y11, double *z1, double *x2,
     return ret_val;
 } /* left_ */
 
-int lstptr_(int *lpl, int *nb, int *list, int *lptr)
+NFFT_INT lstptr_(NFFT_INT *lpl, NFFT_INT *nb, NFFT_INT *list, NFFT_INT *lptr)
 {
     /* System generated locals */
-    int ret_val;
+    NFFT_INT ret_val;
 
     /* Local variables */
-    static int nd, lp;
+    static NFFT_INT nd, lp;
 
 
 /* *********************************************************** */
@@ -3997,13 +3997,13 @@ L2:
     return ret_val;
 } /* lstptr_ */
 
-int nbcnt_(int *lpl, int *lptr)
+NFFT_INT nbcnt_(NFFT_INT *lpl, NFFT_INT *lptr)
 {
     /* System generated locals */
-    int ret_val;
+    NFFT_INT ret_val;
 
     /* Local variables */
-    static int k, lp;
+    static NFFT_INT k, lp;
 
 
 /* *********************************************************** */
@@ -4065,23 +4065,23 @@ L2:
     return ret_val;
 } /* nbcnt_ */
 
-int nearnd_(double *p, int *ist, int *n, double *x,
-	double *y, double *z__, int *list, int *lptr, int
+NFFT_INT nearnd_(double *p, NFFT_INT *ist, NFFT_INT *n, double *x,
+	double *y, double *z__, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT
 	*lend, double *al)
 {
     /* System generated locals */
-    int ret_val, i__1;
+    NFFT_INT ret_val, i__1;
 
     /* Local variables */
-    static int l;
+    static NFFT_INT l;
     static double b1, b2, b3;
-    static int i1, i2, i3, n1, n2, n3, lp, nn, nr;
+    static NFFT_INT i1, i2, i3, n1, n2, n3, lp, nn, nr;
     static double ds1;
-    static int lp1, lp2;
+    static NFFT_INT lp1, lp2;
     static double dx1, dx2, dx3, dy1, dy2, dy3, dz1, dz2, dz3;
-    static int lpl;
+    static NFFT_INT lpl;
     static double dsr;
-    static int nst, listp[25], lptrp[25];
+    static NFFT_INT nst, listp[25], lptrp[25];
 
 /* *********************************************************** */
 
@@ -4351,18 +4351,18 @@ L6:
     return ret_val;
 } /* nearnd_ */
 
-/* Subroutine */ int optim_(double *x, double *y, double *z__,
-	int *na, int *list, int *lptr, int *lend, int *
-	nit, int *iwk, int *ier)
+/* Subroutine */ NFFT_INT optim_(double *x, double *y, double *z__,
+	NFFT_INT *na, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *
+	nit, NFFT_INT *iwk, NFFT_INT *ier)
 {
     /* System generated locals */
-    int i__1, i__2;
+    NFFT_INT i__1, i__2;
 
     /* Local variables */
-    static int i__, n1, n2, lp, io1, io2, nna, lp21, lpl, lpp;
-    static int swp;
-    static int iter;
-    static int maxit;
+    static NFFT_INT i__, n1, n2, lp, io1, io2, nna, lp21, lpl, lpp;
+    static NFFT_INT swp;
+    static NFFT_INT iter;
+    static NFFT_INT maxit;
 
 /* *********************************************************** */
 
@@ -4404,7 +4404,7 @@ L6:
 /*       NIT = Maximum number of iterations to be performed. */
 /*             NIT = 4*NA should be sufficient.  NIT .GE. 1. */
 
-/*       IWK = int array dimensioned 2 by NA containing */
+/*       IWK = NFFT_INT array dimensioned 2 by NA containing */
 /*             the nodal indexes of the arc endpoints (pairs */
 /*             of endpoints are stored in columns). */
 
@@ -4594,7 +4594,7 @@ L9:
     return 0;
 } /* optim_ */
 
-/* Subroutine */ int scoord_(double *px, double *py, double *pz,
+/* Subroutine */ NFFT_INT scoord_(double *px, double *py, double *pz,
 	double *plat, double *plon, double *pnrm)
 {
 /* *********************************************************** */
@@ -4692,14 +4692,14 @@ double store_(double *x)
     return ret_val;
 } /* store_ */
 
-/* Subroutine */ int swap_(int *in1, int *in2, int *io1, int *
-	io2, int *list, int *lptr, int *lend, int *lp21)
+/* Subroutine */ NFFT_INT swap_(NFFT_INT *in1, NFFT_INT *in2, NFFT_INT *io1, NFFT_INT *
+	io2, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT *lp21)
 {
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
 
     /* Local variables */
-    static int lp, lph, lpsav;
+    static NFFT_INT lp, lph, lpsav;
 
 /* *********************************************************** */
 
@@ -4816,11 +4816,11 @@ double store_(double *x)
     return 0;
 } /* swap_ */
 
-int swptst_(int *n1, int *n2, int *n3, int *n4,
+NFFT_INT swptst_(NFFT_INT *n1, NFFT_INT *n2, NFFT_INT *n3, NFFT_INT *n4,
 	double *x, double *y, double *z__)
 {
     /* System generated locals */
-    int ret_val;
+    NFFT_INT ret_val;
 
     /* Local variables */
     static double x4, y4, z4, dx1, dx2, dx3, dy1, dy2, dy3, dz1, dz2, dz3;
@@ -4907,14 +4907,14 @@ int swptst_(int *n1, int *n2, int *n3, int *n4,
     return ret_val;
 } /* swptst_ */
 
-/* Subroutine */ int trans_(int *n, double *rlat, double *rlon,
+/* Subroutine */ NFFT_INT trans_(NFFT_INT *n, double *rlat, double *rlon,
 	double *x, double *y, double *z__)
 {
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
 
     /* Local variables */
-    static int i__, nn;
+    static NFFT_INT i__, nn;
     static double phi, theta, cosphi;
 
 
@@ -4992,30 +4992,30 @@ int swptst_(int *n1, int *n2, int *n3, int *n4,
     return 0;
 } /* trans_ */
 
-/* Subroutine */ int trfind_(int *nst, double *p, int *n,
-	double *x, double *y, double *z__, int *list, int
-	*lptr, int *lend, double *b1, double *b2, double *b3,
-	int *i1, int *i2, int *i3)
+/* Subroutine */ NFFT_INT trfind_(NFFT_INT *nst, double *p, NFFT_INT *n,
+	double *x, double *y, double *z__, NFFT_INT *list, NFFT_INT
+	*lptr, NFFT_INT *lend, double *b1, double *b2, double *b3,
+	NFFT_INT *i1, NFFT_INT *i2, NFFT_INT *i3)
 {
     /* Initialized data */
 
-    static int ix = 1;
-    static int iy = 2;
-    static int iz = 3;
+    static NFFT_INT ix = 1;
+    static NFFT_INT iy = 2;
+    static NFFT_INT iz = 3;
 
     /* System generated locals */
-    int i__1;
+    NFFT_INT i__1;
     double d__1, d__2;
 
     /* Local variables */
     static double q[3];
-    static int n0, n1, n2, n3, n4, nf;
+    static NFFT_INT n0, n1, n2, n3, n4, nf;
     static double s12;
-    static int nl, lp;
+    static NFFT_INT nl, lp;
     static double xp, yp, zp;
-    static int n1s, n2s;
+    static NFFT_INT n1s, n2s;
     static double eps, tol, ptn1, ptn2;
-    static int next;
+    static NFFT_INT next;
 
 /* *********************************************************** */
 
@@ -5097,7 +5097,7 @@ int swptst_(int *n1, int *n2, int *n3, int *n4,
 /* Local parameters: */
 
 /* EPS =      Machine precision */
-/* IX,IY,IZ = int seeds for JRAND */
+/* IX,IY,IZ = NFFT_INT seeds for JRAND */
 /* LP =       LIST pointer */
 /* N0,N1,N2 = Nodes in counterclockwise order defining a */
 /*              cone (with vertex N0) containing P, or end- */
@@ -5505,18 +5505,18 @@ L14:
     return 0;
 } /* trfind_ */
 
-/* Subroutine */ int trlist_(int *n, int *list, int *lptr,
-	int *lend, int *nrow, int *nt, int *ltri, int *
+/* Subroutine */ NFFT_INT trlist_(NFFT_INT *n, NFFT_INT *list, NFFT_INT *lptr,
+	NFFT_INT *lend, NFFT_INT *nrow, NFFT_INT *nt, NFFT_INT *ltri, NFFT_INT *
 	ier)
 {
     /* System generated locals */
-    int ltri_dim1, ltri_offset, i__1, i__2;
+    NFFT_INT ltri_dim1, ltri_offset, i__1, i__2;
 
     /* Local variables */
-    static int i__, j, i1, i2, i3, n1, n2, n3, ka, kn, lp, kt, nm2, lp2,
+    static NFFT_INT i__, j, i1, i2, i3, n1, n2, n3, ka, kn, lp, kt, nm2, lp2,
 	    lpl, isv;
-    static int arcs;
-    static int lpln1;
+    static NFFT_INT arcs;
+    static NFFT_INT lpln1;
 
 
 /* *********************************************************** */
@@ -5549,7 +5549,7 @@ L14:
 
 /* The above parameters are not altered by this routine. */
 
-/*       LTRI = int array of length at least NROW*NT, */
+/*       LTRI = NFFT_INT array of length at least NROW*NT, */
 /*              where NT is at most 2N-4.  (A sufficient */
 /*              length is 12N if NROW=6 or 18N if NROW=9.) */
 
@@ -5599,7 +5599,7 @@ L14:
 
 /* Local parameters: */
 
-/* ARCS =     int variable with value TRUE iff are */
+/* ARCS =     NFFT_INT variable with value TRUE iff are */
 /*              indexes are to be stored */
 /* I,J =      LTRI row indexes (1 to 3) associated with */
 /*              triangles KT and KN, respectively */
@@ -5808,19 +5808,19 @@ L12:
     return 0;
 } /* trlist_ */
 
-/* Subroutine */ int trmesh_(int *n, double *x, double *y,
-	double *z__, int *list, int *lptr, int *lend, int
-	*lnew, int *near__, int *next, double *dist, int *ier)
+/* Subroutine */ NFFT_INT trmesh_(NFFT_INT *n, double *x, double *y,
+	double *z__, NFFT_INT *list, NFFT_INT *lptr, NFFT_INT *lend, NFFT_INT
+	*lnew, NFFT_INT *near__, NFFT_INT *next, double *dist, NFFT_INT *ier)
 {
     /* System generated locals */
-    int i__1, i__2;
+    NFFT_INT i__1, i__2;
 
     /* Local variables */
     static double d__;
-    static int i__, j, k;
+    static NFFT_INT i__, j, k;
     static double d1, d2, d3;
-    static int i0, lp, nn, lpl;
-    static int nexti;
+    static NFFT_INT i0, lp, nn, lpl;
+    static NFFT_INT nexti;
 
 /* *********************************************************** */
 
@@ -5904,7 +5904,7 @@ L12:
 /*             pair of great circle arcs. */
 
 /*  JRAND  - Generates a uniformly distributed pseudo-random */
-/*             int. */
+/*             NFFT_INT. */
 
 /*  LEFT   - Locates a point relative to a great circle. */
 

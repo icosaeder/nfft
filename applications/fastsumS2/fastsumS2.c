@@ -58,12 +58,12 @@
 /** Enumeration type for yes/no/both-type parameters */
 enum pvalue {NO = 0, YES = 1, BOTH = 2};
 
-static inline int scaled_modified_bessel_i_series(const R x, const R alpha,
-  const int nb, const int ize, R *b)
+static inline NFFT_INT scaled_modified_bessel_i_series(const R x, const R alpha,
+  const NFFT_INT nb, const NFFT_INT ize, R *b)
 {
   const R enmten = K(4.0)*nfft_float_property(NFFT_R_MIN);
   R tempa = K(1.0), empal = K(1.0) + alpha, halfx = K(0.0), tempb = K(0.0);
-  int n, ncalc = nb;
+  NFFT_INT n, ncalc = nb;
 
   if (enmten < x)
     halfx = x/K(2.0);
@@ -115,11 +115,11 @@ static inline int scaled_modified_bessel_i_series(const R x, const R alpha,
 }
 
 static inline void scaled_modified_bessel_i_normalize(const R x,
-  const R alpha, const int nb, const int ize, R *b, const R sum_)
+  const R alpha, const NFFT_INT nb, const NFFT_INT ize, R *b, const R sum_)
 {
   const R enmten = K(4.0)*nfft_float_property(NFFT_R_MIN);
   R sum = sum_, tempa;
-  int n;
+  NFFT_INT n;
 
   /* Normalize, i.e., divide all b[n] by sum */
   if (alpha != K(0.0))
@@ -189,7 +189,7 @@ static inline void scaled_modified_bessel_i_normalize(const R x,
  * Modified by Jens Keiner, Institute of Mathematics, University of Lübeck,
  *   23560 Lübeck, Germany
  */
-static int smbi(const R x, const R alpha, const int nb, const int ize, R *b)
+static NFFT_INT smbi(const R x, const R alpha, const NFFT_INT nb, const NFFT_INT ize, R *b)
 {
   /* machine dependent parameters */
   /* NSIG   - DECIMAL SIGNIFICANCE DESIRED.  SHOULD BE SET TO */
@@ -211,7 +211,7 @@ static int smbi(const R x, const R alpha, const int nb, const int ize, R *b)
   /* EXPARG - LARGEST WORKING PRECISION ARGUMENT THAT THE LIBRARY */
   /*          EXP ROUTINE CAN HANDLE AND UPPER LIMIT ON THE */
   /*          MAGNITUDE OF X WHEN IZE=1. */
-  const int nsig = MANT_DIG + 2;
+  const NFFT_INT nsig = MANT_DIG + 2;
   const R enten = nfft_float_property(NFFT_R_MAX);
   const R ensig = POW(K(10.0),(R)nsig);
   const R rtnsig = POW(K(10.0),-CEIL((R)nsig/K(4.0)));
@@ -219,7 +219,7 @@ static int smbi(const R x, const R alpha, const int nb, const int ize, R *b)
   const R exparg = FLOOR(LOG(POW(K(R_RADIX),K(DBL_MAX_EXP-1))));
 
   /* System generated locals */
-  int l, n, nend, magx, nbmx, ncalc, nstart;
+  NFFT_INT l, n, nend, magx, nbmx, ncalc, nstart;
   R p, em, en, sum, pold, test, empal, tempa, tempb, tempc, psave, plast, tover,
     emp2al, psavel;
 
@@ -536,31 +536,31 @@ int main (int argc, char **argv)
 {
   double **p;                  /* The array containing the parameter sets     *
                                 * for the kernel functions                    */
-  int *m;                      /* The array containing the cut-off degrees M  */
-  int **ld;                    /* The array containing the numbers of source  *
+  NFFT_INT *m;                      /* The array containing the cut-off degrees M  */
+  NFFT_INT **ld;                    /* The array containing the numbers of source  *
                                 * and target nodes, L and D                   */
-  int ip;                      /* Index variable for p                        */
-  int im;                      /* Index variable for m                        */
-  int ild;                     /* Index variable for l                        */
-  int ipp;                     /* Index for kernel parameters                 */
-  int ip_max;                  /* The maximum index for p                     */
-  int im_max;                  /* The maximum index for m                     */
-  int ild_max;                 /* The maximum index for l                     */
-  int ipp_max;                 /* The maximum index for ip                    */
-  int tc_max;                  /* The number of testcases                     */
-  int m_max;                   /* The maximum cut-off degree M for the        *
+  NFFT_INT ip;                      /* Index variable for p                        */
+  NFFT_INT im;                      /* Index variable for m                        */
+  NFFT_INT ild;                     /* Index variable for l                        */
+  NFFT_INT ipp;                     /* Index for kernel parameters                 */
+  NFFT_INT ip_max;                  /* The maximum index for p                     */
+  NFFT_INT im_max;                  /* The maximum index for m                     */
+  NFFT_INT ild_max;                 /* The maximum index for l                     */
+  NFFT_INT ipp_max;                 /* The maximum index for ip                    */
+  NFFT_INT tc_max;                  /* The number of testcases                     */
+  NFFT_INT m_max;                   /* The maximum cut-off degree M for the        *
                                 * current dataset                             */
-  int l_max;                   /* The maximum number of source nodes L for    *
+  NFFT_INT l_max;                   /* The maximum number of source nodes L for    *
                                 * the current dataset                         */
-  int d_max;                   /* The maximum number of target nodes D for    *
+  NFFT_INT d_max;                   /* The maximum number of target nodes D for    *
                                 * the current dataset                         */
   long ld_max_prec;            /* The maximum number of source and target     *
                                 * nodes for precomputation multiplied         */
   long l_max_prec;             /* The maximum number of source nodes for      *
                                 * precomputation                              */
-  int tc;                      /* Index variable for testcases                */
-  int kt;                      /* The kernel function                         */
-  int cutoff;                  /* The current NFFT cut-off parameter          */
+  NFFT_INT tc;                      /* Index variable for testcases                */
+  NFFT_INT kt;                      /* The kernel function                         */
+  NFFT_INT cutoff;                  /* The current NFFT cut-off parameter          */
   double threshold;            /* The current NFSFT threshold parameter       */
   double t_d;                  /* Time for direct algorithm in seconds        */
   double t_dp;                 /* Time for direct algorithm with              *
@@ -584,15 +584,15 @@ int main (int argc, char **argv)
   fftw_complex *prec = NULL; /*                                             */
   nfsft_plan plan;             /* NFSFT plan                                  */
   nfsft_plan plan_adjoint;     /* adjoint NFSFT plan                          */
-  int i;                       /*                                             */
-  int k;                       /*                                             */
-  int n;                       /*                                             */
-  int d;                       /*                                             */
-  int l;                       /*                                             */
-  int use_nfsft;               /*                                             */
-  int use_nfft;                /*                                             */
-  int use_fpt;                 /*                                             */
-  int rinc;                    /*                                             */
+  NFFT_INT i;                       /*                                             */
+  NFFT_INT k;                       /*                                             */
+  NFFT_INT n;                       /*                                             */
+  NFFT_INT d;                       /*                                             */
+  NFFT_INT l;                       /*                                             */
+  NFFT_INT use_nfsft;               /*                                             */
+  NFFT_INT use_nfft;                /*                                             */
+  NFFT_INT use_fpt;                 /*                                             */
+  NFFT_INT rinc;                    /*                                             */
   double constant;             /*                                             */
 
   /* Read the number of testcases. */
@@ -683,7 +683,7 @@ int main (int argc, char **argv)
     /* Read the number of cut-off degrees. */
     fscanf(stdin,"bandwidths=%d\n",&im_max);
     fprintf(stdout,"%d\n",im_max);
-    m = (int*) nfft_malloc(im_max*sizeof(int));
+    m = (NFFT_INT*) nfft_malloc(im_max*sizeof(NFFT_INT));
 
     /* Read the cut-off degrees. */
     for (im = 0; im < im_max; im++)
@@ -697,13 +697,13 @@ int main (int argc, char **argv)
     /* Read number of node specifications. */
     fscanf(stdin,"node_sets=%d\n",&ild_max);
     fprintf(stdout,"%d\n",ild_max);
-    ld = (int**) nfft_malloc(ild_max*sizeof(int*));
+    ld = (NFFT_INT**) nfft_malloc(ild_max*sizeof(NFFT_INT*));
 
     /* Read the run specification. */
     for (ild = 0; ild < ild_max; ild++)
     {
       /* Allocate memory for the run parameters. */
-      ld[ild] = (int*) nfft_malloc(5*sizeof(int));
+      ld[ild] = (NFFT_INT*) nfft_malloc(5*sizeof(NFFT_INT));
 
       /* Read number of source nodes. */
       fscanf(stdin,"L=%d ",&ld[ild][0]);
