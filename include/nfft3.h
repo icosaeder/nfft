@@ -887,7 +887,28 @@ void Y(get_version)(unsigned *major, unsigned *minor, unsigned *patch); \
  * The window function to be used is configured at compile time. \
  */ \
 const char *Y(get_window_name)(); \
-NFFT_INT Y(get_default_window_cut_off)();
+NFFT_INT Y(get_default_window_cut_off)(); \
+\
+/* dft.c */ \
+/** Proxy to FFTW 3 using NFFT_INT based sizes instead of int. */ \
+fftw_plan Y(plan_dft)(NFFT_INT rank, const NFFT_INT *n, \
+                      fftw_complex *in, fftw_complex *out, \
+                      int sign, unsigned flags); \
+fftw_plan Y(plan_dft_1d)(NFFT_INT n0, \
+                         fftw_complex *in, fftw_complex *out, \
+                         int sign, unsigned flags); \
+fftw_plan Y(plan_dft_2d)(NFFT_INT n0, NFFT_INT n1, \
+                         fftw_complex *in, fftw_complex *out, \
+                         int sign, unsigned flags); \
+fftw_plan Y(plan_r2r)(NFFT_INT rank, const NFFT_INT *n, \
+                      double *in, double *out, \
+                      const fftw_r2r_kind *kind, unsigned flags); \
+fftw_plan Y(plan_many_r2r)(NFFT_INT rank, const NFFT_INT *n, NFFT_INT howmany, \
+                           double *in, const NFFT_INT *inembed, \
+                           NFFT_INT istride, NFFT_INT idist, \
+                           double *out, const NFFT_INT *onembed, \
+                           NFFT_INT ostride, NFFT_INT odist, \
+                           const fftw_r2r_kind *kind, unsigned flags); \
 
 NFFT_DEFINE_UTIL_API(NFFT_MANGLE_FLOAT,float,fftwf_complex)
 NFFT_DEFINE_UTIL_API(NFFT_MANGLE_DOUBLE,double,fftw_complex)

@@ -18,7 +18,7 @@
 
 #include "infft.h"
 
-#define MAKE_FFTW_DIMS(hownamy, istride, ostride)                                     \
+#define MAKE_FFTW_DIMS(howmany, istride, ostride)                                     \
     fftw_iodim64 *dims = (fftw_iodim64 *)alloca((size_t)rank * sizeof(fftw_iodim64)); \
     NFFT_INT i = rank - 1;                                                            \
     dims[i].n = n[i];                                                                 \
@@ -54,7 +54,7 @@ fftw_plan Y(plan_r2r)(NFFT_INT rank, const NFFT_INT *n, double *in, double *out,
                       const fftw_r2r_kind *kind, unsigned flags)
 {
     MAKE_FFTW_DIMS(1, 1, 1);
-    return FFTW(plan_guru_r2r)((int)rank, dims, 1, &howmany_dims, in, out, kind, flags);
+    return FFTW(plan_guru64_r2r)((int)rank, dims, 1, &howmany_dims, in, out, kind, flags);
 }
 
 fftw_plan Y(plan_many_r2r)(NFFT_INT rank, const NFFT_INT *n, NFFT_INT howmany,
@@ -71,6 +71,6 @@ fftw_plan Y(plan_many_r2r)(NFFT_INT rank, const NFFT_INT *n, NFFT_INT howmany,
     // odist == 1
     // which is the case in NFFT.
     // Guru interface cannot handle these parameters.
-    MAKE_FFTW_DIMS(hownamy, istride, ostride);
-    return FFTW(plan_guru_r2r)((int)rank, dims, 1, &howmany_dims, in, out, kind, flags);
+    MAKE_FFTW_DIMS(howmany, istride, ostride);
+    return FFTW(plan_guru64_r2r)((int)rank, dims, 1, &howmany_dims, in, out, kind, flags);
 }
