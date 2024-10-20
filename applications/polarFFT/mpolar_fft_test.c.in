@@ -355,7 +355,7 @@ static NFFT_INT comparison_fft(FILE *fp, NFFT_INT N, NFFT_INT T, NFFT_INT S)
   f_hat = (NFFT_C *) NFFT(malloc)(sizeof(NFFT_C) * (size_t)(N * N));
   f = (NFFT_C *) NFFT(malloc)(sizeof(NFFT_C) * (size_t)((T * S / 4) * 5));
 
-  my_fftw_plan = Y(plan_dft_2d)(N, N, f_hat, f, FFTW_BACKWARD, FFTW_MEASURE);
+  my_fftw_plan = NFFT(plan_dft_2d)(N, N, f_hat, f, FFTW_BACKWARD, FFTW_MEASURE);
 
   for (k = 0; k < N * N; k++)
     f_hat[k] = NFFT(drand48)() + _Complex_I * NFFT(drand48)();
@@ -380,13 +380,13 @@ static NFFT_INT comparison_fft(FILE *fp, NFFT_INT N, NFFT_INT T, NFFT_INT S)
   for (m = 3; m <= 9; m += 3)
   {
     if ((m == 3) && (N < 256))
-      fprintf(fp, "%d\t&\t&\t%1.1" NFFT__FES__ "&\t%1.1" NFFT__FES__ "&\t%d\t", N, t_fft, t_dft_mpolar, m);
+      fprintf(fp, "%td\t&\t&\t%1.1" NFFT__FES__ "&\t%1.1" NFFT__FES__ "&\t%td\t", N, t_fft, t_dft_mpolar, m);
     else if (m == 3)
-      fprintf(fp, "%d\t&\t&\t%1.1" NFFT__FES__ "&\t       &\t%d\t", N, t_fft, m);
+      fprintf(fp, "%td\t&\t&\t%1.1" NFFT__FES__ "&\t       &\t%td\t", N, t_fft, m);
     else
-      fprintf(fp, "  \t&\t&\t       &\t       &\t%d\t", m);
+      fprintf(fp, "  \t&\t&\t       &\t       &\t%td\t", m);
 
-    printf("N=%d\tt_fft=%1.1" NFFT__FES__ "\tt_dft_mpolar=%1.1" NFFT__FES__ "\tm=%d\t", N, t_fft,
+    printf("N=%td\tt_fft=%1.1" NFFT__FES__ "\tt_dft_mpolar=%1.1" NFFT__FES__ "\tm=%td\t", N, t_fft,
         t_dft_mpolar, m);
 
     mpolar_fft(f_hat, N, f, T, S, m);
@@ -448,7 +448,7 @@ int main(int argc, char **argv)
   N = atoi(argv[1]);
   T = atoi(argv[2]);
   S = atoi(argv[3]);
-  printf("N=%d, modified polar grid with T=%d, R=%d => ", N, T, S);
+  printf("N=%td, modified polar grid with T=%td, R=%td => ", N, T, S);
 
   x = (NFFT_R *) NFFT(malloc)((size_t)(5 * T * S / 2) * (sizeof(NFFT_R)));
   w = (NFFT_R *) NFFT(malloc)((size_t)(5 * T * S / 4) * (sizeof(NFFT_R)));
@@ -460,7 +460,7 @@ int main(int argc, char **argv)
 
   /** generate knots of mpolar grid */
   M = mpolar_grid(T, S, x, w);
-  printf("M=%d.\n", M);
+  printf("M=%td.\n", M);
 
   /** load data */
   fp1 = fopen("input_data_r.dat", "r");
@@ -490,7 +490,7 @@ int main(int argc, char **argv)
 
     /** compute error of fast mpolar FFT */
     E_max = NFFT(error_l_infty_complex)(f_direct, f, M);
-    printf("m=%2d: E_max = %" NFFT__FES__ "\n", m, E_max);
+    printf("m=%2td: E_max = %" NFFT__FES__ "\n", m, E_max);
     fprintf(fp1, "%" NFFT__FES__ "\n", E_max);
   }
   fclose(fp1);
@@ -498,8 +498,8 @@ int main(int argc, char **argv)
   /** Test of the inverse mpolar FFT for different m in dependece of the iteration number*/
   for (m = 3; m <= 9; m += 3)
   {
-    printf("\nTest of the inverse mpolar FFT for m=%d: \n", m);
-    sprintf(filename, "mpolar_ifft_error%d.dat", m);
+    printf("\nTest of the inverse mpolar FFT for m=%td: \n", m);
+    sprintf(filename, "mpolar_ifft_error%td.dat", m);
     fp1 = fopen(filename, "w+");
     for (max_i = 0; max_i <= 20; max_i += 2)
     {
@@ -508,7 +508,7 @@ int main(int argc, char **argv)
 
       /** compute maximum relativ error */
       E_max = NFFT(error_l_infty_complex)(f_hat, f_tilde, N * N);
-      printf("%3d iterations: E_max = %" NFFT__FES__ "\n", max_i, E_max);
+      printf("%3td iterations: E_max = %" NFFT__FES__ "\n", max_i, E_max);
       fprintf(fp1, "%" NFFT__FES__ "\n", E_max);
     }
     fclose(fp1);

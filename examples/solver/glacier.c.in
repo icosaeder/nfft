@@ -220,8 +220,8 @@ int main(int argc, char **argv)
   else
     for (M_cv = atoi(argv[3]); M_cv <= atoi(argv[5]); M_cv += atoi(argv[4]))
     {
-      fprintf(stderr, "\nM_cv=%d,\t", M_cv);
-      printf("$%d$ & ", M_cv);
+      fprintf(stderr, "\nM_cv=%td,\t", M_cv);
+      printf("$%td$ & ", M_cv);
       fprintf(stderr, "cgne+damp: ");
       glacier_cv(atoi(argv[1]), atoi(argv[2]), M_cv, CGNE | PRECOMPUTE_DAMP);
       //fprintf(stderr,"cgne: ");

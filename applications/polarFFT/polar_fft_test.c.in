@@ -347,7 +347,7 @@ int main(int argc, char **argv)
   N = atoi(argv[1]);
   T = atoi(argv[2]);
   S = atoi(argv[3]);
-  printf("N=%d, polar grid with T=%d, R=%d => ", N, T, S);
+  printf("N=%td, polar grid with T=%td, R=%td => ", N, T, S);
 
   x = (NFFT_R *) NFFT(malloc)((size_t)(2 * 5 * (T / 2) * (S / 2)) * (sizeof(NFFT_R)));
   w = (NFFT_R *) NFFT(malloc)((size_t)(5 * (T / 2) * (S / 2)) * (sizeof(NFFT_R)));
@@ -359,7 +359,7 @@ int main(int argc, char **argv)
 
   /** generate knots of mpolar grid */
   M = polar_grid(T, S, x, w);
-  printf("M=%d.\n", M);
+  printf("M=%td.\n", M);
 
   /** load data */
   fp1 = fopen("input_data_r.dat", "r");
@@ -389,7 +389,7 @@ int main(int argc, char **argv)
 
     /** compute error of fast polar FFT */
     E_max = NFFT(error_l_infty_complex)(f_direct, f, M);
-    printf("m=%2d: E_max = %" NFFT__FES__ "\n", m, E_max);
+    printf("m=%2td: E_max = %" NFFT__FES__ "\n", m, E_max);
     fprintf(fp1, "%" NFFT__FES__ "\n", E_max);
   }
   fclose(fp1);
@@ -397,8 +397,8 @@ int main(int argc, char **argv)
   /** Test of the inverse polar FFT for different m in dependece of the iteration number*/
   for (m = 3; m <= 9; m += 3)
   {
-    printf("\nTest of the inverse polar FFT for m=%d: \n", m);
-    sprintf(filename, "polar_ifft_error%d.dat", m);
+    printf("\nTest of the inverse polar FFT for m=%td: \n", m);
+    sprintf(filename, "polar_ifft_error%td.dat", m);
     fp1 = fopen(filename, "w+");
     for (max_i = 0; max_i <= 100; max_i += 10)
     {
@@ -414,7 +414,7 @@ int main(int argc, char **argv)
        }
        */
       E_max = NFFT(error_l_infty_complex)(f_hat, f_tilde, N * N);
-      printf("%3d iterations: E_max = %" NFFT__FES__ "\n", max_i, E_max);
+      printf("%3td iterations: E_max = %" NFFT__FES__ "\n", max_i, E_max);
       fprintf(fp1, "%" NFFT__FES__ "\n", E_max);
     }
     fclose(fp1);
