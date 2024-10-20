@@ -900,6 +900,12 @@ fftw_plan Y(plan_dft_1d)(NFFT_INT n0, \
 fftw_plan Y(plan_dft_2d)(NFFT_INT n0, NFFT_INT n1, \
                          fftw_complex *in, fftw_complex *out, \
                          int sign, unsigned flags); \
+fftw_plan Y(plan_many_dft)(NFFT_INT rank, const NFFT_INT *n, NFFT_INT howmany, \
+                           fftw_complex *in, const NFFT_INT *inembed, \
+                           NFFT_INT istride, NFFT_INT idist, \
+                           fftw_complex *out, const NFFT_INT *onembed, \
+                           NFFT_INT ostride, NFFT_INT odist, \
+                           int sign, unsigned flags); \
 fftw_plan Y(plan_r2r)(NFFT_INT rank, const NFFT_INT *n, \
                       double *in, double *out, \
                       const fftw_r2r_kind *kind, unsigned flags); \
