@@ -49,6 +49,8 @@
 /*#define KERNEL(r) 1.0 */
 #define KERNEL(r) (NFFT_K(1.0)-NFFT_M(fabs)((NFFT_R)(r))/((NFFT_R)S/2))
 
+typedef NFFT_INT (*GridFunc)(NFFT_INT T, NFFT_INT S, NFFT_R *x, NFFT_R *w);
+
 /** generates the points x with weights w
  *  for the polar grid with T angles and R offsets
  */
@@ -111,7 +113,7 @@ static NFFT_INT linogram_grid(NFFT_INT T, NFFT_INT S, NFFT_R *x, NFFT_R *w)
  *  on the grid given by gridfcn() with T angles and R offsets
  *  by a NFFT-based CG-type algorithm
  */
-static NFFT_INT inverse_radon_trafo(NFFT_INT (*gridfcn)(), NFFT_INT T, NFFT_INT S, NFFT_R *Rf, NFFT_INT NN, NFFT_R *f,
+static NFFT_INT inverse_radon_trafo(GridFunc gridfcn, NFFT_INT T, NFFT_INT S, NFFT_R *Rf, NFFT_INT NN, NFFT_R *f,
     NFFT_INT max_i)
 {
   NFFT_INT j, k; /**< index for nodes and freqencies   */
@@ -134,7 +136,7 @@ static NFFT_INT inverse_radon_trafo(NFFT_INT (*gridfcn)(), NFFT_INT T, NFFT_INT 
   n[1] = 2 * N[1];
 
   fft = (NFFT_C *) NFFT(malloc)((size_t)(S) * sizeof(NFFT_C));
-  my_fftw_plan = Y(plan_dft_1d)(S, fft, fft, FFTW_FORWARD, FFTW_MEASURE);
+  my_fftw_plan = NFFT(plan_dft_1d)(S, fft, fft, FFTW_FORWARD, FFTW_MEASURE);
 
   x = (NFFT_R *) NFFT(malloc)((size_t)(2 * T * S) * (sizeof(NFFT_R)));
   if (x == NULL)
@@ -237,7 +239,7 @@ static NFFT_INT inverse_radon_trafo(NFFT_INT (*gridfcn)(), NFFT_INT T, NFFT_INT 
  */
 int main(int argc, char **argv)
 {
-  NFFT_INT (*gridfcn)(); /**< grid generating function        */
+  GridFunc gridfcn; /**< grid generating function        */
   NFFT_INT T, S; /**< number of directions/offsets    */
   FILE *fp;
   NFFT_INT N; /**< image size                      */

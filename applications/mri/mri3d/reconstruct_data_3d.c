@@ -51,9 +51,9 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT Z,NFFT_INT
 
   /* initialise my_plan, specific.
      we don't precompute psi */
-  my_N[0]=Z; my_n[0]=ceil(Z*1.2);
-  my_N[1]=N; my_n[1]=ceil(N*1.2);
-  my_N[2]=N; my_n[2]=ceil(N*1.2);
+  my_N[0] = Z; my_n[0] = (NFFT_INT)ceil(Z * 1.2);
+  my_N[1] = N; my_n[1] = (NFFT_INT)ceil(N * 1.2);
+  my_N[2] = N; my_n[2] = (NFFT_INT)ceil(N * 1.2);
   nfft_init_guru(&my_plan, 3, my_N, M, my_n, 6,
                       PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
                       MALLOC_F| FFTW_INIT,
@@ -133,7 +133,7 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT Z,NFFT_INT
     /* break if dot_r_iter is smaller than epsilon*/
     if(my_iplan.dot_r_iter<epsilon)
       break;
-    fprintf(stderr,"%e,  %i of %i\n",sqrt(my_iplan.dot_r_iter),
+    fprintf(stderr,"%e,  %td of %td\n",sqrt(my_iplan.dot_r_iter),
     l+1,iteration);
     solver_loop_one_step_complex(&my_iplan);
   }

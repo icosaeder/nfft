@@ -142,25 +142,25 @@ int main (int argc, char **argv)
   ticks t0, t1;
 
   /* Read the number of testcases. */
-  fscanf(stdin,"testcases=%d\n",&tc_max);
-  fprintf(stdout,"%d\n",tc_max);
+  fscanf(stdin,"testcases=%td\n",&tc_max);
+  fprintf(stdout,"%td\n",tc_max);
 
   /* Process each testcase. */
   for (tc = 0; tc < tc_max; tc++)
   {
     /* Check if the fast transform shall be used. */
-    fscanf(stdin,"nfsft=%d\n",&use_nfsft);
-    fprintf(stdout,"%d\n",use_nfsft);
+    fscanf(stdin,"nfsft=%td\n",&use_nfsft);
+    fprintf(stdout,"%td\n",use_nfsft);
     if (use_nfsft != NO)
     {
       /* Check if the NFFT shall be used. */
-      fscanf(stdin,"nfft=%d\n",&use_nfft);
-      fprintf(stdout,"%d\n",use_nfsft);
+      fscanf(stdin,"nfft=%td\n",&use_nfft);
+      fprintf(stdout,"%td\n",use_nfsft);
       if (use_nfft != NO)
       {
         /* Read the cut-off parameter. */
-        fscanf(stdin,"cutoff=%d\n",&cutoff);
-        fprintf(stdout,"%d\n",cutoff);
+        fscanf(stdin,"cutoff=%td\n",&cutoff);
+        fprintf(stdout,"%td\n",cutoff);
       }
       else
       {
@@ -169,8 +169,8 @@ int main (int argc, char **argv)
         cutoff = 1;
       }
       /* Check if the fast polynomial transform shall be used. */
-      fscanf(stdin,"fpt=%d\n",&use_fpt);
-      fprintf(stdout,"%d\n",use_fpt);
+      fscanf(stdin,"fpt=%td\n",&use_fpt);
+      fprintf(stdout,"%td\n",use_fpt);
       if (use_fpt != NO)
       {
         /* Read the NFSFT threshold parameter. */
@@ -201,19 +201,19 @@ int main (int argc, char **argv)
     if (testmode == ERROR)
     {
       /* Read the quadrature grid type. */
-      fscanf(stdin,"gridtype=%d\n",&gridtype);
-      fprintf(stdout,"%d\n",gridtype);
+      fscanf(stdin,"gridtype=%td\n",&gridtype);
+      fprintf(stdout,"%td\n",gridtype);
 
       /* Read the test function. */
-      fscanf(stdin,"testfunction=%d\n",&testfunction);
-      fprintf(stdout,"%d\n",testfunction);
+      fscanf(stdin,"testfunction=%td\n",&testfunction);
+      fprintf(stdout,"%td\n",testfunction);
 
       /* Check if random bandlimited function has been chosen. */
       if (testfunction == FUNCTION_RANDOM_BANDLIMITED)
       {
         /* Read the bandwidht. */
-        fscanf(stdin,"bandlimit=%d\n",&N);
-        fprintf(stdout,"%d\n",N);
+        fscanf(stdin,"bandlimit=%td\n",&N);
+        fprintf(stdout,"%td\n",N);
       }
       else
       {
@@ -221,18 +221,18 @@ int main (int argc, char **argv)
       }
 
       /* Read the number of repetitions. */
-      fscanf(stdin,"repetitions=%d\n",&repetitions);
-      fprintf(stdout,"%d\n",repetitions);
+      fscanf(stdin,"repetitions=%td\n",&repetitions);
+      fprintf(stdout,"%td\n",repetitions);
 
-      fscanf(stdin,"mode=%d\n",&mode);
-      fprintf(stdout,"%d\n",mode);
+      fscanf(stdin,"mode=%td\n",&mode);
+      fprintf(stdout,"%td\n",mode);
 
       if (mode == RANDOM)
       {
         /* Read the bandwidht. */
-        fscanf(stdin,"points=%d\n",&m_compare);
-        fprintf(stdout,"%d\n",m_compare);
-        x_compare = (double*) nfft_malloc(2*m_compare*sizeof(double));
+        fscanf(stdin,"points=%td\n",&m_compare);
+        fprintf(stdout,"%td\n",m_compare);
+        x_compare = (double*) nfft_malloc(2 * (size_t)m_compare * sizeof(double));
         d = 0;
         while (d < m_compare)
         {
@@ -256,8 +256,8 @@ int main (int argc, char **argv)
             d++;
           }
         }
-        f_compare = (double _Complex*) nfft_malloc(m_compare*sizeof(double _Complex));
-        f = (double _Complex*) nfft_malloc(m_compare*sizeof(double _Complex));
+        f_compare = (double _Complex*) nfft_malloc((size_t)m_compare * sizeof(double _Complex));
+        f = (double _Complex*) nfft_malloc((size_t)m_compare * sizeof(double _Complex));
       }
     }
 
@@ -266,15 +266,15 @@ int main (int argc, char **argv)
     SQ_max = 0;
 
     /* Read the number of cut-off degrees. */
-    fscanf(stdin,"bandwidths=%d\n",&iNQ_max);
-    fprintf(stdout,"%d\n",iNQ_max);
+    fscanf(stdin,"bandwidths=%td\n",&iNQ_max);
+    fprintf(stdout,"%td\n",iNQ_max);
 
     /* Allocate memory for the cut-off degrees and grid size parameters. */
-    NQ = (NFFT_INT*) nfft_malloc(iNQ_max*sizeof(NFFT_INT));
-    SQ = (NFFT_INT*) nfft_malloc(iNQ_max*sizeof(NFFT_INT));
+    NQ = (NFFT_INT*) nfft_malloc((size_t)iNQ_max * sizeof(NFFT_INT));
+    SQ = (NFFT_INT*) nfft_malloc((size_t)iNQ_max * sizeof(NFFT_INT));
     if (testmode == TIMING)
     {
-      RQ = (NFFT_INT*) nfft_malloc(iNQ_max*sizeof(NFFT_INT));
+      RQ = (NFFT_INT*) nfft_malloc((size_t)iNQ_max * sizeof(NFFT_INT));
     }
 
     /* Read the cut-off degrees and grid size parameters. */
@@ -283,16 +283,16 @@ int main (int argc, char **argv)
       if (testmode == TIMING)
       {
         /* Read cut-off degree and grid size parameter. */
-        fscanf(stdin,"%d %d %d\n",&NQ[iNQ],&SQ[iNQ],&RQ[iNQ]);
-        fprintf(stdout,"%d %d %d\n",NQ[iNQ],SQ[iNQ],RQ[iNQ]);
+        fscanf(stdin,"%td %td %td\n",&NQ[iNQ],&SQ[iNQ],&RQ[iNQ]);
+        fprintf(stdout,"%td %td %td\n",NQ[iNQ],SQ[iNQ],RQ[iNQ]);
         NQ_max = MAX(NQ_max,NQ[iNQ]);
         SQ_max = MAX(SQ_max,SQ[iNQ]);
       }
       else
       {
         /* Read cut-off degree and grid size parameter. */
-        fscanf(stdin,"%d %d\n",&NQ[iNQ],&SQ[iNQ]);
-        fprintf(stdout,"%d %d\n",NQ[iNQ],SQ[iNQ]);
+        fscanf(stdin,"%td %td\n",&NQ[iNQ],&SQ[iNQ]);
+        fprintf(stdout,"%td %td\n",NQ[iNQ],SQ[iNQ]);
         NQ_max = MAX(NQ_max,NQ[iNQ]);
         SQ_max = MAX(SQ_max,SQ[iNQ]);
       }
@@ -307,9 +307,9 @@ int main (int argc, char **argv)
     if (testmode == TIMING)
     {
       /* Allocate data structures. */
-      f_hat = (double _Complex*) nfft_malloc(NFSFT_F_HAT_SIZE(NQ_max)*sizeof(double _Complex));
-      f = (double _Complex*) nfft_malloc(SQ_max*sizeof(double _Complex));
-      x_grid = (double*) nfft_malloc(2*SQ_max*sizeof(double));
+      f_hat = (double _Complex*) nfft_malloc((size_t)NFSFT_F_HAT_SIZE(NQ_max) * sizeof(double _Complex));
+      f = (double _Complex*) nfft_malloc((size_t)SQ_max * sizeof(double _Complex));
+      x_grid = (double*) nfft_malloc(2 * (size_t)SQ_max * sizeof(double));
       for (d = 0; d < SQ_max; d++)
       {
         f[d] = (((double)rand())/RAND_MAX)-0.5 + _Complex_I*((((double)rand())/RAND_MAX)-0.5);
@@ -363,7 +363,7 @@ int main (int argc, char **argv)
         nfsft_finalize(&plan);
 
         fprintf(stdout,"%+le\n", t_avg);
-        fprintf(stderr,"%d: %4d %4d %+le\n", tc, NQ[iNQ], SQ[iNQ], t_avg);
+        fprintf(stderr,"%td: %4td %4td %+le\n", tc, NQ[iNQ], SQ[iNQ], t_avg);
       }
       else
       {
@@ -406,8 +406,8 @@ int main (int argc, char **argv)
         }
 
         /* Allocate memory for data structures. */
-        w = (double*) nfft_malloc(m_theta*sizeof(double));
-        x_grid = (double*) nfft_malloc(2*m_total*sizeof(double));
+        w = (double*) nfft_malloc((size_t)m_theta * sizeof(double));
+        x_grid = (double*) nfft_malloc(2 * (size_t)m_total * sizeof(double));
 
         //fprintf(stderr,"NQ = %d\n",NQ[iNQ]);
         //fflush(stderr);
@@ -427,8 +427,8 @@ int main (int argc, char **argv)
             //fprintf(stderr,"Allocating theta and phi\n");
             //fflush(stderr);
             /* Allocate memory to store the grid's angles. */
-            theta = (double*) nfft_malloc(m_theta*sizeof(double));
-            phi = (double*) nfft_malloc(m_phi*sizeof(double));
+            theta = (double*) nfft_malloc((size_t)m_theta * sizeof(double));
+            phi = (double*) nfft_malloc((size_t)m_phi * sizeof(double));
 
             //if (theta == NULL || phi == NULL)
             //{
@@ -476,8 +476,8 @@ int main (int argc, char **argv)
           case GRID_CLENSHAW_CURTIS:
 
             /* Allocate memory to store the grid's angles. */
-            theta = (double*) nfft_malloc(m_theta*sizeof(double));
-            phi = (double*) nfft_malloc(m_phi*sizeof(double));
+            theta = (double*) nfft_malloc((size_t)m_theta * sizeof(double));
+            phi = (double*) nfft_malloc((size_t)m_phi * sizeof(double));
 
             /* Generate the grid angles theta. */
             for (k = 0; k < m_theta; k++)
@@ -493,7 +493,7 @@ int main (int argc, char **argv)
             }
 
             /* Generate quadrature weights. */
-            fplan = fftw_plan_r2r_1d(SQ[iNQ]+1, w, w, FFTW_REDFT00, 0U);
+            fplan = nfft_plan_r2r_1d(SQ[iNQ]+1, w, w, FFTW_REDFT00, 0U);
             for (k = 0; k < SQ[iNQ]+1; k++)
             {
               w[k] = -2.0/(4*k*k-1);
@@ -578,8 +578,8 @@ int main (int argc, char **argv)
 
             if (gridtype == GRID_EQUIDISTRIBUTION)
             {
-              w_temp = (double*) nfft_malloc((SQ[iNQ]+1)*sizeof(double));
-              fplan = fftw_plan_r2r_1d(SQ[iNQ]/2+1, w_temp, w_temp, FFTW_REDFT00, 0U);
+              w_temp = (double*) nfft_malloc((size_t)(SQ[iNQ] + 1) * sizeof(double));
+              fplan = nfft_plan_r2r_1d(SQ[iNQ]/2+1, w_temp, w_temp, FFTW_REDFT00, 0U);
               for (k = 0; k < SQ[iNQ]/2+1; k++)
               {
                 w_temp[k] = -2.0/(4*k*k-1);
@@ -653,7 +653,7 @@ int main (int argc, char **argv)
         }
 
         /* Allocate memory for grid values. */
-        f_grid = (double _Complex*) nfft_malloc(m_total*sizeof(double _Complex));
+        f_grid = (double _Complex*) nfft_malloc((size_t)m_total * sizeof(double _Complex));
 
         if (mode == RANDOM)
         {
@@ -661,7 +661,7 @@ int main (int argc, char **argv)
         else
         {
           m_compare = m_total;
-          f_compare = (double _Complex*) nfft_malloc(m_compare*sizeof(double _Complex));
+          f_compare = (double _Complex*) nfft_malloc((size_t)m_compare * sizeof(double _Complex));
           x_compare = x_grid;
           f = f_grid;
         }
@@ -671,7 +671,7 @@ int main (int argc, char **argv)
         switch (testfunction)
         {
           case FUNCTION_RANDOM_BANDLIMITED:
-            f_hat_gen = (double _Complex*) nfft_malloc(NFSFT_F_HAT_SIZE(N)*sizeof(double _Complex));
+            f_hat_gen = (double _Complex*) nfft_malloc((size_t)NFSFT_F_HAT_SIZE(N) * sizeof(double _Complex));
             //fprintf(stderr,"Generating random test function\n");
             //fflush(stderr);
             /* Generate random function samples by sampling a bandlimited
@@ -744,7 +744,7 @@ int main (int argc, char **argv)
             }
             else
             {
-              memcpy(f_compare,f_grid,m_total*sizeof(double _Complex));
+              memcpy(f_compare, f_grid, (size_t)m_total * sizeof(double _Complex));
             }
 
             nfft_free(f_hat_gen);
@@ -771,7 +771,7 @@ int main (int argc, char **argv)
             }
             else
             {
-              memcpy(f_compare,f_grid,m_total*sizeof(double _Complex));
+              memcpy(f_compare, f_grid, (size_t)m_total * sizeof(double _Complex));
             }
             break;
           case FUNCTION_F2:
@@ -794,7 +794,7 @@ int main (int argc, char **argv)
             }
             else
             {
-              memcpy(f_compare,f_grid,m_total*sizeof(double _Complex));
+              memcpy(f_compare, f_grid, (size_t)m_total * sizeof(double _Complex));
             }
             break;
           case FUNCTION_F3:
@@ -819,7 +819,7 @@ int main (int argc, char **argv)
             }
             else
             {
-              memcpy(f_compare,f_grid,m_total*sizeof(double _Complex));
+              memcpy(f_compare, f_grid, (size_t)m_total * sizeof(double _Complex));
             }
             break;
           case FUNCTION_F4:
@@ -844,7 +844,7 @@ int main (int argc, char **argv)
             }
             else
             {
-              memcpy(f_compare,f_grid,m_total*sizeof(double _Complex));
+              memcpy(f_compare, f_grid, (size_t)m_total * sizeof(double _Complex));
             }
             break;
           case FUNCTION_F5:
@@ -869,7 +869,7 @@ int main (int argc, char **argv)
             }
             else
             {
-              memcpy(f_compare,f_grid,m_total*sizeof(double _Complex));
+              memcpy(f_compare, f_grid, (size_t)m_total * sizeof(double _Complex));
             }
             break;
           case FUNCTION_F6:
@@ -900,7 +900,7 @@ int main (int argc, char **argv)
             }
             else
             {
-              memcpy(f_compare,f_grid,m_total*sizeof(double _Complex));
+              memcpy(f_compare, f_grid, (size_t)m_total * sizeof(double _Complex));
             }
             break;
           default:
@@ -919,7 +919,7 @@ int main (int argc, char **argv)
             }
             else
             {
-              memcpy(f_compare,f_grid,m_total*sizeof(double _Complex));
+              memcpy(f_compare, f_grid, (size_t)m_total * sizeof(double _Complex));
             }
             break;
         }
@@ -949,7 +949,7 @@ int main (int argc, char **argv)
           plan_ptr = &plan_adjoint;
         }
 
-        f_hat = (double _Complex*) nfft_malloc(NFSFT_F_HAT_SIZE(NQ[iNQ])*sizeof(double _Complex));
+        f_hat = (double _Complex*) nfft_malloc((size_t)NFSFT_F_HAT_SIZE(NQ[iNQ]) * sizeof(double _Complex));
 
         plan_adjoint_ptr->f_hat = f_hat;
         plan_adjoint_ptr->x = x_grid;
@@ -1102,7 +1102,7 @@ int main (int argc, char **argv)
 
         /* Print out the error measurements. */
         fprintf(stdout,"%+le %+le %+le\n", t_avg, err_infty_avg, err_2_avg);
-        fprintf(stderr,"%d: %4d %4d %+le %+le %+le\n", tc, NQ[iNQ], SQ[iNQ],
+        fprintf(stderr,"%td: %4td %4td %+le %+le %+le\n", tc, NQ[iNQ], SQ[iNQ],
           t_avg, err_infty_avg, err_2_avg);
       }
     } /* for (im = 0; im < im_max; im++) - Process all cut-off

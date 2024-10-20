@@ -46,8 +46,8 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT Z, NFFT_IN
   FILE* fweight;           /* input file for the weights */
 
   /* initialise my_plan */
-  my_N[0]=N; my_n[0]=ceil(N*1.2);
-  my_N[1]=N; my_n[1]=ceil(N*1.2);
+  my_N[0]=N; my_n[0]=(NFFT_INT)ceil(N*1.2);
+  my_N[1]=N; my_n[1]=(NFFT_INT)ceil(N*1.2);
   nfft_init_guru(&my_plan, 2, my_N, M/Z, my_n, 6, PRE_PHI_HUT| PRE_PSI|
                         MALLOC_X| MALLOC_F_HAT| MALLOC_F|
                         FFTW_INIT,
@@ -137,15 +137,16 @@ int main(int argc, char **argv)
 
   /* Allocate memory to hold every slice in memory after the
   2D-infft */
-  mem = (fftw_complex*) nfft_malloc(sizeof(fftw_complex) * atoi(argv[2]) * atoi(argv[2]) * atoi(argv[4]));
+  mem = (fftw_complex*) nfft_malloc(sizeof(fftw_complex) *
+                                    (size_t)atoi(argv[2]) * (size_t)atoi(argv[2]) * (size_t)atoi(argv[4]));
 
   /* Create plan for the 1d-ifft */
-  plan = fftw_plan_many_dft(1, &Z, N*N,
-                                  mem, NULL,
-                                  N*N, 1,
-                                  mem, NULL,
-                                  N*N,1 ,
-                                  FFTW_BACKWARD, FFTW_MEASURE);
+  plan = nfft_plan_many_dft(1, &Z, N * N,
+                            mem, NULL,
+                            N * N, 1,
+                            mem, NULL,
+                            N * N, 1,
+                            FFTW_BACKWARD, FFTW_MEASURE);
 
   /* execute the 2d-nfft's */
   reconstruct(argv[1],atoi(argv[2]),atoi(argv[3]),atoi(argv[4]),atoi(argv[6]),mem);
