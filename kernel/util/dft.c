@@ -75,6 +75,11 @@ fftw_plan Y(plan_r2r)(NFFT_INT rank, const NFFT_INT *n, double *in, double *out,
     return FFTW(plan_guru64_r2r)((int)rank, dims, 1, &howmany_dims, in, out, kind, flags);
 }
 
+fftw_plan Y(plan_r2r_1d)(NFFT_INT n, double *in, double *out, fftw_r2r_kind kind, unsigned flags)
+{
+    return Y(plan_r2r)(1, &n, in, out, &kind, flags);
+}
+
 fftw_plan Y(plan_many_r2r)(NFFT_INT rank, const NFFT_INT *n, NFFT_INT howmany,
                            double *in, const NFFT_INT *inembed,
                            NFFT_INT istride, NFFT_INT idist,

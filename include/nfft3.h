@@ -909,6 +909,8 @@ fftw_plan Y(plan_many_dft)(NFFT_INT rank, const NFFT_INT *n, NFFT_INT howmany, \
 fftw_plan Y(plan_r2r)(NFFT_INT rank, const NFFT_INT *n, \
                       double *in, double *out, \
                       const fftw_r2r_kind *kind, unsigned flags); \
+fftw_plan Y(plan_r2r_1d)(NFFT_INT n, double *in, double *out, \
+                         fftw_r2r_kind kind, unsigned flags); \
 fftw_plan Y(plan_many_r2r)(NFFT_INT rank, const NFFT_INT *n, NFFT_INT howmany, \
                            double *in, const NFFT_INT *inembed, \
                            NFFT_INT istride, NFFT_INT idist, \
