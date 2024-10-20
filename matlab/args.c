@@ -147,11 +147,11 @@ void nfft_mex_check_nargs(const NFFT_INT nrhs, const NFFT_INT n, const char* err
     mexErrMsgTxt(errmsg);)
 }
 
-NFFT_INT nfft_mex_set_num_threads_check(const NFFT_INT nrhs, const mxArray *prhs[], void **plans, const NFFT_INT plans_num_allocated)
+int nfft_mex_set_num_threads_check(const NFFT_INT nrhs, const mxArray *prhs[], void **plans, const NFFT_INT plans_num_allocated)
 {
   nfft_mex_check_nargs(nrhs,2,"Wrong number of arguments for set_num_threads.");
 
-  NFFT_INT nthreads_new = nfft_mex_get_int(prhs[1],"Input argument nthreads must be a scalar.");
+  int nthreads_new = (int)nfft_mex_get_int(prhs[1],"Input argument nthreads must be a scalar.");
 
   if (nthreads_new < 1)
     mexErrMsgTxt("Number of threads must be at least 1.");
@@ -159,7 +159,7 @@ NFFT_INT nfft_mex_set_num_threads_check(const NFFT_INT nrhs, const mxArray *prhs
   if (nthreads_new > 1 && !X(has_threads_enabled)())
     mexErrMsgTxt("Threads are not enabled.");
 
-  NFFT_INT nthreads_old = X(get_num_threads)();
+  int nthreads_old = X(get_num_threads)();
   if (nthreads_new != nthreads_old)
   {
     NFFT_INT i;

@@ -1550,5 +1550,11 @@ fftw_plan Y(plan_dft_2d)(NFFT_INT n0, NFFT_INT n1,
 fftw_plan Y(plan_r2r)(NFFT_INT rank, const NFFT_INT *n,
                       double *in, double *out,
                       const fftw_r2r_kind *kind, unsigned flags);
+fftw_plan Y(plan_many_r2r)(NFFT_INT rank, const NFFT_INT *n, NFFT_INT howmany,
+                           double *in, const NFFT_INT *inembed,
+                           NFFT_INT istride, NFFT_INT idist,
+                           double *out, const NFFT_INT *onembed,
+                           NFFT_INT ostride, NFFT_INT odist,
+                           const fftw_r2r_kind *kind, unsigned flags);
 
 #endif

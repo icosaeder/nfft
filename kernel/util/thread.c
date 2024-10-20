@@ -22,13 +22,13 @@
 #include <omp.h>
 #endif
 
-NFFT_INT Y(get_num_threads)(void)
+int Y(get_num_threads)(void)
 {
 #ifdef _OPENMP
-  NFFT_INT nthreads;
+  int nthreads;
   #pragma omp parallel default(shared)
   {
-    NFFT_INT n = (NFFT_INT)omp_get_num_threads();
+    int n = omp_get_num_threads();
     #pragma omp master
     {
       nthreads = n;
@@ -40,7 +40,7 @@ NFFT_INT Y(get_num_threads)(void)
 #endif
 }
 
-void Y(set_num_threads)(NFFT_INT nthreads)
+void Y(set_num_threads)(int nthreads)
 {
 #ifdef _OPENMP
   /* Already created plans may still use old number of threads for FFT step! */
@@ -48,7 +48,7 @@ void Y(set_num_threads)(NFFT_INT nthreads)
 #endif
 }
 
-NFFT_INT Y(has_threads_enabled)(void)
+int Y(has_threads_enabled)(void)
 {
 #ifdef _OPENMP
   return 1;

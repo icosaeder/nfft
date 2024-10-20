@@ -213,7 +213,7 @@ static inline void NAME(double _Complex  *a, double _Complex *b, double *a11, do
     /* Perform multiplication for both rows. */ \
     M2_FUNCTION(norm,set->z,b,a22,a,a21,length); \
     M1_FUNCTION(norm*g,a,a,a11,b,a12,length); \
-    memcpy(b,set->z,length*sizeof(double _Complex)); \
+    memcpy(b, set->z, (size_t)length * sizeof(double _Complex)); \
     /* Compute Chebyshev-coefficients using a DCT-II. */ \
     fftw_execute_r2r(set->plans_dct2[tau-1],(double*)a,(double*)a); \
     /* Compensate for factors introduced by a raw DCT-II. */ \
@@ -269,7 +269,7 @@ static inline void fpt_do_step_symmetric_u(double _Complex *a, double _Complex *
     /* Perform multiplication for both rows. */
     auvxpwy_symmetric_1(norm,set->z,b,a12,a,a11,length,x);
     auvxpwy_symmetric(norm*gam,a,a,a11,b,a12,length);
-    memcpy(b,set->z,length*sizeof(double _Complex));
+    memcpy(b, set->z, (size_t)length * sizeof(double _Complex));
     /* Compute Chebyshev-coefficients using a DCT-II. */
     fftw_execute_r2r(set->plans_dct2[tau-1],(double*)a,(double*)a);
     /* Compensate for factors introduced by a raw DCT-II. */
@@ -319,7 +319,7 @@ static inline void fpt_do_step_symmetric_l(double _Complex  *a, double _Complex 
     /* Perform multiplication for both rows. */
     auvxpwy_symmetric(norm,set->z,b,a22,a,a21,length);
     auvxpwy_symmetric_2(norm*gam,a,a,a21,b,a22,length,x);
-    memcpy(b,set->z,length*sizeof(double _Complex));
+    memcpy(b, set->z, (size_t)length * sizeof(double _Complex));
     /* Compute Chebyshev-coefficients using a DCT-II. */
     fftw_execute_r2r(set->plans_dct2[tau-1],(double*)a,(double*)a);
     /* Compensate for factors introduced by a raw DCT-II. */
@@ -348,7 +348,7 @@ static inline void NAME(double _Complex  *a, double _Complex *b, double *a11, \
   /* Perform matrix multiplication. */ \
   M1_FUNCTION(norm,g,set->z,a,a11,b,a21,length); \
   M2_FUNCTION(norm,g,b,a,a12,b,a22,length); \
-  memcpy(a,set->z,length*sizeof(double _Complex)); \
+  memcpy(a, set->z, (size_t)length * sizeof(double _Complex)); \
   \
   /* Compute Chebyshev-coefficients using a DCT-II. */ \
   fftw_execute_r2r(set->plans_dct2[tau-1],(double*)a,(double*)a); \
@@ -377,7 +377,7 @@ static inline void fpt_do_step_t_symmetric_u(double _Complex  *a,
   /* Perform matrix multiplication. */
   abuvxpwy_symmetric1_1(norm,gam,set->z,a,a11,b,length,x);
   abuvxpwy_symmetric1_2(norm,gam,b,a,a12,b,length,x);
-  memcpy(a,set->z,length*sizeof(double _Complex));
+  memcpy(a, set->z, (size_t)length * sizeof(double _Complex));
 
   /* Compute Chebyshev-coefficients using a DCT-II. */
   fftw_execute_r2r(set->plans_dct2[tau-1],(double*)a,(double*)a);
@@ -400,7 +400,7 @@ static inline void fpt_do_step_t_symmetric_l(double _Complex  *a,
   /* Perform matrix multiplication. */
   abuvxpwy_symmetric2_2(norm,gam,set->z,a,b,a21,length,x);
   abuvxpwy_symmetric2_1(norm,gam,b,a,b,a22,length,x);
-  memcpy(a,set->z,length*sizeof(double _Complex));
+  memcpy(a, set->z, (size_t)length * sizeof(double _Complex));
 
   /* Compute Chebyshev-coefficients using a DCT-II. */
   fftw_execute_r2r(set->plans_dct2[tau-1],(double*)a,(double*)a);
@@ -477,7 +477,7 @@ static void eval_clenshaw(const double *x, double *y, NFFT_INT size, NFFT_INT k,
           beta_act--;
           gamma_act--;
         }
-        *y_act = (a_ld*((*alpha_act)*x_val_act+(*beta_act))+b_ld);
+        *y_act = (double)(a_ld*((*alpha_act)*x_val_act+(*beta_act))+b_ld);
       }
 #endif
 
@@ -620,8 +620,8 @@ static NFFT_INT eval_clenshaw_thresh2(const double *x, double *z, double *y, NFF
           beta_act--;
           gamma_act--;
         }
-        *z_act = a_ld;
-        *y_act = (a_ld*((*alpha_act)*x_val_act+(*beta_act))+b_ld);
+        *z_act = (double)a_ld;
+        *y_act = (double)(a_ld*((*alpha_act)*x_val_act+(*beta_act))+b_ld);
       }
 #endif
       if (FABS(*y_act) > threshold_abs)
@@ -689,7 +689,7 @@ static inline void eval_sum_clenshaw_fast(const NFFT_INT N, const NFFT_INT M,
           tmp1_ld = tmp3_ld;
         }
         tmp2_ld *= (alpha[0] * xc + beta[0]);
-        y[j] = lambda * (tmp2_ld + tmp1_ld);
+        y[j] = (double _Complex)(lambda * (tmp2_ld + tmp1_ld));
       } /* end fabs(tmp2) >= 1e247 */
 #endif
     } /* for j */
@@ -818,7 +818,7 @@ fpt_set fpt_init(const NFFT_INT M, const NFFT_INT t, const unsigned int flags)
   if (!(flags & FPT_NO_INIT_FPT_DATA))
   {
     /* Allocate memory for M transforms. */
-    set->dpt = (fpt_data*) nfft_malloc(M*sizeof(fpt_data));
+    set->dpt = (fpt_data*) nfft_malloc((size_t)M * sizeof(fpt_data));
 
     /* Initialize with NULL pointer. */
     for (m = 0; m < set->M; m++)
@@ -838,14 +838,14 @@ fpt_set fpt_init(const NFFT_INT M, const NFFT_INT t, const unsigned int flags)
    * factor 2 introduced by the DCT-III, we set this coefficient to 0.5 here. */
 
   /* Allocate memory for array of pointers to node arrays. */
-  set->xcvecs = (double**) nfft_malloc((set->t)*sizeof(double*));
+  set->xcvecs = (double**) nfft_malloc((size_t)(set->t) * sizeof(double*));
   /* For each polynomial length starting with 4, compute the Chebyshev nodes
    * using a DCT-III. */
   plength = 4;
   for (tau = 1; tau < t+1; tau++)
   {
     /* Allocate memory for current array. */
-    set->xcvecs[tau-1] = (double*) nfft_malloc(plength*sizeof(double));
+    set->xcvecs[tau-1] = (double*) nfft_malloc((size_t)plength * sizeof(double));
     for (k = 0; k < plength; k++)
     {
       set->xcvecs[tau-1][k] = cos(((k+0.5)*KPI)/plength);
@@ -854,11 +854,11 @@ fpt_set fpt_init(const NFFT_INT M, const NFFT_INT t, const unsigned int flags)
   }
 
   /** Allocate memory for auxilliary arrays. */
-  set->work = (double _Complex*) nfft_malloc((2*set->N)*sizeof(double _Complex));
-  set->result = (double _Complex*) nfft_malloc((2*set->N)*sizeof(double _Complex));
+  set->work = (double _Complex*) nfft_malloc((size_t)(2 * set->N) * sizeof(double _Complex));
+  set->result = (double _Complex*) nfft_malloc((size_t)(2 * set->N) * sizeof(double _Complex));
 
-  set->plans_dct2 = (fftw_plan*) nfft_malloc(sizeof(fftw_plan)*(set->t/*-1*/));
-  set->kindsr     = (fftw_r2r_kind*) nfft_malloc(2*sizeof(fftw_r2r_kind));
+  set->plans_dct2 = (fftw_plan*) nfft_malloc(sizeof(fftw_plan) * (size_t)(set->t/*-1*/));
+  set->kindsr     = (fftw_r2r_kind*) nfft_malloc(2 * sizeof(fftw_r2r_kind));
   set->kindsr[0]  = FFTW_REDFT10;
   set->kindsr[1]  = FFTW_REDFT10;
   for (tau = 0, plength = 4; tau < set->t/*-1*/; tau++, plength<<=1)
@@ -869,17 +869,17 @@ fpt_set fpt_init(const NFFT_INT M, const NFFT_INT t, const unsigned int flags)
     fftw_plan_with_nthreads(nthreads);
 #endif
     set->plans_dct2[tau] =
-      fftw_plan_many_r2r(1, &plength, 2, (double*)set->work, NULL,
-                         2, 1, (double*)set->result, NULL, 2, 1,set->kindsr,
-                         0);
+      Y(plan_many_r2r)(1, &plength, 2, (double*)set->work, NULL,
+                       2, 1, (double*)set->result, NULL, 2, 1,set->kindsr,
+                       0);
 #ifdef _OPENMP
 }
 #endif
   }
 
   /** Initialize FFTW plans. */
-  set->plans_dct3 = (fftw_plan*) nfft_malloc(sizeof(fftw_plan)*(set->t/*-1*/));
-  set->kinds      = (fftw_r2r_kind*) nfft_malloc(2*sizeof(fftw_r2r_kind));
+  set->plans_dct3 = (fftw_plan*) nfft_malloc(sizeof(fftw_plan) * (size_t)(set->t/*-1*/));
+  set->kinds      = (fftw_r2r_kind*) nfft_malloc(2 * sizeof(fftw_r2r_kind));
   set->kinds[0]   = FFTW_REDFT01;
   set->kinds[1]   = FFTW_REDFT01;
   for (tau = 0, plength = 4; tau < set->t/*-1*/; tau++, plength<<=1)
@@ -890,9 +890,9 @@ fpt_set fpt_init(const NFFT_INT M, const NFFT_INT t, const unsigned int flags)
   fftw_plan_with_nthreads(nthreads);
 #endif
     set->plans_dct3[tau] =
-      fftw_plan_many_r2r(1, &plength, 2, (double*)set->work, NULL,
-                         2, 1, (double*)set->result, NULL, 2, 1, set->kinds,
-                         0);
+      Y(plan_many_r2r)(1, &plength, 2, (double*)set->work, NULL,
+                       2, 1, (double*)set->result, NULL, 2, 1, set->kinds,
+                       0);
 #ifdef _OPENMP
 }
 #endif
@@ -913,15 +913,15 @@ fpt_set fpt_init(const NFFT_INT M, const NFFT_INT t, const unsigned int flags)
   if (!(set->flags & FPT_NO_FAST_ALGORITHM))
   {
     /** Allocate memory for auxilliary arrays. */
-    set->vec3 = (double _Complex*) nfft_malloc(set->N*sizeof(double _Complex));
-    set->vec4 = (double _Complex*) nfft_malloc(set->N*sizeof(double _Complex));
-    set->z = (double _Complex*) nfft_malloc(set->N*sizeof(double _Complex));
+    set->vec3 = (double _Complex*) nfft_malloc((size_t)set->N * sizeof(double _Complex));
+    set->vec4 = (double _Complex*) nfft_malloc((size_t)set->N * sizeof(double _Complex));
+    set->z = (double _Complex*) nfft_malloc((size_t)set->N * sizeof(double _Complex));
   }
 
   if (!(set->flags & FPT_NO_DIRECT_ALGORITHM))
   {
-    set->xc_slow = (double*) nfft_malloc((set->N+1)*sizeof(double));
-    set->temp = (double _Complex*) nfft_malloc((set->N+1)*sizeof(double _Complex));
+    set->xc_slow = (double*) nfft_malloc((size_t)(set->N+1) * sizeof(double));
+    set->temp = (double _Complex*) nfft_malloc((size_t)(set->N+1) * sizeof(double _Complex));
 
     if (!(flags & FPT_NO_INIT_FPT_DATA))
     {
@@ -971,16 +971,16 @@ void fpt_precompute_1(fpt_set set, const NFFT_INT m, NFFT_INT k_start)
   if (!(set->flags & FPT_NO_FAST_ALGORITHM))
   {
     /* Save recursion coefficients. */
-    data->alphaN = (double*) nfft_malloc(3*(set->t-1)*sizeof(double));
+    data->alphaN = (double*) nfft_malloc(3 * (size_t)(set->t-1) * sizeof(double));
     data->betaN = data->alphaN + (set->t-1);
     data->gammaN = data->betaN + (set->t-1);
 
     k_start_tilde = K_START_TILDE(data->k_start,X(next_power_of_2)(data->k_start)
           /*set->N*/);
     N_tilde = N_TILDE(set->N);
-  
+
     /* Allocate memory for the cascade with t = log_2(N) many levels. */
-    data->steps = (fpt_step**) nfft_malloc(sizeof(fpt_step*)*set->t);
+    data->steps = (fpt_step**) nfft_malloc(sizeof(fpt_step*) * (size_t)set->t);
 
     plength = 4;
     for (tau = 1; tau < set->t; tau++)
@@ -995,7 +995,7 @@ void fpt_precompute_1(fpt_set set, const NFFT_INT m, NFFT_INT k_start)
       /* Allocate memory for current level. This level will contain 2^{t-tau-1}
        * many matrices. */
       data->steps[tau] = (fpt_step*) nfft_malloc(sizeof(fpt_step)
-                         * (lastl+1));
+                         * (size_t)(lastl+1));
 
       /* For l = 0,...2^{t-tau-1}-1 compute the matrices U_{n,tau,l}. */
       for (l = firstl; l <= lastl; l++)
@@ -1010,7 +1010,7 @@ void fpt_precompute_1(fpt_set set, const NFFT_INT m, NFFT_INT k_start)
         }
 
         /* Allocate memory for the components of U_{n,tau,l}. */
-        data->steps[tau][l].a = (double*) nfft_malloc(sizeof(double)*clength*4);
+        data->steps[tau][l].a = (double*) nfft_malloc(sizeof(double) * (size_t)clength * 4);
       }
       /** Increase polynomial degree to next power of two. */
       plength = plength << 1;
@@ -1019,7 +1019,7 @@ void fpt_precompute_1(fpt_set set, const NFFT_INT m, NFFT_INT k_start)
 
   if (!(set->flags & FPT_NO_DIRECT_ALGORITHM) && !(set->flags & FPT_PERSISTENT_DATA) && (data->_alpha == NULL))
   {
-    data->_alpha = (double*) nfft_malloc(3*(set->N+1)*sizeof(double));
+    data->_alpha = (double*) nfft_malloc(3 * (size_t)(set->N+1) * sizeof(double));
     data->_beta = data->_alpha + (set->N+1);
     data->_gamma = data->_beta + (set->N+1);
   }
@@ -1211,7 +1211,7 @@ void fpt_precompute_2(fpt_set set, const NFFT_INT m, double *alpha, double *beta
               clength_1 = plength_stab;
               clength_2 = plength_stab;
               /* Allocate memory for arrays. */
-              data->steps[tau][l].a = (double*) nfft_malloc(sizeof(double)*(clength_1*2+clength_2*2));
+              data->steps[tau][l].a = (double*) nfft_malloc(sizeof(double) * (size_t)(clength_1 * 2 + clength_2 * 2));
               a11 = data->steps[tau][l].a;
               a12 = a11+clength_1;
               a21 = a12+clength_1;
@@ -1226,7 +1226,7 @@ void fpt_precompute_2(fpt_set set, const NFFT_INT m, double *alpha, double *beta
             else
             {
               clength = plength_stab/2;
-              data->steps[tau][l].a = (double*) nfft_malloc(sizeof(double)*clength*2);
+              data->steps[tau][l].a = (double*) nfft_malloc(sizeof(double) * (size_t)clength * 2);
               if (m%2 == 0)
               {
                 a11 = data->steps[tau][l].a;
@@ -1253,7 +1253,7 @@ void fpt_precompute_2(fpt_set set, const NFFT_INT m, double *alpha, double *beta
           {
             clength_1 = plength_stab;
             clength_2 = plength_stab;
-            data->steps[tau][l].a = (double*) nfft_malloc(sizeof(double)*(clength_1*2+clength_2*2));
+            data->steps[tau][l].a = (double*) nfft_malloc(sizeof(double) * (size_t)(clength_1 * 2 + clength_2 * 2));
             a11 = data->steps[tau][l].a;
             a12 = a11+clength_1;
             a21 = a12+clength_1;
@@ -1297,9 +1297,9 @@ void fpt_precompute_2(fpt_set set, const NFFT_INT m, double *alpha, double *beta
       data->_alpha = (double*) nfft_malloc((set->N+1)*sizeof(double));
       data->_beta = (double*) nfft_malloc((set->N+1)*sizeof(double));
       data->_gamma = (double*) nfft_malloc((set->N+1)*sizeof(double));*/
-      memcpy(data->_alpha,alpha,(set->N+1)*sizeof(double));
-      memcpy(data->_beta,beta,(set->N+1)*sizeof(double));
-      memcpy(data->_gamma,gam,(set->N+1)*sizeof(double));
+      memcpy(data->_alpha, alpha, (size_t)(set->N + 1) * sizeof(double));
+      memcpy(data->_beta, beta, (size_t)(set->N + 1) * sizeof(double));
+      memcpy(data->_gamma, gam, (size_t)(set->N + 1) * sizeof(double));
     }
   }
 }
@@ -1319,13 +1319,13 @@ void fpt_trafo_direct(fpt_set set, const NFFT_INT m, const double _Complex *x, d
   NFFT_INT Nk;
   NFFT_INT tk;
   double norm;
-  
-    //fprintf(stderr, "Executing dpt.\n");  
+
+    //fprintf(stderr, "Executing dpt.\n");
 
   X(next_power_of_2_exp_int)(k_end+1,&Nk,&tk);
   norm = 2.0/(Nk<<1);
 
-    //fprintf(stderr, "Norm = %e.\n", norm);  
+    //fprintf(stderr, "Norm = %e.\n", norm);
 
   if (set->flags & FPT_NO_DIRECT_ALGORITHM)
   {
@@ -1338,11 +1338,11 @@ void fpt_trafo_direct(fpt_set set, const NFFT_INT m, const double _Complex *x, d
     for (j = 0; j <= k_end; j++)
     {
       set->xc_slow[j] = cos((KPI*(j+0.5))/(k_end+1));
-        //fprintf(stderr, "x[%4d] = %e.\n", j, set->xc_slow[j]);  
+        //fprintf(stderr, "x[%4d] = %e.\n", j, set->xc_slow[j]);
     }
 
-    memset(set->result,0U,data->k_start*sizeof(double _Complex));
-    memcpy(&set->result[data->k_start],x,(k_end-data->k_start+1)*sizeof(double _Complex));
+    memset(set->result, 0U, (size_t)data->k_start * sizeof(double _Complex));
+    memcpy(&set->result[data->k_start], x, (size_t)(k_end-data->k_start + 1) * sizeof(double _Complex));
 
     /*eval_sum_clenshaw(k_end, k_end, set->result, set->xc_slow,
       y, set->work, &data->alpha[1], &data->beta[1], &data->gamma[1],
@@ -1352,8 +1352,8 @@ void fpt_trafo_direct(fpt_set set, const NFFT_INT m, const double _Complex *x, d
   }
   else
   {
-    memset(set->temp,0U,data->k_start*sizeof(double _Complex));
-    memcpy(&set->temp[data->k_start],x,(k_end-data->k_start+1)*sizeof(double _Complex));
+    memset(set->temp, 0U, (size_t)data->k_start * sizeof(double _Complex));
+    memcpy(&set->temp[data->k_start], x, (size_t)(k_end-data->k_start + 1) * sizeof(double _Complex));
 
     eval_sum_clenshaw_fast(k_end, Nk-1, set->temp, set->xcvecs[tk-2],
       set->result, &data->_alpha[1], &data->_beta[1], &data->_gamma[1],
@@ -1368,7 +1368,7 @@ void fpt_trafo_direct(fpt_set set, const NFFT_INT m, const double _Complex *x, d
       set->result[j] *= norm;
     }
 
-    memcpy(y,set->result,(k_end+1)*sizeof(double _Complex));
+    memcpy(y, set->result, (size_t)(k_end + 1) * sizeof(double _Complex));
   }
 }
 
@@ -1436,20 +1436,20 @@ void fpt_trafo(fpt_set set, const NFFT_INT m, const double _Complex *x, double _
 {
     fftw_plan_with_nthreads(nthreads);
 #endif
-    plan = fftw_plan_many_r2r(1, &length, 2, (double*)set->work, NULL, 2, 1,
-      (double*)set->work, NULL, 2, 1, kinds, 0U);
+    plan = Y(plan_many_r2r)(1, &length, 2, (double*)set->work, NULL, 2, 1,
+                            (double*)set->work, NULL, 2, 1, kinds, 0U);
 #ifdef _OPENMP
 }
 #endif
   }
 
   /* Initialize working arrays. */
-  memset(set->result,0U,2*Nk*sizeof(double _Complex));
+  memset(set->result, 0U, 2 * (size_t)Nk * sizeof(double _Complex));
 
   /* The first step. */
 
   /* Set the first 2*data->k_start coefficients to zero. */
-  memset(set->work,0U,2*data->k_start*sizeof(double _Complex));
+  memset(set->work, 0U, 2 * (size_t)data->k_start * sizeof(double _Complex));
 
   work_ptr = &set->work[2*data->k_start];
   x_ptr = x;
@@ -1461,7 +1461,7 @@ void fpt_trafo(fpt_set set, const NFFT_INT m, const double _Complex *x, double _
   }
 
   /* Set the last 2*(set->N-1-k_end_tilde) coefficients to zero. */
-  memset(&set->work[2*(k_end_tilde+1)],0U,2*(Nk-1-k_end_tilde)*sizeof(double _Complex));
+  memset(&set->work[2 * (k_end_tilde + 1)], 0U, 2 * (size_t)(Nk - 1 - k_end_tilde) * sizeof(double _Complex));
 
   /* If k_end == Nk, use three-term recurrence to map last coefficient x_{Nk} to
    * x_{Nk-1} and x_{Nk-2}. */
@@ -1485,15 +1485,16 @@ void fpt_trafo(fpt_set set, const NFFT_INT m, const double _Complex *x, double _
     for (l = firstl; l <= lastl; l++)
     {
       /* Copy vectors to multiply into working arrays zero-padded to twice the length. */
-      memcpy(set->vec3,&(set->work[(plength/2)*(4*l+2)]),(plength/2)*sizeof(double _Complex));
-      memcpy(set->vec4,&(set->work[(plength/2)*(4*l+3)]),(plength/2)*sizeof(double _Complex));
-      memset(&set->vec3[plength/2],0U,(plength/2)*sizeof(double _Complex));
-      memset(&set->vec4[plength/2],0U,(plength/2)*sizeof(double _Complex));
+      memcpy(set->vec3, &(set->work[(plength / 2) * (4 * l + 2)]), (size_t)(plength / 2) * sizeof(double _Complex));
+      memcpy(set->vec4, &(set->work[(plength / 2) * (4 * l + 3)]), (size_t)(plength / 2) * sizeof(double _Complex));
+      memset(&set->vec3[plength / 2], 0U, (size_t)(plength / 2) * sizeof(double _Complex));
+      memset(&set->vec4[plength / 2], 0U, (size_t)(plength / 2) * sizeof(double _Complex));
 
       /* Copy coefficients into first half. */
-      memcpy(&(set->work[(plength/2)*(4*l+2)]),&(set->work[(plength/2)*(4*l+1)]),(plength/2)*sizeof(double _Complex));
-      memset(&(set->work[(plength/2)*(4*l+1)]),0U,(plength/2)*sizeof(double _Complex));
-      memset(&(set->work[(plength/2)*(4*l+3)]),0U,(plength/2)*sizeof(double _Complex));
+      memcpy(&(set->work[(plength / 2) * (4 * l + 2)]), &(set->work[(plength / 2) * (4 * l + 1)]),
+             (size_t)(plength / 2) * sizeof(double _Complex));
+      memset(&(set->work[(plength / 2) * (4 * l + 1)]), 0U, (size_t)(plength / 2) * sizeof(double _Complex));
+      memset(&(set->work[(plength / 2) * (4 * l + 3)]), 0U, (size_t)(plength / 2) * sizeof(double _Complex));
 
       /* Get matrix U_{n,tau,l} */
       step = &(data->steps[tau][l]);
@@ -1561,8 +1562,8 @@ void fpt_trafo(fpt_set set, const NFFT_INT m, const double _Complex *x, double _
         /* Set rest of vectors explicitely to zero */
         /*fprintf(stderr,"fpt_trafo: stabilizing: plength = %d, plength_stab = %d\n",
           plength, plength_stab);*/
-        memset(&set->vec3[plength/2],0U,(plength_stab-plength/2)*sizeof(double _Complex));
-        memset(&set->vec4[plength/2],0U,(plength_stab-plength/2)*sizeof(double _Complex));
+        memset(&set->vec3[plength / 2], 0U, (size_t)(plength_stab-plength / 2) * sizeof(double _Complex));
+        memset(&set->vec4[plength / 2], 0U, (size_t)(plength_stab-plength / 2) * sizeof(double _Complex));
 
         /* Multiply third and fourth polynomial with matrix U. */
         /* Check for symmetry. */
@@ -1708,13 +1709,13 @@ void fpt_transposed_direct(fpt_set set, const NFFT_INT m, double _Complex *x,
       y, set->work, &data->_alpha[1], &data->_beta[1], &data->_gamma[1],
       data->gamma_m1);
 
-    memcpy(x,&set->result[data->k_start],(k_end-data->k_start+1)*
-      sizeof(double _Complex));
+    memcpy(x, &set->result[data->k_start], (size_t)(k_end-data->k_start + 1) *
+           sizeof(double _Complex));
   }
   else
   {
-    memcpy(set->result,y,(k_end+1)*sizeof(double _Complex));
-    memset(&set->result[k_end+1],0U,(Nk-k_end-1)*sizeof(double _Complex));
+    memcpy(set->result, y, (size_t)(k_end + 1) * sizeof(double _Complex));
+    memset(&set->result[k_end + 1], 0U, (size_t)(Nk-k_end - 1) * sizeof(double _Complex));
 
     for (j = 0; j < Nk; j++)
     {
@@ -1733,7 +1734,7 @@ void fpt_transposed_direct(fpt_set set, const NFFT_INT m, double _Complex *x,
         set->result, set->work, &data->_alpha[1], &data->_beta[1], &data->_gamma[1],
         data->gamma_m1);
 
-    memcpy(x,&set->temp[data->k_start],(k_end-data->k_start+1)*sizeof(double _Complex));
+    memcpy(x, &set->temp[data->k_start], (size_t)(k_end-data->k_start + 1) * sizeof(double _Complex));
   }
 }
 
@@ -1799,8 +1800,8 @@ void fpt_transposed(fpt_set set, const NFFT_INT m, double _Complex *x,
 {
     fftw_plan_with_nthreads(nthreads);
 #endif
-    plan = fftw_plan_many_r2r(1, &length, 2, (double*)set->work, NULL, 2, 1,
-      (double*)set->work, NULL, 2, 1, kinds, 0U);
+    plan = Y(plan_many_r2r)(1, &length, 2, (double*)set->work, NULL, 2, 1,
+                            (double*)set->work, NULL, 2, 1, kinds, 0U);
 #ifdef _OPENMP
 }
 #endif
@@ -1816,11 +1817,11 @@ void fpt_transposed(fpt_set set, const NFFT_INT m, double _Complex *x,
   }
   else
   {
-    memcpy(set->result,y,(k_end+1)*sizeof(double _Complex));
+    memcpy(set->result, y, (size_t)(k_end + 1) * sizeof(double _Complex));
   }
 
   /* Initialize working arrays. */
-  memset(set->work,0U,2*Nk*sizeof(double _Complex));
+  memset(set->work, 0U, 2 * (size_t)Nk * sizeof(double _Complex));
 
   /* The last step is now the first step. */
   for (k = 0; k <= k_end; k++)
@@ -1838,11 +1839,11 @@ void fpt_transposed(fpt_set set, const NFFT_INT m, double _Complex *x,
   }
   if (k_end<Nk)
   {
-    memset(&set->work[k_end],0U,(Nk-k_end)*sizeof(double _Complex));
+    memset(&set->work[k_end], 0U, (size_t)(Nk - k_end) * sizeof(double _Complex));
   }
 
   /** Save copy of inpute data for stabilization steps. */
-  memcpy(set->result,set->work,2*Nk*sizeof(double _Complex));
+  memcpy(set->result, set->work, 2 * (size_t)Nk * sizeof(double _Complex));
 
   /* Compute the remaining steps. */
   plength = Nk;
@@ -1857,11 +1858,11 @@ void fpt_transposed(fpt_set set, const NFFT_INT m, double _Complex *x,
     for (l = firstl; l <= lastl; l++)
     {
       /* Initialize second half of coefficient arrays with zeros. */
-      memcpy(set->vec3,&(set->work[(plength/2)*(4*l+0)]),plength*sizeof(double _Complex));
-      memcpy(set->vec4,&(set->work[(plength/2)*(4*l+2)]),plength*sizeof(double _Complex));
+      memcpy(set->vec3, &(set->work[(plength / 2) * (4 * l + 0)]), (size_t)plength * sizeof(double _Complex));
+      memcpy(set->vec4, &(set->work[(plength / 2) * (4 * l + 2)]), (size_t)plength * sizeof(double _Complex));
 
-      memcpy(&set->work[(plength/2)*(4*l+1)],&(set->work[(plength/2)*(4*l+2)]),
-        (plength/2)*sizeof(double _Complex));
+      memcpy(&set->work[(plength / 2) * (4 * l + 1)], &(set->work[(plength / 2) * (4 * l + 2)]),
+             (size_t)(plength / 2) * sizeof(double _Complex));
 
       /* Get matrix U_{n,tau,l} */
       step = &(data->steps[tau][l]);
@@ -1891,7 +1892,7 @@ void fpt_transposed(fpt_set set, const NFFT_INT m, double _Complex *x,
           fpt_do_step_t(set->vec3, set->vec4, a11, a12,
             a21, a22, step->g, tau, set);
         }
-        memcpy(&(set->vec3[plength/2]), set->vec4,(plength/2)*sizeof(double _Complex));
+        memcpy(&(set->vec3[plength / 2]), set->vec4, (size_t)(plength / 2) * sizeof(double _Complex));
 
         for (k = 0; k < plength; k++)
         {
@@ -1904,8 +1905,8 @@ void fpt_transposed(fpt_set set, const NFFT_INT m, double _Complex *x,
         plength_stab = step->Ns;
         t_stab = step->ts;
 
-        memcpy(set->vec3,set->result,plength_stab*sizeof(double _Complex));
-        memcpy(set->vec4,&(set->result[Nk]),plength_stab*sizeof(double _Complex));
+        memcpy(set->vec3, set->result, (size_t)plength_stab * sizeof(double _Complex));
+        memcpy(set->vec4, &(set->result[Nk]), (size_t)plength_stab * sizeof(double _Complex));
 
         /* Multiply third and fourth polynomial with matrix U. */
         if (set->flags & FPT_AL_SYMMETRY)
@@ -1950,7 +1951,7 @@ void fpt_transposed(fpt_set set, const NFFT_INT m, double _Complex *x,
             a21, a22, step->g, t_stab-1, set);
         }
 
-        memcpy(&(set->vec3[plength/2]),set->vec4,(plength/2)*sizeof(double _Complex));
+        memcpy(&(set->vec3[plength / 2]), set->vec4, (size_t)(plength / 2) * sizeof(double _Complex));
 
         for (k = 0; k < plength; k++)
         {

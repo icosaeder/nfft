@@ -601,14 +601,14 @@ void nsfft_cp(nsfft_plan *ths, nfft_plan *ths_full_plan)
   NFFT_INT k;
 
   /* initialize f_hat with zero values */
-  memset(ths_full_plan->f_hat, 0, ths_full_plan->N_total*sizeof(double _Complex));
+  memset(ths_full_plan->f_hat, 0, (size_t)ths_full_plan->N_total * sizeof(double _Complex));
 
    /* copy values at hyperbolic grid points */
   for(k=0;k<ths->N_total;k++)
     ths_full_plan->f_hat[ths->index_sparse_to_full[k]]=ths->f_hat[k];
 
   /* copy nodes */
-  memcpy(ths_full_plan->x,ths->act_nfft_plan->x,ths->M_total*ths->d*sizeof(double));
+  memcpy(ths_full_plan->x, ths->act_nfft_plan->x, (size_t)ths->M_total * (size_t)ths->d * sizeof(double));
 }
 
 #ifndef NSFTT_DISABLE_TEST
@@ -763,7 +763,7 @@ static void nsdft_trafo_2d(nsfft_plan *ths)
   double omega;
   NFFT_INT N=X(exp2i)(ths->J+2);
 
-  memset(ths->f,0,ths->M_total*sizeof(double _Complex));
+  memset(ths->f, 0, (size_t)ths->M_total * sizeof(double _Complex));
 
   for(k_S=0;k_S<ths->N_total;k_S++)
     {
@@ -788,7 +788,7 @@ static void nsdft_trafo_3d(nsfft_plan *ths)
   NFFT_INT N=X(exp2i)(ths->J+2);
   NFFT_INT k_L;
 
-  memset(ths->f,0,ths->M_total*sizeof(double _Complex));
+  memset(ths->f, 0, (size_t)ths->M_total * sizeof(double _Complex));
 
   for(k_S=0;k_S<ths->N_total;k_S++)
     {
@@ -823,7 +823,7 @@ static void nsdft_adjoint_2d(nsfft_plan *ths)
   double omega;
   NFFT_INT N=X(exp2i)(ths->J+2);
 
-  memset(ths->f_hat,0,ths->N_total*sizeof(double _Complex));
+  memset(ths->f_hat, 0, (size_t)ths->N_total * sizeof(double _Complex));
 
   for(k_S=0;k_S<ths->N_total;k_S++)
     {
@@ -848,7 +848,7 @@ static void nsdft_adjoint_3d(nsfft_plan *ths)
   NFFT_INT N=X(exp2i)(ths->J+2);
   NFFT_INT k_L;
 
-  memset(ths->f_hat,0,ths->N_total*sizeof(double _Complex));
+  memset(ths->f_hat, 0, (size_t)ths->N_total * sizeof(double _Complex));
 
   for(k_S=0;k_S<ths->N_total;k_S++)
     {

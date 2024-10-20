@@ -126,7 +126,7 @@ static inline void c2e(nfsft_plan *plan)
   NFFT_INT upe;             /**< Upper loop bound for even terms                  */
 
   /* Set the first row to order to zero since it is unused. */
-  memset(plan->f_hat_intern,0U,(2*plan->N+2)*sizeof(double _Complex));
+  memset(plan->f_hat_intern, 0U, (size_t)(2 * plan->N + 2) * sizeof(double _Complex));
 
   /* Determine lower and upper bounds for loop processing even terms. */
   lowe = -plan->N + (plan->N%2);
@@ -301,27 +301,27 @@ void nfsft_init_guru(nfsft_plan *plan, NFFT_INT N, NFFT_INT M, unsigned int flag
    * if necessary. */
   if (plan->flags & NFSFT_PRESERVE_F_HAT)
   {
-    plan->f_hat_intern = (double _Complex*) nfft_malloc(plan->N_total*
-                                                  sizeof(double _Complex));
+    plan->f_hat_intern = (double _Complex*) nfft_malloc((size_t)plan->N_total *
+                                                        sizeof(double _Complex));
   }
 
   /* Allocate memory for spherical Fourier coefficients, if necessary. */
   if (plan->flags & NFSFT_MALLOC_F_HAT)
   {
-    plan->f_hat = (double _Complex*) nfft_malloc(plan->N_total*
-                                           sizeof(double _Complex));
+    plan->f_hat = (double _Complex*) nfft_malloc((size_t)plan->N_total *
+                                                 sizeof(double _Complex));
   }
 
   /* Allocate memory for samples, if necessary. */
   if (plan->flags & NFSFT_MALLOC_F)
   {
-    plan->f = (double _Complex*) nfft_malloc(plan->M_total*sizeof(double _Complex));
+    plan->f = (double _Complex*) nfft_malloc((size_t)plan->M_total * sizeof(double _Complex));
   }
 
   /* Allocate memory for nodes, if necessary. */
   if (plan->flags & NFSFT_MALLOC_X)
   {
-    plan->x = (double*) nfft_malloc(plan->M_total*2*sizeof(double));
+    plan->x = (double*) nfft_malloc((size_t)plan->M_total * 2 * sizeof(double));
     if (plan->flags & NFSFT_EQUISPACED)
       /* Set equispaced nodes. This way also trafo_direct works correctly. */
       for (NFFT_INT i=0; i<2*plan->N+2; i++)
@@ -412,12 +412,12 @@ void nfsft_precompute(NFFT_INT N, double kappa, unsigned int nfsft_flags,
   else
   {
     /* Allocate memory for three-term recursion coefficients. */
-    wisdom.alpha = (double*) nfft_malloc((wisdom.N_MAX+1)*(wisdom.N_MAX+2)*
-      sizeof(double));
-    wisdom.beta = (double*) nfft_malloc((wisdom.N_MAX+1)*(wisdom.N_MAX+2)*
-      sizeof(double));
-    wisdom.gamma = (double*) nfft_malloc((wisdom.N_MAX+1)*(wisdom.N_MAX+2)*
-      sizeof(double));
+    wisdom.alpha = (double*) nfft_malloc((size_t)(wisdom.N_MAX + 1) * (size_t)(wisdom.N_MAX + 2) *
+                                         sizeof(double));
+    wisdom.beta = (double*) nfft_malloc((size_t)(wisdom.N_MAX + 1) * (size_t)(wisdom.N_MAX + 2) *
+                                        sizeof(double));
+    wisdom.gamma = (double*) nfft_malloc((size_t)(wisdom.N_MAX + 1) * (size_t)(wisdom.N_MAX + 2) *
+                                         sizeof(double));
     /** \todo Change to functions which compute only for fixed order n. */
     /* Compute three-term recurrence coefficients alpha_k^n, beta_k^n, and
      * gamma_k^n. */
@@ -545,9 +545,9 @@ void nfsft_precompute(NFFT_INT N, double kappa, unsigned int nfsft_flags,
 #else
     /* Allocate memory for three-term recursion coefficients. */
       double *alpha, *beta, *gamma;
-      alpha = (double*) nfft_malloc((wisdom.N_MAX+2)*sizeof(double));
-      beta = (double*) nfft_malloc((wisdom.N_MAX+2)*sizeof(double));
-      gamma = (double*) nfft_malloc((wisdom.N_MAX+2)*sizeof(double));
+      alpha = (double*) nfft_malloc((size_t)(wisdom.N_MAX + 2) * sizeof(double));
+      beta = (double*) nfft_malloc((size_t)(wisdom.N_MAX + 2) * sizeof(double));
+      gamma = (double*) nfft_malloc((size_t)(wisdom.N_MAX + 2) * sizeof(double));
       wisdom.set = fpt_init(wisdom.N_MAX+1, wisdom.T_MAX,
         fpt_flags | FPT_AL_SYMMETRY);
       for (n = 0; n <= wisdom.N_MAX; n++)
@@ -701,7 +701,7 @@ void nfsft_trafo_direct(nfsft_plan *plan)
   /* Copy spherical Fourier coefficients, if necessary. */
   if (plan->flags & NFSFT_PRESERVE_F_HAT)
   {
-    memcpy(plan->f_hat_intern,plan->f_hat,plan->N_total*
+    memcpy(plan->f_hat_intern, plan->f_hat, (size_t)plan->N_total *
            sizeof(double _Complex));
   }
   else
@@ -772,7 +772,7 @@ void nfsft_trafo_direct(nfsft_plan *plan)
         a = &(plan->f_hat_intern[NFSFT_INDEX(0,n,plan)]);
 
         /* Take absolute value of n. */
-        n_abs = abs(n);
+        n_abs = labs(n);
 
         /* Get pointers to three-term recurrence coefficients arrays. */
         alpha = &(wisdom.alpha[ROW(n_abs)]);
@@ -877,7 +877,7 @@ void nfsft_adjoint_direct(nfsft_plan *plan)
   }
 
   /* Initialise spherical Fourier coefficients array with zeros. */
-  memset(plan->f_hat,0U,plan->N_total*sizeof(double _Complex));
+  memset(plan->f_hat, 0U, (size_t)plan->N_total * sizeof(double _Complex));
 
   /* Distinguish by bandwidth N. */
   if (plan->N == 0)
@@ -976,7 +976,7 @@ void nfsft_adjoint_direct(nfsft_plan *plan)
       for (n = -plan->N; n <= plan->N; n++)
       {
         /* Take absolute value of n. */
-        n_abs = abs(n);
+        n_abs = labs(n);
 
         /* Get pointers to three-term recurrence coefficients arrays. */
         alpha = &(wisdom.alpha[ROW(n_abs)]);
@@ -1059,8 +1059,8 @@ void nfsft_adjoint_direct(nfsft_plan *plan)
   {
     for (n = -plan->N; n <= plan->N+1; n++)
     {
-      memset(&plan->f_hat[NFSFT_INDEX(-plan->N-1,n,plan)],0U,
-        (plan->N+1+abs(n))*sizeof(double _Complex));
+      memset(&plan->f_hat[NFSFT_INDEX(-plan->N - 1, n, plan)], 0U,
+             (size_t)(plan->N + 1 + labs(n))*sizeof(double _Complex));
     }
   }
 }
@@ -1115,7 +1115,7 @@ void nfsft_trafo(nfsft_plan *plan)
     /* Copy spherical Fourier coefficients, if necessary. */
     if (plan->flags & NFSFT_PRESERVE_F_HAT)
     {
-      memcpy(plan->f_hat_intern,plan->f_hat,plan->N_total*
+      memcpy(plan->f_hat_intern, plan->f_hat, (size_t)plan->N_total *
              sizeof(double _Complex));
     }
     else
@@ -1161,10 +1161,10 @@ void nfsft_trafo(nfsft_plan *plan)
     {
 #ifdef _OPENMP
       n = 0;
-      fpt_trafo_direct(wisdom.set_threads[0],abs(n),
-        &plan->f_hat_intern[NFSFT_INDEX(abs(n),n,plan)],
-        &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
-        plan->N,0U);
+      fpt_trafo_direct(wisdom.set_threads[0], labs(n),
+        &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
+        &plan->f_hat_intern[NFSFT_INDEX(0, n, plan)],
+        plan->N, 0U);
 
       NFFT_INT n_abs;
       #pragma omp parallel for default(shared) private(n_abs,n) num_threads(wisdom.nthreads) schedule(dynamic)
@@ -1172,15 +1172,15 @@ void nfsft_trafo(nfsft_plan *plan)
       {
         int threadid = omp_get_thread_num();
         n = -n_abs;
-        fpt_trafo_direct(wisdom.set_threads[threadid],abs(n),
-          &plan->f_hat_intern[NFSFT_INDEX(abs(n),n,plan)],
+        fpt_trafo_direct(wisdom.set_threads[threadid], labs(n),
+          &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
           &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+          plan->N, 0U);
         n = n_abs;
-        fpt_trafo_direct(wisdom.set_threads[threadid],abs(n),
-          &plan->f_hat_intern[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_trafo_direct(wisdom.set_threads[threadid], labs(n),
+          &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat_intern[NFSFT_INDEX(0, n, plan)],
+          plan->N, 0U);
       }
 #else
       /* Use direct discrete polynomial transform DPT. */
@@ -1188,10 +1188,10 @@ void nfsft_trafo(nfsft_plan *plan)
       {
         //fprintf(stderr,"nfsft_trafo: n = %d\n",n);
         //fflush(stderr);
-        fpt_trafo_direct(wisdom.set,abs(n),
-          &plan->f_hat_intern[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_trafo_direct(wisdom.set, labs(n),
+          &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat_intern[NFSFT_INDEX(0, n, plan)],
+          plan->N, 0U);
       }
 #endif
     }
@@ -1199,10 +1199,10 @@ void nfsft_trafo(nfsft_plan *plan)
     {
 #ifdef _OPENMP
       n = 0;
-      fpt_trafo(wisdom.set_threads[0],abs(n),
-        &plan->f_hat_intern[NFSFT_INDEX(abs(n),n,plan)],
-        &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
-        plan->N,0U);
+      fpt_trafo(wisdom.set_threads[0],l abs(n),
+        &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
+        &plan->f_hat_intern[NFSFT_INDEX(0, n, plan)],
+        plan->N, 0U);
 
       NFFT_INT n_abs;
       #pragma omp parallel for default(shared) private(n_abs,n) num_threads(wisdom.nthreads) schedule(dynamic)
@@ -1210,15 +1210,15 @@ void nfsft_trafo(nfsft_plan *plan)
       {
         int threadid = omp_get_thread_num();
         n = -n_abs;
-        fpt_trafo(wisdom.set_threads[threadid],abs(n),
-          &plan->f_hat_intern[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_trafo(wisdom.set_threads[threadid], labs(n),
+          &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat_intern[NFSFT_INDEX(0, n, plan)],
+          plan->N, 0U);
         n = n_abs;
-        fpt_trafo(wisdom.set_threads[threadid],abs(n),
-          &plan->f_hat_intern[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_trafo(wisdom.set_threads[threadid], labs(n),
+          &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat_intern[NFSFT_INDEX(0, n, plan)],
+          plan->N, 0U);
       }
 #else
       /* Use fast polynomial transform FPT. */
@@ -1226,10 +1226,10 @@ void nfsft_trafo(nfsft_plan *plan)
       {
         //fprintf(stderr,"nfsft_trafo: n = %d\n",n);
         //fflush(stderr);
-        fpt_trafo(wisdom.set,abs(n),
-          &plan->f_hat_intern[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat_intern[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_trafo(wisdom.set, labs(n),
+          &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat_intern[NFSFT_INDEX(0, n, plan)],
+          plan->N, 0U);
       }
 #endif
     }
@@ -1257,7 +1257,7 @@ void nfsft_trafo(nfsft_plan *plan)
        * plan_nfft is not initialized if NFSFT_EQUISPACED is set. */
 
 #ifdef _OPENMP
-      NFFT_INT nthreads = Y(get_num_threads)();
+      int nthreads = Y(get_num_threads)();
 #endif
 
       NFFT_INT N[2];
@@ -1432,10 +1432,10 @@ void nfsft_adjoint(nfsft_plan *plan)
     {
 #ifdef _OPENMP
       n = 0;
-      fpt_transposed_direct(wisdom.set_threads[0],abs(n),
-        &plan->f_hat[NFSFT_INDEX(abs(n),n,plan)],
-        &plan->f_hat[NFSFT_INDEX(0,n,plan)],
-        plan->N,0U);
+      fpt_transposed_direct(wisdom.set_threads[0], labs(n),
+        &plan->f_hat[NFSFT_INDEX(labs(n), n, plan)],
+        &plan->f_hat[NFSFT_INDEX(0, n, plan)],
+        plan->N, 0U);
 
       NFFT_INT n_abs;
       #pragma omp parallel for default(shared) private(n_abs,n) num_threads(wisdom.nthreads) schedule(dynamic)
@@ -1443,15 +1443,15 @@ void nfsft_adjoint(nfsft_plan *plan)
       {
         int threadid = omp_get_thread_num();
         n = -n_abs;
-        fpt_transposed_direct(wisdom.set_threads[threadid],abs(n),
-          &plan->f_hat[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_transposed_direct(wisdom.set_threads[threadid], labs(n),
+          &plan->f_hat[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat[NFSFT_INDEX(0, n, plan)],
+          plan->N ,0U);
         n = n_abs;
-        fpt_transposed_direct(wisdom.set_threads[threadid],abs(n),
-          &plan->f_hat[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_transposed_direct(wisdom.set_threads[threadid], labs(n),
+          &plan->f_hat[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat[NFSFT_INDEX(0, n, plan)],
+          plan->N, 0U);
       }
 #else
       /* Use transposed DPT. */
@@ -1459,10 +1459,10 @@ void nfsft_adjoint(nfsft_plan *plan)
       {
         //fprintf(stderr,"nfsft_adjoint: Executing dpt_transposed\n");
         //fflush(stderr);
-        fpt_transposed_direct(wisdom.set,abs(n),
-          &plan->f_hat[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_transposed_direct(wisdom.set, labs(n),
+          &plan->f_hat[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat[NFSFT_INDEX(0, n, plan)],
+          plan->N, 0U);
       }
 #endif
     }
@@ -1470,10 +1470,10 @@ void nfsft_adjoint(nfsft_plan *plan)
     {
 #ifdef _OPENMP
       n = 0;
-      fpt_transposed(wisdom.set_threads[0],abs(n),
-        &plan->f_hat[NFSFT_INDEX(abs(n),n,plan)],
-        &plan->f_hat[NFSFT_INDEX(0,n,plan)],
-        plan->N,0U);
+      fpt_transposed(wisdom.set_threads[0], labs(n),
+        &plan->f_hat[NFSFT_INDEX(labs(n), n, plan)],
+        &plan->f_hat[NFSFT_INDEX(0, n, plan)],
+        plan->N, 0U);
 
       NFFT_INT n_abs;
        #pragma omp parallel for default(shared) private(n_abs,n) num_threads(wisdom.nthreads) schedule(dynamic)
@@ -1481,15 +1481,15 @@ void nfsft_adjoint(nfsft_plan *plan)
        {
          int threadid = omp_get_thread_num();
          n = -n_abs;
-         fpt_transposed(wisdom.set_threads[threadid],abs(n),
-           &plan->f_hat[NFSFT_INDEX(abs(n),n,plan)],
-           &plan->f_hat[NFSFT_INDEX(0,n,plan)],
-           plan->N,0U);
+         fpt_transposed(wisdom.set_threads[threadid], labs(n),
+           &plan->f_hat[NFSFT_INDEX(labs(n), n, plan)],
+           &plan->f_hat[NFSFT_INDEX(0, n, plan)],
+           plan->N, 0U);
          n = n_abs;
-         fpt_transposed(wisdom.set_threads[threadid],abs(n),
-           &plan->f_hat[NFSFT_INDEX(abs(n),n,plan)],
-           &plan->f_hat[NFSFT_INDEX(0,n,plan)],
-           plan->N,0U);
+         fpt_transposed(wisdom.set_threads[threadid], labs(n),
+           &plan->f_hat[NFSFT_INDEX(labs(n), n, plan)],
+           &plan->f_hat[NFSFT_INDEX(0, n, plan)],
+           plan->N, 0U);
        }
 #else
       //fprintf(stderr,"nfsft_adjoint: fpt_transposed\n");
@@ -1498,10 +1498,10 @@ void nfsft_adjoint(nfsft_plan *plan)
       {
         //fprintf(stderr,"nfsft_adjoint: Executing fpt_transposed\n");
         //fflush(stderr);
-        fpt_transposed(wisdom.set,abs(n),
-          &plan->f_hat[NFSFT_INDEX(abs(n),n,plan)],
-          &plan->f_hat[NFSFT_INDEX(0,n,plan)],
-          plan->N,0U);
+        fpt_transposed(wisdom.set, labs(n),
+          &plan->f_hat[NFSFT_INDEX(labs(n), n, plan)],
+          &plan->f_hat[NFSFT_INDEX(0, n, plan)],
+          plan->N, 0U);
       }
 #endif
     }
@@ -1539,8 +1539,8 @@ void nfsft_adjoint(nfsft_plan *plan)
       //fflush(stderr);
       for (n = -plan->N; n <= plan->N+1; n++)
       {
-        memset(&plan->f_hat[NFSFT_INDEX(-plan->N-1,n,plan)],0U,
-          (plan->N+1+abs(n))*sizeof(double _Complex));
+        memset(&plan->f_hat[NFSFT_INDEX(-plan->N - 1, n, plan)], 0U,
+               (size_t)(plan->N + 1 + labs(n)) * sizeof(double _Complex));
       }
     }
     //fprintf(stderr,"nfsft_adjoint: Finished\n");

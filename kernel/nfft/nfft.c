@@ -1348,7 +1348,7 @@ static void nfft_adjoint_B_omp_blockwise_init(NFFT_INT *my_u0, NFFT_INT *my_o0,
 {
   const NFFT_INT n0 = n[0];
   NFFT_INT k;
-  NFFT_INT nthreads = omp_get_num_threads();
+  NFFT_INT nthreads = (NFFT_INT)omp_get_num_threads();
   NFFT_INT nthreads_used = MIN(nthreads, n0);
   NFFT_INT size_per_thread = n0 / nthreads_used;
   NFFT_INT size_left = n0 - size_per_thread * nthreads_used;
@@ -6006,7 +6006,7 @@ static void init_help(X(plan) *ths)
   if(ths->flags & FFTW_INIT)
   {
 #ifdef _OPENMP
-    NFFT_INT nthreads = Y(get_num_threads)();
+    int nthreads = Y(get_num_threads)();
 #endif
 
     ths->g1 = (C*)Y(malloc)((size_t)(ths->n_total) * sizeof(C));

@@ -56,8 +56,8 @@ static void window_funct_init(window_funct_plan* ths, NFFT_INT m, NFFT_INT n, do
 
 void mri_inh_2d1d_trafo(mri_inh_2d1d_plan *that) {
   NFFT_INT l,j;
-  double _Complex *f = (double _Complex*) nfft_malloc(that->M_total*sizeof(double _Complex));
-  double _Complex *f_hat = (double _Complex*) nfft_malloc(that->N_total*sizeof(double _Complex));
+  double _Complex *f = (double _Complex*) nfft_malloc((size_t)that->M_total * sizeof(double _Complex));
+  double _Complex *f_hat = (double _Complex*) nfft_malloc((size_t)that->N_total * sizeof(double _Complex));
 
   window_funct_plan *ths = (window_funct_plan*) nfft_malloc(sizeof(window_funct_plan));
 	window_funct_init(ths,that->plan.m,that->N3,that->sigma3);
@@ -67,7 +67,7 @@ void mri_inh_2d1d_trafo(mri_inh_2d1d_plan *that) {
   that->plan.f_hat = that->f_hat;
 
 
-	memset(f,0,that->M_total*sizeof(double _Complex));
+	memset(f, 0, (size_t)that->M_total * sizeof(double _Complex));
   for(j=0;j<that->N_total;j++)
   {
     f_hat[j]=that->f_hat[j];
@@ -103,13 +103,13 @@ void mri_inh_2d1d_trafo(mri_inh_2d1d_plan *that) {
 
 void mri_inh_2d1d_adjoint(mri_inh_2d1d_plan *that) {
   NFFT_INT l,j;
-  double _Complex *f = (double _Complex*) nfft_malloc(that->M_total*sizeof(double _Complex));
-  double _Complex *f_hat = (double _Complex*) nfft_malloc(that->N_total*sizeof(double _Complex));
+  double _Complex *f = (double _Complex*) nfft_malloc((size_t)that->M_total * sizeof(double _Complex));
+  double _Complex *f_hat = (double _Complex*) nfft_malloc((size_t)that->N_total * sizeof(double _Complex));
 
   window_funct_plan *ths = (window_funct_plan*) nfft_malloc(sizeof(window_funct_plan));
 	window_funct_init(ths,that->plan.m,that->N3,that->sigma3);
 
-	memset(f_hat,0,that->N_total*sizeof(double _Complex));
+	memset(f_hat, 0, (size_t)that->N_total * sizeof(double _Complex));
 
 	/* the pointers that->f and that->f_hat have been modified by the solver */
 	that->plan.f = that->f;
@@ -164,8 +164,8 @@ void mri_inh_2d1d_init_guru(mri_inh_2d1d_plan *ths, NFFT_INT *N, NFFT_INT M, NFF
   ths->f = ths->plan.f;
   ths->f_hat = ths->plan.f_hat;
 
-  ths->t = (double*) nfft_malloc(ths->M_total*sizeof(double));
-  ths->w = (double*) nfft_malloc(ths->N_total*sizeof(double));
+  ths->t = (double*) nfft_malloc((size_t)ths->M_total * sizeof(double));
+  ths->w = (double*) nfft_malloc((size_t)ths->N_total * sizeof(double));
 
   ths->mv_trafo = (void (*) (void* ))mri_inh_2d1d_trafo;
   ths->mv_adjoint = (void (*) (void* ))mri_inh_2d1d_adjoint;
@@ -256,8 +256,8 @@ void mri_inh_3d_init_guru(mri_inh_3d_plan *ths, NFFT_INT *N, NFFT_INT M, NFFT_IN
   ths->N_total = N[0]*N[1];
   ths->M_total = ths->plan.M_total;
   ths->f = ths->plan.f;
-  ths->f_hat = (double _Complex*) nfft_malloc(ths->N_total*sizeof(double _Complex));
-  ths->w = (double*) nfft_malloc(ths->N_total*sizeof(double));
+  ths->f_hat = (double _Complex*) nfft_malloc((size_t)ths->N_total * sizeof(double _Complex));
+  ths->w = (double*) nfft_malloc((size_t)ths->N_total * sizeof(double));
 
   ths->mv_trafo = (void (*) (void* ))mri_inh_3d_trafo;
   ths->mv_adjoint = (void (*) (void* ))mri_inh_3d_adjoint;

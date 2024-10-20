@@ -210,20 +210,20 @@ void mexFunction(NFFT_INT nlhs, mxArray *plhs[], NFFT_INT nrhs, const mxArray *p
 
   if(strcmp(cmd,"get_num_threads") == 0)
   {
-    NFFT_INT nthreads = X(get_num_threads)();
+    int nthreads = X(get_num_threads)();
     plhs[0] = mxCreateDoubleScalar((double) nthreads);
     return;
   }
   else if(strcmp(cmd,"set_num_threads") == 0)
   {
-    NFFT_INT nthreads_new = nfft_mex_set_num_threads_check(nrhs, prhs, (void **) plans, plans_num_allocated);
+    int nthreads_new = nfft_mex_set_num_threads_check(nrhs, prhs, (void **) plans, plans_num_allocated);
     X(set_num_threads)(nthreads_new);
 
     return;
   }
   else if(strcmp(cmd,"has_threads_enabled") == 0)
   {
-    NFFT_INT threads_enabled = X(has_threads_enabled)();
+    int threads_enabled = X(has_threads_enabled)();
     plhs[0] = mxCreateDoubleScalar((double) threads_enabled);
     return;
   }

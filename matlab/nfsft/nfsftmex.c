@@ -41,7 +41,7 @@ static NFFT_INT n_max = -1; /* maximum degree precomputed */
 static double kappa_global; /* parameters of percompute */
 static unsigned int nfsft_flags_global = 0U;
 static unsigned int fpt_flags_global = 0U;
-static NFFT_INT nthreads_global = 1;
+static int nthreads_global = 1;
 static char cmd[CMD_LEN_MAX];
 
 static inline void get_nmf(const mxArray *prhs[], NFFT_INT *n, NFFT_INT *m,
@@ -501,13 +501,13 @@ void mexFunction(NFFT_INT nlhs, mxArray *plhs[], NFFT_INT nrhs, const mxArray *p
   }
   else if(strcmp(cmd,"get_num_threads") == 0)
   {
-    NFFT_INT nthreads = X(get_num_threads)();
+    int nthreads = X(get_num_threads)();
     plhs[0] = mxCreateDoubleScalar((double) nthreads);
     return;
   }
   else if(strcmp(cmd,"set_num_threads") == 0)
   {
-    NFFT_INT nthreads_new = nfft_mex_set_num_threads_check(nrhs, prhs, (void **) plans, plans_num_allocated);
+    int nthreads_new = nfft_mex_set_num_threads_check(nrhs, prhs, (void **) plans, plans_num_allocated);
     DM(if ((gflags & NFSFT_MEX_PRECOMPUTED) && (nthreads_new != nthreads_global))
       mexWarnMsgIdAndTxt("nfft:set_num_threads:fptAllocated","New number of threads may not affect the FPT step unless you re-run nfsft_precompute.");)
     X(set_num_threads)(nthreads_new);
@@ -517,7 +517,7 @@ void mexFunction(NFFT_INT nlhs, mxArray *plhs[], NFFT_INT nrhs, const mxArray *p
   }
   else if(strcmp(cmd,"has_threads_enabled") == 0)
   {
-    NFFT_INT threads_enabled = X(has_threads_enabled)();
+    int threads_enabled = X(has_threads_enabled)();
     plhs[0] = mxCreateDoubleScalar((double) threads_enabled);
     return;
   }

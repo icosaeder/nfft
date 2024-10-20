@@ -168,7 +168,7 @@ inline void SO3_alpha_all(double *alpha, NFFT_INT N)
       for (j = -1; j <= N; j++)
       {
         *alpha_act = SO3_alpha(i, m, j);
-        fprintf(stdout, "alpha_all_%d^[%d,%d]=%f\n", j, i, m,
+        fprintf(stdout, "alpha_all_%td^[%td,%td]=%f\n", j, i, m,
             SO3_alpha(i, m, j));
         alpha_act++;
         q = q + 1;
@@ -328,8 +328,8 @@ double wigner_start(NFFT_INT m1, NFFT_INT m2, double theta)
   max = (double) (ABS(m1) > ABS(m2) ? ABS(m1) : ABS(m2));
   min = (double) (ABS(m1) < ABS(m2) ? ABS(m1) : ABS(m2));
 
-  l = max;
-  delta = l - min;
+  l = (NFFT_INT)max;
+  delta = l - (NFFT_INT)min;
 
   absM1 = ABS(m1);
   absM2 = ABS(m2);

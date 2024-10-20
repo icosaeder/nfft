@@ -39,7 +39,7 @@
 
 #define NFSOFT_INDEX_TWO(m,n,l,B) ((B+1)*(B+1)+(B+1)*(B+1)*(m+B)-((m-1)*m*(2*m-1)+(B+1)*(B+2)*(2*B+3))/6)+(posN(n,m,B))+(l-MAX(ABS(m),ABS(n)))
 
-static fpt_set* SO3_fpt_init(NFFT_INT l, unsigned int flags, NFFT_INT kappa, NFFT_INT nthreads);
+static fpt_set* SO3_fpt_init(NFFT_INT l, unsigned int flags, NFFT_INT kappa, int nthreads);
 static NFFT_INT posN(NFFT_INT n, NFFT_INT m, NFFT_INT B);
 
 void nfsoft_init(nfsoft_plan *plan, NFFT_INT N, NFFT_INT M)
@@ -92,18 +92,18 @@ void nfsoft_init_guru_advanced(nfsoft_plan *plan, NFFT_INT B, NFFT_INT M,
 
   if (plan->flags & NFSOFT_MALLOC_F_HAT)
   {
-    plan->f_hat = (C*) nfft_malloc((B + 1) * (4* (B +1)*(B+1)-1)/3*sizeof(C));
+    plan->f_hat = (C*) nfft_malloc((size_t)((B + 1) * (4 * (B + 1) * (B + 1) - 1) / 3) * sizeof(C));
     if (plan->f_hat == NULL ) printf("Allocation failed!\n");
   }
 
   if (plan->flags & NFSOFT_MALLOC_X)
   {
-    plan->x = (R*) nfft_malloc(plan->M_total*3*sizeof(R));
+    plan->x = (R*) nfft_malloc((size_t)plan->M_total * 3 * sizeof(R));
     if (plan->x == NULL ) printf("Allocation failed!\n");
   }
   if (plan->flags & NFSOFT_MALLOC_F)
   {
-    plan->f = (C*) nfft_malloc(plan->M_total*sizeof(C));
+    plan->f = (C*) nfft_malloc((size_t)plan->M_total * sizeof(C));
       if (plan->f == NULL ) printf("Allocation failed!\n");
   }
 
@@ -165,9 +165,9 @@ static void c2e(nfsoft_plan *my_plan, NFFT_INT even, C* wig_coeffs, NFFT_INT k, 
 }
 
 
-static fpt_set* SO3_fpt_init(NFFT_INT l, unsigned int flags, NFFT_INT kappa, NFFT_INT nthreads)
+static fpt_set* SO3_fpt_init(NFFT_INT l, unsigned int flags, NFFT_INT kappa, int nthreads)
 {
-  fpt_set *set = (fpt_set*)nfft_malloc(nthreads * sizeof(fpt_set));
+  fpt_set *set = (fpt_set*)nfft_malloc((size_t)nthreads * sizeof(fpt_set));
   NFFT_INT N, t, k_start, k, m;
 
   /** Read in transform length. */
@@ -214,7 +214,7 @@ static fpt_set* SO3_fpt_init(NFFT_INT l, unsigned int flags, NFFT_INT kappa, NFF
 
 #else*/
   set[0] = fpt_init((2* N + 1) * (2* N + 1), t, fptflags);
-  for (NFFT_INT i=1; i<nthreads; i++)
+  for (int i=1; i<nthreads; i++)
     {
       set[i] = fpt_init((2* N + 1) * (2* N + 1), t, fptflags | FPT_NO_INIT_FPT_DATA);
       set[i]->dpt = set[0]->dpt;
@@ -647,7 +647,7 @@ void nfsoft_finalize(nfsoft_plan *plan)
   /* Finalise the nfft plan. */
   nfft_finalize(&plan->p_nfft);
 
-  for (NFFT_INT i=0; i<plan->nthreads; i++)
+  for (int i=0; i<plan->nthreads; i++)
     fpt_finalize(plan->internal_fpt_set[i]);
   nfft_free(plan->internal_fpt_set);
   plan->internal_fpt_set = NULL;
