@@ -408,7 +408,7 @@ C log_sin(R x, NFFT_INT der, const R *param)   /* K(x) = log(|sin(cx)|) */
   else
   {
       if (der == 0) value = LOG(FABS(SIN(c * x)));
-      else value = c * kcot(x, der-1, param);
+      else value = c * (double)kcot(x, der-1, param);
   }
   
   return value;

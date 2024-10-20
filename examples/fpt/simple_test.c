@@ -70,7 +70,7 @@ int main(void)
     "Computing a fast polynomial transform (FPT) and a fast discrete cosine \n"
     "transform (DCT) to evaluate\n\n"
     "  f_j = a_0 P_0(x_j) + a_1 P_1(x_j) + ... + a_N P_N(x_j), j=0,1,...,N,\n\n"
-    "with N=%d, x_j = cos(j*pi/N), j=0,1,...N, the Chebyshev nodes, a_k,\n"
+    "with N=%td, x_j = cos(j*pi/N), j=0,1,...N, the Chebyshev nodes, a_k,\n"
     "k=0,1,...,N, random Fourier coefficients in [-1,1]x[-1,1]*I, and P_k,\n"
     "k=0,1,...,N, the Legendre polynomials.",N
   );
@@ -97,7 +97,7 @@ int main(void)
     /* Plan for discrete cosine transform */
     const NFFT_INT NP1 = N + 1;
     fftw_r2r_kind kind = FFTW_REDFT00;
-    fftw_plan p = fftw_plan_many_r2r(1, &NP1, 1, (double*)b, NULL, 2, 1,
+    fftw_plan p = nfft_plan_many_r2r(1, &NP1, 1, (double*)b, NULL, 2, 1,
       (double*)f, NULL, 1, 1, &kind, 0U);
 
     /* random Fourier coefficients */
@@ -107,7 +107,7 @@ int main(void)
       for (k = 0; k <= N; k++)
       {
         a[k] = 2.0*nfft_drand48() - 1.0; /* for debugging: use k+1 */
-        printf("   a_%-2d = %+5.3lE\n",k,creal(a[k]));
+        printf("   a_%-2td = %+5.3lE\n",k,creal(a[k]));
       }
     }
 
@@ -131,7 +131,7 @@ int main(void)
       NFFT_INT j;
       printf("\n3) Function values f_j, j=1,1,...,M:\n");
       for (j = 0; j <= N; j++)
-        printf("   f_%-2d = %+5.3lE\n",j,f[j]);
+        printf("   f_%-2td = %+5.3lE\n",j,f[j]);
     }
 
     /* cleanup */

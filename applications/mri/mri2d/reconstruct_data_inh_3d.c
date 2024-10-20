@@ -44,8 +44,8 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration 
   solver_plan_complex my_iplan;
   FILE* fp,*fw,*fout_real,*fout_imag,*finh,*ftime;
   NFFT_INT my_N[3],my_n[3];
-  int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
-                      MALLOC_F| FFTW_INIT;
+  unsigned int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
+                       MALLOC_F| FFTW_INIT;
   unsigned infft_flags = CGNR | PRECOMPUTE_DAMP;
 
   double Ts;
@@ -83,16 +83,16 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration 
   }
   fclose(finh);
 
-  N3=ceil((MAX(fabs(min_inh),fabs(max_inh))*(max_time-min_time)/2.0+m/(2*sigma))*4*sigma);
+  N3=(NFFT_INT)ceil((MAX(fabs(min_inh),fabs(max_inh))*(max_time-min_time)/2.0+m/(2*sigma))*4*sigma);
 	/* N3 has to be even */
 	if(N3%2!=0)
 	  N3++;
 
   W= MAX(fabs(min_inh),fabs(max_inh))/(0.5-((double) m)/N3);
 
-  my_N[0]=N;my_n[0]=ceil(N*sigma);
-  my_N[1]=N; my_n[1]=ceil(N*sigma);
-  my_N[2]=N3; my_n[2]=ceil(N3*sigma);
+  my_N[0]=N; my_n[0]=(NFFT_INT)ceil(N*sigma);
+  my_N[1]=N; my_n[1]=(NFFT_INT)ceil(N*sigma);
+  my_N[2]=N3; my_n[2]=(NFFT_INT)ceil(N3*sigma);
 
   /* initialise nfft */
   mri_inh_3d_init_guru(&my_plan, my_N, M, my_n, m, sigma, flags,
@@ -177,7 +177,7 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration 
     /* break if dot_r_iter is smaller than epsilon*/
     if(my_iplan.dot_r_iter<epsilon)
     break;
-    fprintf(stderr,"%e,  %i of %i\n",sqrt(my_iplan.dot_r_iter),
+    fprintf(stderr,"%e,  %td of %td\n",sqrt(my_iplan.dot_r_iter),
     l+1,iteration);
     solver_loop_one_step_complex(&my_iplan);
   }

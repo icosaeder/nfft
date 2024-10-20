@@ -322,7 +322,7 @@ C kubintkern(const R x, const C *Add, const NFFT_INT Ad, const R a)
   C f0, f1, f2, f3;
   c = x * (R)(Ad) / a;
   r = (NFFT_INT)(LRINT(c));
-  r = abs(r);
+  r = labs(r);
   if (r == 0)
   {
     f0 = Add[r + 1];
@@ -357,7 +357,7 @@ static C kubintkern1(const R x, const C *Add, const NFFT_INT Ad, const R a)
   Add += 2;
   c = (x + a) * (R)(Ad) / K(2.0) / a;
   r = (NFFT_INT)(LRINT(c));
-  r = abs(r);
+  r = labs(r);
   /*if (r==0) {f0=Add[r];f1=Add[r];f2=Add[r+1];f3=Add[r+2];}
    else */
   {

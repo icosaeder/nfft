@@ -117,7 +117,7 @@ static void simple_test_nfsoft(NFFT_INT bw, NFFT_INT M)
 
   /**compute the error between the NFSOFT and NDSOFT and display it*/
   error= nfft_error_l_infty_complex(plan_ndsoft.f,plan_nfsoft.f, plan_nfsoft.M_total);
-  printf("\n The NFSOFT of bandwidth=%d for %d rotations has infty-error %11le \n",bw, M,error);
+  printf("\n The NFSOFT of bandwidth=%td for %td rotations has infty-error %11le \n",bw, M,error);
 
   printf("\n---------------------------------------------\n");
 
@@ -150,7 +150,7 @@ static void simple_test_nfsoft(NFFT_INT bw, NFFT_INT M)
 
   /**compute the error between the adjoint NFSOFT and NDSOFT and display it*/
   error=nfft_error_l_infty_complex(plan_ndsoft.f_hat,plan_nfsoft.f_hat, (bw+1)*(4*(bw+1)*(bw+1)-1)/3);
-  printf("\n The adjoint NFSOFT of bandwidth=%d for %d rotations has infty-error %11le \n",bw, M,error);
+  printf("\n The adjoint NFSOFT of bandwidth=%td for %td rotations has infty-error %11le \n",bw, M,error);
 
   printf("\n---------------------------------------------\n");
 

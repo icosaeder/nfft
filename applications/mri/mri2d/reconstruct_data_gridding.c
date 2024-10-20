@@ -45,14 +45,14 @@ static void reconstruct(char* filename, NFFT_INT N, NFFT_INT M, NFFT_INT weight)
   FILE *fout_real;         /* output file  */
   FILE *fout_imag;         /* output file  */
   NFFT_INT my_N[2],my_n[2];
-  int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
-                      MALLOC_F| FFTW_INIT| FFTW_MEASURE;
+  unsigned int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
+                       MALLOC_F| FFTW_INIT| FFTW_MEASURE;
 
   /* initialise nfft */
-  my_N[0]=N; my_n[0]=ceil(N*1.2);
-  my_N[1]=N; my_n[1]=ceil(N*1.2);
-  nfft_init_guru(&my_plan, 2, my_N, M, my_n, 6,flags,
-                      FFTW_MEASURE| FFTW_DESTROY_INPUT);
+  my_N[0] = N; my_n[0] = (NFFT_INT)ceil(N * 1.2);
+  my_N[1] = N; my_n[1] = (NFFT_INT)ceil(N * 1.2);
+  nfft_init_guru(&my_plan, 2, my_N, M, my_n, 6, flags,
+                 FFTW_MEASURE| FFTW_DESTROY_INPUT);
 
   fin=fopen(filename,"r");
 

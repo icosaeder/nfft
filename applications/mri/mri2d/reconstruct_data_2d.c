@@ -47,8 +47,8 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration,
   NFFT_INT m = 6;
   double alpha = 2.0;
   /* initialise my_plan */
-  my_N[0]=N; my_n[0]=ceil(N*alpha);
-  my_N[1]=N; my_n[1]=ceil(N*alpha);
+  my_N[0] = N; my_n[0] = (NFFT_INT)ceil(N * alpha);
+  my_N[1] = N; my_n[1] = (NFFT_INT)ceil(N * alpha);
   nfft_init_guru(&my_plan, 2, my_N, M, my_n, m, PRE_PHI_HUT| PRE_PSI|
                          MALLOC_X| MALLOC_F_HAT| MALLOC_F|
                          FFTW_INIT,
@@ -126,7 +126,7 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration,
     /* break if dot_r_iter is smaller than epsilon*/
     if(my_iplan.dot_r_iter<epsilon)
       break;
-    fprintf(stderr,"%e,  %i of %i\n",sqrt(my_iplan.dot_r_iter),
+    fprintf(stderr,"%e,  %td of %td\n",sqrt(my_iplan.dot_r_iter),
     l+1,iteration);
     solver_loop_one_step_complex(&my_iplan);
   }

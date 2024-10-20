@@ -244,7 +244,7 @@ static void simple_test_innfft_1d(void)
 
   for(l=0;l<8;l++)
   {
-    printf("iteration l=%d\n",l);
+    printf("iteration l=%td\n",l);
     solver_loop_one_step_complex(&my_iplan);
     nfft_vpr_complex(my_iplan.f_hat_iter,my_plan.N_total,
           "approximate solution, vector f_hat_iter");
@@ -301,7 +301,7 @@ static void measure_time_nnfft_1d(void)
     t = t1 - t0;
     printf("t_nnfft=%e\t",t);
 
-    printf("(N=M=%d)\n",my_N);
+    printf("(N=M=%td)\n",my_N);
 
     nnfft_finalize(&my_plan);
   }

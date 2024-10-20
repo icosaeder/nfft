@@ -31,12 +31,12 @@
 NFFT_INT global_n;
 NFFT_INT global_d;
 
-static NFFT_INT comp1(const void *x, const void *y)
+static int comp1(const void *x, const void *y)
 {
   return ((*(const R*) x) < (*(const R*) y) ? -1 : 1);
 }
 
-static NFFT_INT comp2(const void *x, const void *y)
+static int comp2(const void *x, const void *y)
 {
   NFFT_INT nx0, nx1, ny0, ny1;
   nx0 = global_n * (NFFT_INT)LRINT(*((const R*) x + 0));
@@ -55,7 +55,7 @@ static NFFT_INT comp2(const void *x, const void *y)
     return 1;
 }
 
-static NFFT_INT comp3(const void *x, const void *y)
+static int comp3(const void *x, const void *y)
 {
   NFFT_INT nx0, nx1, nx2, ny0, ny1, ny2;
   nx0 = global_n * (NFFT_INT)LRINT(*((const R*) x + 0));

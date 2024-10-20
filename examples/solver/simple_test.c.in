@@ -132,7 +132,7 @@ static void simple_test_solver_nfft_1d(NFFT_INT N, NFFT_INT M, NFFT_INT iter)
 
   for (l = 0; l < iter; l++)
   {
-    printf("\n********** Iteration l=%d **********\n", l);
+    printf("\n********** Iteration l=%td **********\n", l);
     SOLVER(loop_one_step_complex)(&ip);
     NFFT(vpr_complex)(ip.f_hat_iter, p.N_total,
         "Approximate solution, vector f_hat_iter");

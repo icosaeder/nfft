@@ -42,9 +42,9 @@ static void construct(char * file, NFFT_INT N, NFFT_INT M, NFFT_INT Z)
 
   /* initialise my_plan */
   //nfft_init_3d(&my_plan,Z,N,N,M);
-  my_N[0]=Z; my_n[0]=ceil(Z*1.2);
-  my_N[1]=N; my_n[1]=ceil(N*1.2);
-  my_N[2]=N; my_n[2]=ceil(N*1.2);
+  my_N[0]=Z; my_n[0]=(NFFT_INT)ceil(Z*1.2);
+  my_N[1]=N; my_n[1]=(NFFT_INT)ceil(N*1.2);
+  my_N[2]=N; my_n[2]=(NFFT_INT)ceil(N*1.2);
   nfft_init_guru(&my_plan, 3, my_N, M, my_n, 6,
                       PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
                       MALLOC_F| FFTW_INIT,

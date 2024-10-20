@@ -202,7 +202,7 @@ static void fgt_init_guru(fgt_plan *ths, NFFT_INT N, NFFT_INT M, NFFT_C sigma, N
 
   if (ths->flags & FGT_APPROX_B)
   {
-    fplan = Y(plan_dft_1d)(ths->n, ths->b, ths->b, FFTW_FORWARD,
+    fplan = nfft_plan_dft_1d(ths->n, ths->b, ths->b, FFTW_FORWARD,
     FFTW_MEASURE);
 
     for (j = 0; j < ths->n; j++)
@@ -417,11 +417,11 @@ static void fgt_test_andersson(void)
   NFFT_INT N_dgt_pre_exp = (NFFT_INT) (1U << 11);
   NFFT_INT N_dgt = (NFFT_INT) (1U << 19);
 
-  printf("n=%d, sigma=%1.3" NFFT__FES__ "+i%1.3" NFFT__FES__ "\n", n, NFFT_M(creal)(sigma), NFFT_M(cimag)(sigma));
+  printf("n=%td, sigma=%1.3" NFFT__FES__ "+i%1.3" NFFT__FES__ "\n", n, NFFT_M(creal)(sigma), NFFT_M(cimag)(sigma));
 
   for (N = ((NFFT_INT) (1U << 6)); N < ((NFFT_INT) (1U << 22)); N = N << 1)
   {
-    printf("$%d$\t & ", N);
+    printf("$%td$\t & ", N);
 
     fgt_init_guru(&my_plan, N, N, sigma, n, 1, 7, N < N_dgt_pre_exp ? DGT_PRE_CEXP : 0);
 
@@ -483,7 +483,7 @@ static void fgt_test_error(void)
   NFFT_INT M = 1000;
   NFFT_INT m[2] = { 7, 3 };
 
-  printf("N=%d;\tM=%d;\nsigma=%1.3" NFFT__FES__ "+i*%1.3" NFFT__FES__ ";\n", N, M, NFFT_M(creal)(sigma),
+  printf("N=%td;\tM=%td;\nsigma=%1.3" NFFT__FES__ "+i*%1.3" NFFT__FES__ ";\n", N, M, NFFT_M(creal)(sigma),
       NFFT_M(cimag)(sigma));
   printf("error=[\n");
 
@@ -491,7 +491,7 @@ static void fgt_test_error(void)
 
   for (n = 8; n <= 128; n += 4)
   {
-    printf("%d\t", n);
+    printf("%td\t", n);
     for (mi = 0; mi < 2; mi++)
     {
       fgt_init_guru(&my_plan, N, M, sigma, n, 1, m[mi], 0);
@@ -535,7 +535,7 @@ static void fgt_test_error_p(void)
   NFFT_INT M = 1000;
   NFFT_R p[3] = {NFFT_K(1.0), NFFT_K(1.5), NFFT_K(2.0)};
 
-  printf("N=%d;\tM=%d;\nsigma=%1.3" NFFT__FES__ "+i*%1.3" NFFT__FES__ ";\n", N, M, NFFT_M(creal)(sigma),
+  printf("N=%td;\tM=%td;\nsigma=%1.3" NFFT__FES__ "+i*%1.3" NFFT__FES__ ";\n", N, M, NFFT_M(creal)(sigma),
       NFFT_M(cimag)(sigma));
   printf("error=[\n");
 
@@ -543,7 +543,7 @@ static void fgt_test_error_p(void)
 
   for (n = 8; n <= 128; n += 4)
   {
-    printf("%d\t", n);
+    printf("%td\t", n);
     for (pi = 0; pi < 3; pi++)
     {
       fgt_init_guru(&my_plan, N, M, sigma, n, p[pi], 7, 0);

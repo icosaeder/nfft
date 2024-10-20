@@ -60,7 +60,7 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration,
   NFFT_INT m=2;
   double sigma = 1.25;
 
-  w = (double*)nfft_malloc(N*N*sizeof(double));
+  w = (double*)nfft_malloc((size_t)N * (size_t)N * sizeof(double));
 
   ftime=fopen("readout_time.dat","r");
   finh=fopen("inh.dat","r");
@@ -90,17 +90,17 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration,
   }
   fclose(finh);
 
-  N3=ceil((MAX(fabs(min_inh),fabs(max_inh))*(max_time-min_time)/2.0)*4);
+  N3=(NFFT_INT)ceil((MAX(fabs(min_inh),fabs(max_inh))*(max_time-min_time)/2.0)*4);
 
 
   W=MAX(fabs(min_inh),fabs(max_inh))*2.0;
 
-  fprintf(stderr,"3:  %i %e %e %e %e %e %e\n",N3,W,min_inh,max_inh,min_time,max_time,Ts);
+  fprintf(stderr,"3:  %td %e %e %e %e %e %e\n",N3,W,min_inh,max_inh,min_time,max_time,Ts);
 
   /* initialise my_plan */
-  my_N[0]=N;my_n[0]=ceil(N*sigma);
-  my_N[1]=N; my_n[1]=ceil(N*sigma);
-  my_N[2]=N3; my_n[2]=ceil(N3*sigma);
+  my_N[0]=N; my_n[0]=(NFFT_INT)ceil(N*sigma);
+  my_N[1]=N; my_n[1]=(NFFT_INT)ceil(N*sigma);
+  my_N[2]=N3; my_n[2]=(NFFT_INT)ceil(N3*sigma);
   nnfft_init_guru(&my_plan, 3, N*N, M, my_N,my_n,m,
         PRE_PSI| PRE_PHI_HUT| MALLOC_X| MALLOC_V| MALLOC_F_HAT| MALLOC_F );
 
@@ -190,7 +190,7 @@ static void reconstruct(char* filename,NFFT_INT N,NFFT_INT M,NFFT_INT iteration,
     /* break if dot_r_iter is smaller than epsilon*/
     if(my_iplan.dot_r_iter<epsilon)
     break;
-    fprintf(stderr,"%e,  %i of %i\n",sqrt(my_iplan.dot_r_iter),
+    fprintf(stderr,"%e,  %td of %td\n",sqrt(my_iplan.dot_r_iter),
     l+1,iteration);
     solver_loop_one_step_complex(&my_iplan);
   }

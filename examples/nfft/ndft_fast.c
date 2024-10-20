@@ -91,7 +91,7 @@ static void ndft_time(NFFT_INT N, NFFT_INT M, unsigned test_ndft, unsigned test_
 
   NFFT(plan) np;
 
-  printf("%d\t%d\t", N, M);
+  printf("%td\t%td\t", N, M);
 
   NFFT(init_1d)(&np, N, M);
 

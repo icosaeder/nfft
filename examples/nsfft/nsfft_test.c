@@ -35,9 +35,9 @@ static void accuracy_nsfft(NFFT_INT d, NFFT_INT J, NFFT_INT M, NFFT_INT m)
 
   nsfft_init(&p, d, J, M, m, NSDFT);
 
-  swap_sndft_trafo=(double _Complex*) nfft_malloc(p.M_total*
+  swap_sndft_trafo=(double _Complex*) nfft_malloc((size_t)p.M_total *
 						 sizeof(double _Complex));
-  swap_sndft_adjoint=(double _Complex*) nfft_malloc(p.N_total*
+  swap_sndft_adjoint=(double _Complex*) nfft_malloc((size_t)p.N_total *
 						   sizeof(double _Complex));
 
   nsfft_init_random_nodes_coeffs(&p);
@@ -50,7 +50,7 @@ static void accuracy_nsfft(NFFT_INT d, NFFT_INT J, NFFT_INT M, NFFT_INT m)
   /** approx. trafo */
   nsfft_trafo(&p);
 
-  printf("%5d\t %+.5E\t",J,
+  printf("%5td\t %+.5E\t",J,
          nfft_error_l_infty_1_complex(swap_sndft_trafo, p.f, p.M_total,
                                  p.f_hat, p.N_total));
   fflush(stdout);
@@ -159,7 +159,7 @@ static void time_nsfft(NFFT_INT d, NFFT_INT J, NFFT_INT M, unsigned test_nsdft, 
     }
   t_nsfft/=r;
 
-  printf("%d\t%.2e\t%.2e\t%.2e\n", J, t_nsdft, t_nfft, t_nsfft);
+  printf("%td\t%.2e\t%.2e\t%.2e\n", J, t_nsdft, t_nfft, t_nsfft);
 
   fflush(stdout);
 

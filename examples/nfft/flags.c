@@ -82,7 +82,7 @@ static void time_accuracy(NFFT_INT d, NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_I
   NFFT(plan) p_pre_psi;
   NFFT(plan) p_pre_full_psi;
 
-  printf("%d\t%d\t", d, N);
+  printf("%td\t%td\t", d, N);
 
   for (r = 0; r < d; r++)
   {
@@ -188,7 +188,7 @@ static void time_accuracy(NFFT_INT d, NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_I
     e = MKNAN("");
 
   printf(
-      "%.2" __FES__ "\t%d\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\n",
+      "%.2" __FES__ "\t%td\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\t%.2" __FES__ "\n",
       t_ndft, m, e, p.MEASURE_TIME_t[0], p_pre_phi_hut.MEASURE_TIME_t[0],
       p.MEASURE_TIME_t[1], p.MEASURE_TIME_t[2], p_fg_psi.MEASURE_TIME_t[2],
       p_pre_lin_psi.MEASURE_TIME_t[2], p_pre_fg_psi.MEASURE_TIME_t[2],

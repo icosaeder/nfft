@@ -182,7 +182,7 @@ static void taylor_time_accuracy(NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_INT m,
   taylor_plan tp;
   NFFT(plan) np;
 
-  printf("%d\t%d\t", N, M);
+  printf("%td\t%td\t", N, M);
 
   taylor_init(&tp, N, M, n_taylor, m_taylor);
 
@@ -250,7 +250,7 @@ static void taylor_time_accuracy(NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_INT m,
   }
   t_nfft /= (R)(r);
 
-  printf("%.2" __FES__ "\t%d\t%.2" __FES__ "\t", ((R)(n)) / ((R)(N)), m, t_nfft);
+  printf("%.2" __FES__ "\t%td\t%.2" __FES__ "\t", ((R)(n)) / ((R)(N)), m, t_nfft);
 
   if (test_accuracy)
     printf("%.2" __FES__ "\t", NFFT(error_l_infty_complex)(swapndft, np.f, np.M_total));
@@ -271,7 +271,7 @@ static void taylor_time_accuracy(NFFT_INT N, NFFT_INT M, NFFT_INT n, NFFT_INT m,
   }
   t_taylor /= (R)(r);
 
-  printf("%.2" __FES__ "\t%d\t%.2" __FES__ "\t", ((R)(n_taylor)) / ((R)(N)), m_taylor, t_taylor);
+  printf("%.2" __FES__ "\t%td\t%.2" __FES__ "\t", ((R)(n_taylor)) / ((R)(N)), m_taylor, t_taylor);
 
   if (test_accuracy)
     printf("%.2" __FES__ "\n", NFFT(error_l_infty_complex)(swapndft, np.f, np.M_total));
@@ -332,7 +332,7 @@ int main(int argc, char **argv)
     NFFT_INT N = (NFFT_INT)atoi(argv[7]);
     NFFT_INT arg5 = (NFFT_INT) (atof(argv[5]) * N);
     NFFT_INT arg6 = (NFFT_INT) (atof(argv[6]) * N);
-    fprintf(stderr, "Fixed N=M=%d, error vs. m.\n\n", N);
+    fprintf(stderr, "Fixed N=M=%td, error vs. m.\n\n", N);
     for (m = arg2; m <= arg3; m++)
     {
       for (trial = 0; trial < arg4; trial++)

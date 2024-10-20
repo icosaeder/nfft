@@ -135,7 +135,7 @@ int main(int argc, char **argv)
     }
   }
   printf(
-      "d=%d, N=%d, M=%d, n=%d, m=%d, p=%d, kernel=%s, c=%" __FGS__ ", eps_I=%" __FGS__ ", eps_B=%" __FGS__ " \n",
+      "d=%td, N=%td, M=%td, n=%td, m=%td, p=%td, kernel=%s, c=%" __FGS__ ", eps_I=%" __FGS__ ", eps_B=%" __FGS__ " \n",
       d, N, M, n, m, p, s, c, eps_I, eps_B);
 
   /** init two dimensional fastsum plan */

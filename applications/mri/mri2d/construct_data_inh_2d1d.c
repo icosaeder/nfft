@@ -48,8 +48,8 @@ static void construct(char * file, NFFT_INT N, NFFT_INT M)
   mri_inh_2d1d_plan my_plan;
   FILE *fp,*fout,*fi,*finh,*ftime;
   NFFT_INT my_N[3],my_n[3];
-  int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
-                      MALLOC_F| FFTW_INIT| FFTW_MEASURE;
+  unsigned int flags = PRE_PHI_HUT| PRE_PSI |MALLOC_X| MALLOC_F_HAT|
+                       MALLOC_F| FFTW_INIT| FFTW_MEASURE;
 
   double Ts;
   double W,T;
@@ -86,12 +86,12 @@ static void construct(char * file, NFFT_INT N, NFFT_INT M)
   fclose(finh);
 
 
-  N3=ceil((MAX(fabs(min_inh),fabs(max_inh))*(max_time-min_time)/2.0+m/(2*sigma))*4*sigma);
+  N3=(NFFT_INT)ceil((MAX(fabs(min_inh),fabs(max_inh))*(max_time-min_time)/2.0+m/(2*sigma))*4*sigma);
   T=((max_time-min_time)/2.0)/(0.5-((double) m)/N3);
   W=N3/T;
 
-  my_N[0]=N; my_n[0]=ceil(N*sigma);
-  my_N[1]=N; my_n[1]=ceil(N*sigma);
+  my_N[0]=N; my_n[0]=(NFFT_INT)ceil(N*sigma);
+  my_N[1]=N; my_n[1]=(NFFT_INT)ceil(N*sigma);
   my_N[2]=N3; my_n[2]=N3;
 
   /* initialise nfft */

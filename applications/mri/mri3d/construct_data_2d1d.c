@@ -83,12 +83,12 @@ static void construct(char * file, NFFT_INT N, NFFT_INT M, NFFT_INT Z, fftw_comp
 static void fft(NFFT_INT N,NFFT_INT M,NFFT_INT Z, fftw_complex *mem)
 {
   fftw_plan plan;
-  plan = fftw_plan_many_dft(1, &Z, N*N,
-                                  mem, NULL,
-                                  N*N, 1,
-                                  mem, NULL,
-                                  N*N,1 ,
-                                  FFTW_FORWARD, FFTW_ESTIMATE);
+  plan = nfft_plan_many_dft(1, &Z, N*N,
+                            mem, NULL,
+                            N*N, 1,
+                            mem, NULL,
+                            N*N,1 ,
+                            FFTW_FORWARD, FFTW_ESTIMATE);
 
   fftw_execute(plan); /* execute the fft */
   fftw_destroy_plan(plan);
@@ -125,7 +125,8 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  mem = (fftw_complex*) nfft_malloc(sizeof(fftw_complex) * atoi(argv[2]) * atoi(argv[2]) * atoi(argv[4]));
+  mem = (fftw_complex*) nfft_malloc(sizeof(fftw_complex) *
+                                    (size_t)atoi(argv[2]) * (size_t)atoi(argv[2]) * (size_t)atoi(argv[4]));
 
   read_data(atoi(argv[2]),atoi(argv[3]),atoi(argv[4]), mem);
 

@@ -596,25 +596,25 @@ int main (int argc, char **argv)
   double constant;             /*                                             */
 
   /* Read the number of testcases. */
-  fscanf(stdin,"testcases=%d\n",&tc_max);
-  fprintf(stdout,"%d\n",tc_max);
+  fscanf(stdin,"testcases=%td\n",&tc_max);
+  fprintf(stdout,"%td\n",tc_max);
 
   /* Process each testcase. */
   for (tc = 0; tc < tc_max; tc++)
   {
     /* Check if the fast transform shall be used. */
-    fscanf(stdin,"nfsft=%d\n",&use_nfsft);
-    fprintf(stdout,"%d\n",use_nfsft);
+    fscanf(stdin,"nfsft=%td\n",&use_nfsft);
+    fprintf(stdout,"%td\n",use_nfsft);
     if (use_nfsft != NO)
     {
       /* Check if the NFFT shall be used. */
-      fscanf(stdin,"nfft=%d\n",&use_nfft);
-      fprintf(stdout,"%d\n",use_nfft);
+      fscanf(stdin,"nfft=%td\n",&use_nfft);
+      fprintf(stdout,"%td\n",use_nfft);
       if (use_nfft != NO)
       {
         /* Read the cut-off parameter. */
-        fscanf(stdin,"cutoff=%d\n",&cutoff);
-        fprintf(stdout,"%d\n",cutoff);
+        fscanf(stdin,"cutoff=%td\n",&cutoff);
+        fprintf(stdout,"%td\n",cutoff);
       }
       else
       {
@@ -623,8 +623,8 @@ int main (int argc, char **argv)
         cutoff = 1;
       }
       /* Check if the fast polynomial transform shall be used. */
-      fscanf(stdin,"fpt=%d\n",&use_fpt);
-      fprintf(stdout,"%d\n",use_fpt);
+      fscanf(stdin,"fpt=%td\n",&use_fpt);
+      fprintf(stdout,"%td\n",use_fpt);
       /* Read the NFSFT threshold parameter. */
       fscanf(stdin,"threshold=%lf\n",&threshold);
       fprintf(stdout,"%lf\n",threshold);
@@ -650,26 +650,26 @@ int main (int argc, char **argv)
 
     /* Read the kernel type. This is one of KT_ABEL_POISSON, KT_SINGULARITY,
      * KT_LOC_SUPP and KT_GAUSSIAN. */
-    fscanf(stdin,"kernel=%d\n",&kt);
-    fprintf(stdout,"%d\n",kt);
+    fscanf(stdin,"kernel=%td\n",&kt);
+    fprintf(stdout,"%td\n",kt);
 
     /* Read the number of parameter sets. */
-    fscanf(stdin,"parameter_sets=%d\n",&ip_max);
-    fprintf(stdout,"%d\n",ip_max);
+    fscanf(stdin,"parameter_sets=%td\n",&ip_max);
+    fprintf(stdout,"%td\n",ip_max);
 
     /* Allocate memory for pointers to parameter sets. */
-    p = (double**) nfft_malloc(ip_max*sizeof(double*));
+    p = (double**) nfft_malloc((size_t)ip_max * sizeof(double*));
 
     /* We now read in the parameter sets. */
 
     /* Read number of parameters. */
-    fscanf(stdin,"parameters=%d\n",&ipp_max);
-    fprintf(stdout,"%d\n",ipp_max);
+    fscanf(stdin,"parameters=%td\n",&ipp_max);
+    fprintf(stdout,"%td\n",ipp_max);
 
     for (ip = 0; ip < ip_max; ip++)
     {
       /* Allocate memory for the parameters. */
-      p[ip] = (double*) nfft_malloc(ipp_max*sizeof(double));
+      p[ip] = (double*) nfft_malloc((size_t)ipp_max * sizeof(double));
 
       /* Read the parameters. */
       for (ipp = 0; ipp < ipp_max; ipp++)
@@ -681,23 +681,23 @@ int main (int argc, char **argv)
     }
 
     /* Read the number of cut-off degrees. */
-    fscanf(stdin,"bandwidths=%d\n",&im_max);
-    fprintf(stdout,"%d\n",im_max);
-    m = (NFFT_INT*) nfft_malloc(im_max*sizeof(NFFT_INT));
+    fscanf(stdin,"bandwidths=%td\n",&im_max);
+    fprintf(stdout,"%td\n",im_max);
+    m = (NFFT_INT*) nfft_malloc((size_t)im_max * sizeof(NFFT_INT));
 
     /* Read the cut-off degrees. */
     for (im = 0; im < im_max; im++)
     {
       /* Read cut-off degree. */
-      fscanf(stdin,"%d\n",&m[im]);
-      fprintf(stdout,"%d\n",m[im]);
+      fscanf(stdin,"%td\n",&m[im]);
+      fprintf(stdout,"%td\n",m[im]);
       m_max = MAX(m_max,m[im]);
     }
 
     /* Read number of node specifications. */
-    fscanf(stdin,"node_sets=%d\n",&ild_max);
-    fprintf(stdout,"%d\n",ild_max);
-    ld = (NFFT_INT**) nfft_malloc(ild_max*sizeof(NFFT_INT*));
+    fscanf(stdin,"node_sets=%td\n",&ild_max);
+    fprintf(stdout,"%td\n",ild_max);
+    ld = (NFFT_INT**) nfft_malloc((size_t)ild_max * sizeof(NFFT_INT*));
 
     /* Read the run specification. */
     for (ild = 0; ild < ild_max; ild++)
@@ -706,30 +706,30 @@ int main (int argc, char **argv)
       ld[ild] = (NFFT_INT*) nfft_malloc(5*sizeof(NFFT_INT));
 
       /* Read number of source nodes. */
-      fscanf(stdin,"L=%d ",&ld[ild][0]);
-      fprintf(stdout,"%d\n",ld[ild][0]);
+      fscanf(stdin,"L=%td ",&ld[ild][0]);
+      fprintf(stdout,"%td\n",ld[ild][0]);
       l_max = MAX(l_max,ld[ild][0]);
 
       /* Read number of target nodes. */
-      fscanf(stdin,"D=%d ",&ld[ild][1]);
-      fprintf(stdout,"%d\n",ld[ild][1]);
+      fscanf(stdin,"D=%td ",&ld[ild][1]);
+      fprintf(stdout,"%td\n",ld[ild][1]);
       d_max = MAX(d_max,ld[ild][1]);
 
       /* Determine whether direct and fast algorithm shall be compared. */
-      fscanf(stdin,"compare=%d ",&ld[ild][2]);
-      fprintf(stdout,"%d\n",ld[ild][2]);
+      fscanf(stdin,"compare=%td ",&ld[ild][2]);
+      fprintf(stdout,"%td\n",ld[ild][2]);
 
       /* Check if precomputation for the direct algorithm is used. */
       if (ld[ild][2] == YES)
       {
         /* Read whether the precomputed version shall also be used. */
-        fscanf(stdin,"precomputed=%d\n",&ld[ild][3]);
-        fprintf(stdout,"%d\n",ld[ild][3]);
+        fscanf(stdin,"precomputed=%td\n",&ld[ild][3]);
+        fprintf(stdout,"%td\n",ld[ild][3]);
 
         /* Read the number of repetitions over which measurements are
          * averaged. */
-        fscanf(stdin,"repetitions=%d\n",&ld[ild][4]);
-        fprintf(stdout,"%d\n",ld[ild][4]);
+        fscanf(stdin,"repetitions=%td\n",&ld[ild][4]);
+        fprintf(stdout,"%td\n",ld[ild][4]);
 
         /* Update ld_max_prec and l_max_prec. */
         if (ld[ild][3] == YES)
@@ -750,18 +750,18 @@ int main (int argc, char **argv)
     }
 
     /* Allocate memory for data structures. */
-    b = (fftw_complex*) nfft_malloc(l_max*sizeof(fftw_complex));
-    eta = (double*) nfft_malloc(2*l_max*sizeof(double));
-    f_hat = (fftw_complex*) nfft_malloc(NFSFT_F_HAT_SIZE(m_max)*sizeof(fftw_complex));
-    a = (fftw_complex*) nfft_malloc((m_max+1)*sizeof(fftw_complex));
-    xi = (double*) nfft_malloc(2*d_max*sizeof(double));
-    f_m = (fftw_complex*) nfft_malloc(d_max*sizeof(fftw_complex));
-    f = (fftw_complex*) nfft_malloc(d_max*sizeof(fftw_complex));
+    b = (fftw_complex*) nfft_malloc((size_t)l_max * sizeof(fftw_complex));
+    eta = (double*) nfft_malloc(2 * (size_t)l_max * sizeof(double));
+    f_hat = (fftw_complex*) nfft_malloc((size_t)NFSFT_F_HAT_SIZE(m_max) * sizeof(fftw_complex));
+    a = (fftw_complex*) nfft_malloc((size_t)(m_max + 1) * sizeof(fftw_complex));
+    xi = (double*) nfft_malloc(2 * (size_t)d_max * sizeof(double));
+    f_m = (fftw_complex*) nfft_malloc((size_t)d_max * sizeof(fftw_complex));
+    f = (fftw_complex*) nfft_malloc((size_t)d_max * sizeof(fftw_complex));
 
     /* Allocate memory for precomputed data. */
     if (precompute == YES)
     {
-      prec = (fftw_complex*) nfft_malloc(ld_max_prec*sizeof(fftw_complex));
+      prec = (fftw_complex*) nfft_malloc((size_t)ld_max_prec * sizeof(fftw_complex));
     }
 
     /* Generate random source nodes and weights. */
@@ -815,7 +815,7 @@ int main (int argc, char **argv)
 
         case KT_GAUSSIAN:
           /* Fourier-Legendre coefficients */
-          steed = (double*) nfft_malloc((m_max+1)*sizeof(double));
+          steed = (double*) nfft_malloc((size_t)(m_max + 1) * sizeof(double));
           smbi(2.0*p[ip][0],0.5,m_max+1,2,steed);
           for (k = 0; k <= m_max; k++)
             a[k] = K2PI*(sqrt(KPI/p[ip][0]))*steed[k];
