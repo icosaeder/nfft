@@ -104,7 +104,7 @@ int main(int argc, char **argv)
 
   N = atoi(argv[2]);
   M = atoi(argv[3]);
-  fprintf(stderr, "tr_adj=%d, N=%td, M=%td\n", trafo_adjoint, N, M);
+  fprintf(stderr, "tr_adj=%td, N=%td, M=%td\n", trafo_adjoint, N, M);
 
   nfsft_benchomp_createdataset(trafo_adjoint, N, M);
 

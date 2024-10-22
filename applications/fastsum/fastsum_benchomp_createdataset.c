@@ -78,7 +78,7 @@ void fastsum_benchomp_createdataset(unsigned int d, NFFT_INT L, NFFT_INT M)
     k++;
   }
 
-  printf("%td %td %td\n", d, L, M);
+  printf("%d %td %td\n", d, L, M);
 
   for (j = 0; j < L; j++)
   {
