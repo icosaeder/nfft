@@ -1199,7 +1199,7 @@ void nfsft_trafo(nfsft_plan *plan)
     {
 #ifdef _OPENMP
       n = 0;
-      fpt_trafo(wisdom.set_threads[0],l abs(n),
+      fpt_trafo(wisdom.set_threads[0], labs(n),
         &plan->f_hat_intern[NFSFT_INDEX(labs(n), n, plan)],
         &plan->f_hat_intern[NFSFT_INDEX(0, n, plan)],
         plan->N, 0U);
