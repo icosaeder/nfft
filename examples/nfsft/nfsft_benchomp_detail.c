@@ -34,7 +34,7 @@ void bench_openmp_readfile(FILE *infile, NFFT_INT *trafo_adjoint, NFFT_INT *N, N
   NFFT_INT k, n, j, t;
   nfsft_plan plan;
 
-  fscanf(infile, "%d %d %d", trafo_adjoint, N, M);
+  fscanf(infile, "%td %td %td", trafo_adjoint, N, M);
   *x = (double *)nfft_malloc(2*(*M)*sizeof(double));
   *f_hat = (C*)nfft_malloc((2*(*N)+2) * (2*(*N)+2) * sizeof(C));
   *f = (C*)nfft_malloc((*M)*sizeof(C));

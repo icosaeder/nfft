@@ -59,7 +59,7 @@ void bench_openmp(FILE *infile, NFFT_INT m, int psi_flag)
     n[t] = (NFFT_INT)val;
   }
 
-  fscanf(infile, "%d", &M);
+  fscanf(infile, "%td", &M);
 
 #ifdef _OPENMP
   FFTW(import_wisdom_from_filename)("nfft_benchomp_detail_threads.plan");

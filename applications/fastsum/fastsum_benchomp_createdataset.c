@@ -78,7 +78,7 @@ void fastsum_benchomp_createdataset(unsigned int d, NFFT_INT L, NFFT_INT M)
     k++;
   }
 
-  printf("%d %d %d\n", d, L, M);
+  printf("%td %td %td\n", d, L, M);
 
   for (j = 0; j < L; j++)
   {
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
   L = atoi(argv[2]);
   M = atoi(argv[3]);
 
-  fprintf(stderr, "d=%d, L=%d, M=%d\n", d, L, M);
+  fprintf(stderr, "d=%td, L=%td, M=%td\n", d, L, M);
 
   fastsum_benchomp_createdataset(d, L, M);
 

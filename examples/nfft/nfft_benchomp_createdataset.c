@@ -60,12 +60,12 @@ void nfft_benchomp_createdataset(unsigned int d, unsigned int trafo_adjoint, NFF
   printf("%d %d ", d, trafo_adjoint);
 
   for (t=0; t<d; t++)
-    printf("%d ", N[t]);
+    printf("%td ", N[t]);
 
   for (t=0; t<d; t++)
-    printf("%d ", n[t]);
+    printf("%td ", n[t]);
 
-  printf("%d\n", M);
+  printf("%td\n", M);
 
   for (j=0; j < M; j++)
   {
@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 
   d = (NFFT_INT)atoi(argv[1]);
   
-  fprintf(stderr, "d=%d", d);
+  fprintf(stderr, "d=%td", d);
 
   if (d < 1 || argc < 5+d) {
     fprintf(stderr, "usage: d tr_adj N_1 ... N_d M sigma\n");
@@ -125,13 +125,13 @@ int main(int argc, char **argv)
     N[t] = atoi(argv[3+t]);
 
   for (t=0; t<d; t++)
-    fprintf(stderr, "%d ",N[t]);
+    fprintf(stderr, "%td ",N[t]);
 
 
   M = atoi(argv[3+d]);
   sigma = atof(argv[4+d]);
 
-  fprintf(stderr, ", M=%d, sigma=%.16g\n", M, sigma);
+  fprintf(stderr, ", M=%td, sigma=%.16g\n", M, sigma);
 
   nfft_benchomp_createdataset(d, trafo_adjoint, N, M, sigma);
 

@@ -41,7 +41,7 @@ NFFT_INT bench_openmp(FILE *infile, NFFT_INT n, NFFT_INT m, NFFT_INT p,
   ticks t0, t1;
   R tt_total;
 
-  fscanf(infile, "%d %d %d", &d, &L, &M);
+  fscanf(infile, "%td %td %td", &d, &L, &M);
 
 #ifdef _OPENMP
   FFTW(import_wisdom_from_filename)("fastsum_benchomp_detail_threads.plan");

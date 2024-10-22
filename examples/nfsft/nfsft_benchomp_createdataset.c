@@ -61,7 +61,7 @@ void nfsft_benchomp_createdataset(unsigned int trafo_adjoint, NFFT_INT N, NFFT_I
     nfft_vrand_unit_complex(f,M);
   }
 
-  printf("%d %d %d\n", trafo_adjoint, N, M);
+  printf("%d %td %td\n", trafo_adjoint, N, M);
 
   for (j=0; j < M; j++)
   {
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
 
   N = atoi(argv[2]);
   M = atoi(argv[3]);
-  fprintf(stderr, "tr_adj=%d, N=%d, M=%d\n", trafo_adjoint, N, M);
+  fprintf(stderr, "tr_adj=%d, N=%td, M=%td\n", trafo_adjoint, N, M);
 
   nfsft_benchomp_createdataset(trafo_adjoint, N, M);
 

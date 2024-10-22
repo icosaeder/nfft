@@ -97,13 +97,13 @@ void run_test_create(int d, int trafo_adjoint, NFFT_INT N, NFFT_INT M, double si
   char cmd[1025];
 
   if (d==1)
-    snprintf(cmd, 1024, "%s %d %d %d %d %lg > nfft_benchomp_test.data", CMD_CREATEDATASET, d, trafo_adjoint, N, M, sigma);
+    snprintf(cmd, 1024, "%s %d %d %td %td %lg > nfft_benchomp_test.data", CMD_CREATEDATASET, d, trafo_adjoint, N, M, sigma);
   else if (d==2)  
-    snprintf(cmd, 1024, "%s %d %d %d %d %d %lg > nfft_benchomp_test.data", CMD_CREATEDATASET, d, trafo_adjoint, N, N, M, sigma);
+    snprintf(cmd, 1024, "%s %d %d %td %td %td %lg > nfft_benchomp_test.data", CMD_CREATEDATASET, d, trafo_adjoint, N, N, M, sigma);
   else if (d==3)  
-    snprintf(cmd, 1024, "%s %d %d %d %d %d %d %lg > nfft_benchomp_test.data", CMD_CREATEDATASET, d, trafo_adjoint, N, N, N, M, sigma);
+    snprintf(cmd, 1024, "%s %d %d %td %td %td %td %lg > nfft_benchomp_test.data", CMD_CREATEDATASET, d, trafo_adjoint, N, N, N, M, sigma);
   else if (d==4)  
-    snprintf(cmd, 1024, "%s %d %d %d %d %d %d %d %lg > nfft_benchomp_test.data", CMD_CREATEDATASET, d, trafo_adjoint, N, N, N, N, M, sigma);
+    snprintf(cmd, 1024, "%s %d %d %td %td %td %td %td %lg > nfft_benchomp_test.data", CMD_CREATEDATASET, d, trafo_adjoint, N, N, N, N, M, sigma);
   else
     exit(1);
   fprintf(stderr, "%s\n", cmd);
@@ -159,9 +159,9 @@ void run_test(s_resval *res, int nrepeat, NFFT_INT m, int flags, int nthreads)
   }
 
   if (nthreads < 2)
-    snprintf(cmd, 1024, "%s %d %d < nfft_benchomp_test.data > nfft_benchomp_test.out", CMD_DETAIL_SINGLE, m, flags);
+    snprintf(cmd, 1024, "%s %td %d < nfft_benchomp_test.data > nfft_benchomp_test.out", CMD_DETAIL_SINGLE, m, flags);
   else
-    snprintf(cmd, 1024, "%s %d %d %d < nfft_benchomp_test.data > nfft_benchomp_test.out", CMD_DETAIL_THREADS, m, flags, nthreads);
+    snprintf(cmd, 1024, "%s %td %d %d < nfft_benchomp_test.data > nfft_benchomp_test.out", CMD_DETAIL_THREADS, m, flags, nthreads);
   fprintf(stderr, "%s\n", cmd);
   check_result_value(system(cmd), 0, cmd);
 
@@ -287,7 +287,7 @@ void get_plot_title(char *outstr, NFFT_INT maxlen, char *hostname, s_param param
 
   if (mask & MASK_N)
   {
-    len = snprintf(outstr+offset, maxlen-offset, " N=%d", param.N);
+    len = snprintf(outstr+offset, maxlen-offset, " N=%td", param.N);
     if (len < 0 || len+offset >= maxlen-1) return;
     offset += len;
   }
@@ -301,14 +301,14 @@ void get_plot_title(char *outstr, NFFT_INT maxlen, char *hostname, s_param param
 
   if (mask & MASK_M)
   {
-    len = snprintf(outstr+offset, maxlen-offset, " M=%d", param.M);
+    len = snprintf(outstr+offset, maxlen-offset, " M=%td", param.M);
     if (len < 0 || len+offset >= maxlen-1) return;
     offset += len;
   }
 
   if (mask & MASK_WINM)
   {
-    len = snprintf(outstr+offset, maxlen-offset, " m=%d", param.m);
+    len = snprintf(outstr+offset, maxlen-offset, " m=%td", param.m);
     if (len < 0 || len+offset >= maxlen-1) return;
     offset += len;
   }
@@ -358,7 +358,7 @@ void print_output_speedup_total_tref(FILE *out, s_testset *testsets, int ntestse
   for (t = 0; t < ntestsets; t++)
   {
     s_testset testset = testsets[t];
-    fprintf(stderr, "%s %dd $\\mathrm{NFFT}%s$ N=%d $\\sigma$=%g M=%d m=%d %s %s %s}", hostname, testset.param.d, testset.param.trafo_adjoint==0?"":"^\\top", testset.param.N, testset.param.sigma, testset.param.M, testset.param.m, get_psi_string(testset.param.flags), get_sort_string(testset.param.flags), get_adjoint_omp_string(testset.param.flags));
+    fprintf(stderr, "%s %dd $\\mathrm{NFFT}%s$ N=%td $\\sigma$=%g M=%td m=%td %s %s %s}", hostname, testset.param.d, testset.param.trafo_adjoint==0?"":"^\\top", testset.param.N, testset.param.sigma, testset.param.M, testset.param.m, get_psi_string(testset.param.flags), get_sort_string(testset.param.flags), get_adjoint_omp_string(testset.param.flags));
     fprintf(stderr, "\n");
 
     fprintf(out, "\\addplot coordinates {");
@@ -425,7 +425,7 @@ void print_output_histo_DFBRT(FILE *out, s_testset testset)
 fprintf(stderr, "FLAGS: %d\n", testset.param.flags);
 
   fprintf(out, "}, x tick label style={ /pgf/number format/1000 sep=}, xlabel=Number of threads, ylabel=Time in s, xtick=data, legend style={legend columns=-1}, ybar, bar width=7pt, ymajorgrids=true, yminorgrids=true, minor y tick num=1, ");
-  fprintf(out, " title={%s %dd $\\mathrm{NFFT}%s$ N=%d $\\sigma$=%g M=%d m=%d %s %s %s}", hostname, testset.param.d, testset.param.trafo_adjoint==0?"":"^\\top", testset.param.N, testset.param.sigma, testset.param.M, testset.param.m, get_psi_string(testset.param.flags), get_sort_string(testset.param.flags), get_adjoint_omp_string(testset.param.flags));
+  fprintf(out, " title={%s %dd $\\mathrm{NFFT}%s$ N=%td $\\sigma$=%g M=%td m=%td %s %s %s}", hostname, testset.param.d, testset.param.trafo_adjoint==0?"":"^\\top", testset.param.N, testset.param.sigma, testset.param.M, testset.param.m, get_psi_string(testset.param.flags), get_sort_string(testset.param.flags), get_adjoint_omp_string(testset.param.flags));
   fprintf(out, " ]\n");
   fprintf(out, "\\addplot coordinates {");
   for (i = 0; i < size; i++)

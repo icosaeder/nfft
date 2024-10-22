@@ -159,11 +159,11 @@ void run_test(s_resval *res, int nrepeat, NFFT_INT n, NFFT_INT m, NFFT_INT p,
 
   if (nthreads < 2)
     snprintf(cmd, 1024,
-        "%s %d %d %d %s " __FR__ " " __FR__ " " __FR__ " < fastsum_benchomp_test.data > fastsum_benchomp_test.out",
+        "%s %td %td %td %s " __FR__ " " __FR__ " " __FR__ " < fastsum_benchomp_test.data > fastsum_benchomp_test.out",
         CMD_DETAIL_SINGLE, n, m, p, kernel_name, c, eps_I, eps_B);
   else
     snprintf(cmd, 1024,
-        "%s %d %d %d %s " __FR__ " " __FR__ " " __FR__ " %d < fastsum_benchomp_test.data > fastsum_benchomp_test.out",
+        "%s %td %td %td %s " __FR__ " " __FR__ " " __FR__ " %d < fastsum_benchomp_test.data > fastsum_benchomp_test.out",
         CMD_DETAIL_THREADS, n, m, p, kernel_name, c, eps_I, eps_B, nthreads);
   fprintf(stderr, "%s\n", cmd);
   check_result_value(system(cmd), 0, cmd);
@@ -305,7 +305,7 @@ void fastsum_get_plot_title_minus_indep(char *outstr, int maxlen,
 
   if (mask & MASK_FSUM_D)
   {
-    len = snprintf(outstr + offset, maxlen - offset, " %dd fastsum", param.d);
+    len = snprintf(outstr + offset, maxlen - offset, " %tdd fastsum", param.d);
     if (len < 0 || len + offset >= maxlen - 1)
       return;
     offset += len;
@@ -313,7 +313,7 @@ void fastsum_get_plot_title_minus_indep(char *outstr, int maxlen,
 
   if ((mask & (MASK_FSUM_L | MASK_FSUM_M)) && param.L == param.M)
   {
-    len = snprintf(outstr + offset, maxlen - offset, " L=M=%d", param.L);
+    len = snprintf(outstr + offset, maxlen - offset, " L=M=%td", param.L);
     if (len < 0 || len + offset >= maxlen - 1)
       return;
     offset += len;
@@ -322,7 +322,7 @@ void fastsum_get_plot_title_minus_indep(char *outstr, int maxlen,
   {
     if (mask & MASK_FSUM_L)
     {
-      len = snprintf(outstr + offset, maxlen - offset, " L=%d", param.L);
+      len = snprintf(outstr + offset, maxlen - offset, " L=%td", param.L);
       if (len < 0 || len + offset >= maxlen - 1)
         return;
       offset += len;
@@ -330,7 +330,7 @@ void fastsum_get_plot_title_minus_indep(char *outstr, int maxlen,
 
     if (mask & MASK_FSUM_M)
     {
-      len = snprintf(outstr + offset, maxlen - offset, " M=%d", param.M);
+      len = snprintf(outstr + offset, maxlen - offset, " M=%td", param.M);
       if (len < 0 || len + offset >= maxlen - 1)
         return;
       offset += len;
@@ -339,7 +339,7 @@ void fastsum_get_plot_title_minus_indep(char *outstr, int maxlen,
 
   if (mask & MASK_FSUM_MULTIBW)
   {
-    len = snprintf(outstr + offset, maxlen - offset, " n=%d", param.n);
+    len = snprintf(outstr + offset, maxlen - offset, " n=%td", param.n);
     if (len < 0 || len + offset >= maxlen - 1)
       return;
     offset += len;
@@ -347,7 +347,7 @@ void fastsum_get_plot_title_minus_indep(char *outstr, int maxlen,
 
   if (mask & MASK_FSUM_WINM)
   {
-    len = snprintf(outstr + offset, maxlen - offset, " m=%d", param.m);
+    len = snprintf(outstr + offset, maxlen - offset, " m=%td", param.m);
     if (len < 0 || len + offset >= maxlen - 1)
       return;
     offset += len;
@@ -355,7 +355,7 @@ void fastsum_get_plot_title_minus_indep(char *outstr, int maxlen,
 
   if (mask & MASK_FSUM_P)
   {
-    len = snprintf(outstr + offset, maxlen - offset, " p=%d", param.p);
+    len = snprintf(outstr + offset, maxlen - offset, " p=%td", param.p);
     if (len < 0 || len + offset >= maxlen - 1)
       return;
     offset += len;
@@ -426,7 +426,7 @@ void nfft_adjoint_print_output_histo_DFBRT(FILE *out, s_testset testset)
   fprintf(out,
       "}, x tick label style={ /pgf/number format/1000 sep=}, xlabel=Number of threads, ylabel=Time in s, xtick=data, legend style={legend columns=-1}, ybar, bar width=7pt, ymajorgrids=true, yminorgrids=true, minor y tick num=1, ");
   fprintf(out,
-      " title={%s %dd $\\textrm{NFFT}^\\top$ N=%d $\\sigma$=2 M=%d m=%d prepsi sorted}",
+      " title={%s %tdd $\\textrm{NFFT}^\\top$ N=%td $\\sigma$=2 M=%td m=%td prepsi sorted}",
       hostname, testset.param.d, testset.param.n, testset.param.M,
       testset.param.m);
   fprintf(out, " ]\n");
@@ -491,7 +491,7 @@ void nfft_trafo_print_output_histo_DFBRT(FILE *out, s_testset testset)
   fprintf(out,
       "}, x tick label style={ /pgf/number format/1000 sep=}, xlabel=Number of threads, ylabel=Time in s, xtick=data, legend style={legend columns=-1}, ybar, bar width=7pt, ymajorgrids=true, yminorgrids=true, minor y tick num=1, ");
   fprintf(out,
-      " title={%s %dd $\\textrm{NFFT}$ N=%d $\\sigma$=2 M=%d m=%d prepsi sorted}",
+      " title={%s %tdd $\\textrm{NFFT}$ N=%td $\\sigma$=2 M=%td m=%td prepsi sorted}",
       hostname, testset.param.d, testset.param.n, testset.param.M,
       testset.param.m);
   fprintf(out, " ]\n");

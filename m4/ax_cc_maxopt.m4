@@ -115,7 +115,7 @@ if test "$ac_test_CFLAGS" != "set"; then
     
     gnu) 
      # default optimization flags for gcc on all systems
-     CFLAGS="-O3 -fomit-frame-pointer"
+     CFLAGS="-O3 -fomit-frame-pointer -Wno-unused-result"
 
      # -malign-double for x86 systems
      AX_CHECK_COMPILER_FLAGS(-malign-double, CFLAGS="$CFLAGS -malign-double")

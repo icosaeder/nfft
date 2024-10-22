@@ -70,7 +70,7 @@ static void simple_test_nfsft(void)
   nfsft_trafo_direct(&plan);
   printf("Vector f (NDSFT):\n");
   for (j = 0; j < plan.M_total; j++)
-    printf("f[%+2d] = %+5.3" __FES__ " %+5.3" __FES__ "*I\n",j,
+    printf("f[%+2td] = %+5.3" __FES__ " %+5.3" __FES__ "*I\n",j,
       creal(plan.f[j]), cimag(plan.f[j]));
 
   printf("\n");
@@ -78,7 +78,7 @@ static void simple_test_nfsft(void)
   /* Fast approximate transformation, display result. */
   printf("Vector f (NDSFT):\n");
   for (j = 0; j < plan.M_total; j++)
-    printf("f[%+2d] = %+5.3" __FES__ " %+5.3" __FES__ "*I\n",j,
+    printf("f[%+2td] = %+5.3" __FES__ " %+5.3" __FES__ "*I\n",j,
       creal(plan.f[j]), cimag(plan.f[j]));
 
   printf("\n");
@@ -88,7 +88,7 @@ static void simple_test_nfsft(void)
   printf("Vector f_hat (NDSFT):\n");
   for (k = 0; k <= plan.N; k++)
     for (n = -k; n <= k; n++)
-      fprintf(stdout,"f_hat[%+2d,%+2d] = %+5.3" __FES__ " %+5.3" __FES__ "*I\n",k,n,
+      fprintf(stdout,"f_hat[%+2td,%+2td] = %+5.3" __FES__ " %+5.3" __FES__ "*I\n",k,n,
         creal(plan.f_hat[NFSFT_INDEX(k,n,&plan)]),
         cimag(plan.f_hat[NFSFT_INDEX(k,n,&plan)]));
 
@@ -101,7 +101,7 @@ static void simple_test_nfsft(void)
   {
     for (n = -k; n <= k; n++)
     {
-      fprintf(stdout,"f_hat[%+2d,%+2d] = %+5.3" __FES__ " %+5.3" __FES__ "*I\n",k,n,
+      fprintf(stdout,"f_hat[%+2td,%+2td] = %+5.3" __FES__ " %+5.3" __FES__ "*I\n",k,n,
         creal(plan.f_hat[NFSFT_INDEX(k,n,&plan)]),
         cimag(plan.f_hat[NFSFT_INDEX(k,n,&plan)]));
     }
